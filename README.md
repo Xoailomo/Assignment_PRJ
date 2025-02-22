@@ -1,1 +1,1 @@
-# Web Applicaiton project: Employee Leave Management System 
+# Web Application project: Employee Leave Management System 

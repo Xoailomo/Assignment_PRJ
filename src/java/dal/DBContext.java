@@ -45,27 +45,22 @@ public abstract class DBContext<T> {
 
         public static void main(String[] args) {
             DBContext<Object> testConnection = new DBContext<Object>() {
-                @Override
                 public java.util.ArrayList<Object> list() {
                     return null; // Not needed for connection test
                 }
 
-                @Override
                 public Object get(int id) {
                     return null; // Not needed for connection test
                 }
 
-                @Override
                 public void insert(Object model) {
                     // Not needed for connection test
                 }
 
-                @Override
                 public void update(Object model) {
                     // Not needed for connection test
                 }
 
-                @Override
                 public void delete(Object model) {
                     // Not needed for connection test
                 }
@@ -86,6 +81,6 @@ public abstract class DBContext<T> {
             } catch (java.sql.SQLException e) {
                 e.printStackTrace();
             }
-        }}}
-
-    
+        }
+    }
+}

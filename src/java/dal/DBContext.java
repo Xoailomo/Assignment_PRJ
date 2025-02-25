@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package dal;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -13,9 +14,10 @@ import java.util.logging.Logger;
  * @author sonnt-local
  */
 public abstract class DBContext<T> {
+
     protected Connection connection;
-    public DBContext()
-    {
+
+    public DBContext() {
         try {
             String user = "sa";
             String pass = "sa";
@@ -28,13 +30,62 @@ public abstract class DBContext<T> {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public abstract ArrayList<T> list();
+
     public abstract T get(int id);
+
     public abstract void insert(T model);
+
     public abstract void update(T model);
+
     public abstract void delete(T model);
-//    public Connection getConnection() {
-//        return connection;
-//    }
-}
+
+    public class DBConnectionTest {
+
+        public static void main(String[] args) {
+            DBContext<Object> testConnection = new DBContext<Object>() {
+                @Override
+                public java.util.ArrayList<Object> list() {
+                    return null; // Not needed for connection test
+                }
+
+                @Override
+                public Object get(int id) {
+                    return null; // Not needed for connection test
+                }
+
+                @Override
+                public void insert(Object model) {
+                    // Not needed for connection test
+                }
+
+                @Override
+                public void update(Object model) {
+                    // Not needed for connection test
+                }
+
+                @Override
+                public void delete(Object model) {
+                    // Not needed for connection test
+                }
+            };
+
+            // If no exception is thrown, the connection was likely successful
+            if (testConnection.connection != null) {
+                System.out.println("Database connection successful!");
+            } else {
+                System.out.println("Database connection failed!");
+            }
+
+            // Optionally, close the connection (though it's not strictly necessary in this case)
+            try {
+                if (testConnection.connection != null && !testConnection.connection.isClosed()) {
+                    testConnection.connection.close();
+                }
+            } catch (java.sql.SQLException e) {
+                e.printStackTrace();
+            }
+        }}}
+
+    

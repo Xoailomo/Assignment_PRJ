@@ -27,8 +27,8 @@ public class UserDBContext extends DBContext<User> {
             if(rs.next())
             {
                 User user = new User();
-                user.setUsername(username);
-                user.setDisplayname(rs.getNString("displayname"));
+                user.setUserName(username);
+//                user.setDisplayname(rs.getNString("displayname"));
                 return user;
             }
             

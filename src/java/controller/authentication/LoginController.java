@@ -30,10 +30,7 @@ public class LoginController extends HttpServlet{
         {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
-            //write some cookie
-            Cookie c_user = new Cookie("username", username);
-            c_user.setMaxAge(3600*24*30*12);
-            resp.addCookie(c_user);
+            
             resp.sendRedirect("home");
         }
         else

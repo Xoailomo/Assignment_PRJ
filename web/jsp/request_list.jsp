@@ -80,7 +80,7 @@
                     <c:if test="${currentPage < totalPages}">
                         <a href ="?page="$currentPage + 1}&keyword=${param.keyword}&statusFilter=${param.statusFilter}">Next &raquo;</a>
                     </c:if>
-                    </div>
+                </div>
                 </c:if>
                 <p><a href="index.jsp">Back to Home</a></p>
             </body>

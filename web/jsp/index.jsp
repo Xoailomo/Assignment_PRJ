@@ -12,6 +12,7 @@
         <title>Home - Leave Management System</title>
     </head>
     <body>
+        <%@ include file="header.jsp"%>
         <h1>Welcome to the Leave Management System</h1>
         <nav>
             <ul>
@@ -22,5 +23,6 @@
                 <li><a href="agenda.jsp">Agenda View</a></li>
             </ul>
         </nav>
+        <% include file="footer.jsp" %>
     </body>
 </html>

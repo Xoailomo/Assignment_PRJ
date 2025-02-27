@@ -71,7 +71,17 @@
                 <c:if test="${totalPages >1}">
                     <div class="pagination">
                         <c: if test="${currentPage > 1}">
+                            <a href="?page=$currentPage - 1}&keyword=${param.keyword}&statusFilter=${param.statusFilter}">$laquo; Prev</a>
+                    </c:if>
+                    <c:forEach var="p" begin="1" end="${totalPages}">
+                        <a href ="?page=${p}&keyword=${param.keyword}&statusFilter=${param.statusFilter}"
+                           class ="${p == currentPage ? 'active' : ''}">${p}</a>
+                    </c:forEach>
+                    <c:if test="${currentPage < totalPages}">
+                        <a href ="?page="$currentPage + 1}&keyword=${param.keyword}&statusFilter=${param.statusFilter}">Next &raquo;</a>
+                    </c:if>
                     </div>
                 </c:if>
+                <p><a href="index.jsp">Back to Home</a></p>
             </body>
         </html>

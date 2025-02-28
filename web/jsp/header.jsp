@@ -13,17 +13,16 @@
     </head>
     <body>
         <header>
-        <nav>
-            <ul>
-                <li><a href="index.jsp">Home</a></li>
-                <li><a href="jsp/login.jsp">Login</a></li>
-                <li><a href="leave_request.jsp">Create Request</a></li>
-                <li><a href="request_list.jsp">List Requests</a></li>
-                <li><a href="review_request.jsp">Review Request</a></li>
-                <li><a href="agenda.jsp">Agenda</a></li>
-            </ul>
-        </nav>
-    </header>
+            <nav>
+                <ul>
+                    <!-- Use the context path to avoid relative path issues -->
+                    <li><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
+                    <li><a href="${pageContext.request.contextPath}/jsp/login.jsp">Login</a></li>
+                    <li><a href="${pageContext.request.contextPath}/jsp/leave_request.jsp">Create Request</a></li>
+
+                </ul>
+            </nav>
+        </header>
 
     </body>
 </html>

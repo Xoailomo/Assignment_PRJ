@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ include file="header.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,7 +13,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%@ include file="header.jsp"%>
         <h1>Login</h1>
         <form action="AuthServelt" method="post">
             <label for="email">Email:</label>

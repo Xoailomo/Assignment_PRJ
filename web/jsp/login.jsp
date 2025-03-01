@@ -1,31 +1,34 @@
-<%-- 
-    Document   : login
-    Created on : Feb 27, 2025, 9:17:54 PM
-    Author     : phank
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="header.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <%--<%@ include file="header.jsp"%>--%>
-        <h1>Login</h1>
-        <form action="AuthServelt" method="post">
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required /></br>
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" required/></br>
+<head>
+    <title>Login - Leave Management System</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <%-- Bao gồm header.jsp --%>
+    <jsp:include page="header.jsp" />
+    
+    <h2>Login</h2>
+    <c:if test="${not empty error}">
+        <p style="color: red">${error}</p>
+    </c:if>
+    <form action="auth/login" method="post">
+        <div>
+            <label>Email:</label>
+            <input type="email" name="email" required>
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password" required>
+        </div>
+        <div>
+            <input type="submit" value="Login">
+        </div>
+    </form>
 
-            <button type="submit">Login</button>
-        </form>
-        <p><a href="register.jsp">Register</a>(if allowed)</p>
-        <%@ include file="footer.jsp"%>
-
-
-    </body>
+    <%-- Bao gồm footer.jsp --%>
+    <jsp:include page="footer.jsp" />
+</body>
 </html>

@@ -1,46 +1,34 @@
-<%-- 
-    Document   : leave_request
-    Created on : Feb 27, 2025, 9:43:54 PM
-    Author     : phank
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="header.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!--<title>JSP Page</title>-->
-    </head>
-    <body>
-        <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-        <%@ include file="../header.jsp" %>
-        <div class="container">
-            <h2>Create Leave Request</h2>
-            <form action="<c:url value='/RequestServlet' />" method="post">
-                <input type="hidden" name="action" value="create" />
-                <div>
-                    <label for="fromDate">From Date:</label>
-                    <input type="date" name="fromDate" id="fromDate" required />
-                </div>
-                <div>
-                    <label for="toDate">To Date:</label>
-                    <input type="date" name="toDate" id="toDate" required />
-                </div>
-                <div>
-                    <label for="requestTitle">Title:</label>
-                    <input type="text" name="requestTitle" id="requestTitle" placeholder="Short description" required />
-                </div>
-                <div>
-                    <label for="reason">Reason:</label>
-                    <textarea name="reason" id="reason" rows="4" cols="50" required></textarea>
-                </div>
-                <div>
-                    <button type="submit">Submit Request</button>
-                </div>
-            </form>
+<head>
+    <title>Create Request - Leave Management System</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <%-- Bao gồm header.jsp --%>
+    <jsp:include page="header.jsp" />
+    
+    <h2>Create Leave Request</h2>
+    <form action="request/create" method="post">
+        <div>
+            <label>From Date:</label>
+            <input type="date" name="fromDate" required>
         </div>
-        <%@ include file="../footer.jsp" %>
+        <div>
+            <label>To Date:</label>
+            <input type="date" name="toDate" required>
+        </div>
+        <div>
+            <label>Reason:</label>
+            <textarea name="reason" required></textarea>
+        </div>
+        <div>
+            <input type="submit" value="Submit">
+        </div>
+    </form>
 
-    </body>
+    <%-- Bao gồm footer.jsp --%>
+    <jsp:include page="footer.jsp" />
+</body>
 </html>

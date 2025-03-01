@@ -13,7 +13,9 @@
     </head>
     <body>
         <footer>
-        <p>&copy; 2025 Leave Management System. All rights reserved.</p>
-    </footer>
+            <div class="container">
+                <p>&copy; 2025 Leave Management System. All rights reserved.</p>
+            </div>
+        </footer>
     </body>
 </html>

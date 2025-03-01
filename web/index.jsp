@@ -10,19 +10,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home - Leave Management System</title>
+
     </head>
     <body>
-        <%--<%@ include file="header.jsp"%>--%>
-        <h1>Welcome to the Leave Management System</h1>
-        <nav>
-            <ul>
-                <li><a href="${pageContext.request.contextPath}/jsp/login.jsp">Login</a></li>
-            <li><a href="${pageContext.request.contextPath}/jsp/leave_request.jsp">Create Leave Request</a></li>
-            <li><a href="${pageContext.request.contextPath}/jsp/request_list.jsp">List Leave Requests</a></li>
-            <li><a href="${pageContext.request.contextPath}/jsp/review_request.jsp">Review Requests</a></li>
-            <li><a href="${pageContext.request.contextPath}/jsp/agenda.jsp">Agenda View</a></li>
-            </ul>
-        </nav>
-        <% // include file="footer.jsp" %>
+        <%@ include file="jsp/header.jsp" %>
+        <div class="container">
+            <h2>Welcome to the Leave Management System</h2>
+            <p>This system helps you create, review, and manage leave requests in an efficient way.</p>
+            <p>Use the navigation menu above to get started.</p>
+        </div>
+        <%@ include file="jsp/footer.jsp" %>
+
     </body>
 </html>

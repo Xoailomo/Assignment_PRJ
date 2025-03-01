@@ -8,22 +8,28 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
         <title>Leave Management System</title>
-        <!--Use context-relative URLs for styles and scripts-->
+        <link rel="stylesheet" type="text/css" href="<c:url value='/styles.css' />" />
+        <script src="<c:url value='/js/main.js' />"></script>
     </head>
     <body>
         <header>
-            <nav>
-                <ul>
-                    <!-- Use the context path to avoid relative path issues -->
-                    <li><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
-                    <li><a href="${pageContext.request.contextPath}/jsp/login.jsp">Login</a></li>
-                    <li><a href="${pageContext.request.contextPath}/jsp/leave_request.jsp">Create Request</a></li>
-
-                </ul>
-            </nav>
-        </header>
-
+            <div class="container">
+                <h1>Leave Management System</h1>
+                <nav>
+                    <ul>
+                        <li><a href="index.jsp">Home</a></li>
+                <li><a href="jsp/login.jsp">Login</a></li>
+                <li><a href="jsp/leave_request.jsp">Create Request</a></li>
+                <li><a href="jsp/request_list.jsp">List Requests</a></li>
+                <li><a href="jsp/review_request.jsp">Review Request</a></li>
+                <li><a href="jsp/agenda.jsp">Agenda</a></li>
+                        <c:if test="${not empty sessionScope.loggedInUser}">
+                            <li><a href="<c:url value='/logout' />">Logout</a></li>
+                        </c:if>
+                    </ul>
+                </nav>
+            </div>
     </body>
 </html>

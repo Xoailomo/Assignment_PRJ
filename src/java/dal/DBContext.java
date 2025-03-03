@@ -21,7 +21,7 @@ public abstract class DBContext<T> {
         try {
             String user = "sa";
             String pass = "sa";
-            String url = "jdbc:sqlserver://localhost\\MSSQLSERVER:1433;databaseName=IS1903;trustServerCertificate=true; [sa on SA]";
+            String url = "jdbc:sqlserver://localhost\\MSSQLSERVER:1433;databaseName=CompanyDB;trustServerCertificate=true;";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);
         } catch (ClassNotFoundException ex) {
@@ -31,6 +31,17 @@ public abstract class DBContext<T> {
         }
     }
 
+//    public boolean testConnection() {
+//        try {
+//            System.out.println((connection != null && !connection.isClosed())
+//                    ? "Kết nối thành công!"
+//                    : "Kết nối thất bại!");
+//            return connection != null && !connection.isClosed();
+//        } catch (SQLException ex) {
+//            return false;
+//        }
+//    }
+//
     public abstract ArrayList<T> list();
 
     public abstract T get(int id);
@@ -40,47 +51,27 @@ public abstract class DBContext<T> {
     public abstract void update(T model);
 
     public abstract void delete(T model);
-
-//    public class DBConnectionTest {
 //
-//        public static void main(String[] args) {
-//            DBContext<Object> testConnection = new DBContext<Object>() {
-//                public java.util.ArrayList<Object> list() {
-//                    return null; // Not needed for connection test
-//                }
-//
-//                public Object get(int id) {
-//                    return null; // Not needed for connection test
-//                }
-//
-//                public void insert(Object model) {
-//                    // Not needed for connection test
-//                }
-//
-//                public void update(Object model) {
-//                    // Not needed for connection test
-//                }
-//
-//                public void delete(Object model) {
-//                    // Not needed for connection test
-//                }
-//            };
-//
-//            // If no exception is thrown, the connection was likely successful
-//            if (testConnection.connection != null) {
-//                System.out.println("Database connection successful!");
-//            } else {
-//                System.out.println("Database connection failed!");
+//    public static void main(String[] args) {
+//        DBContext<Object> db = new DBContext<>() {
+//            public ArrayList<Object> list() {
+//                return null;
 //            }
 //
-//            // Optionally, close the connection (though it's not strictly necessary in this case)
-//            try {
-//                if (testConnection.connection != null && !testConnection.connection.isClosed()) {
-//                    testConnection.connection.close();
-//                }
-//            } catch (java.sql.SQLException e) {
-//                e.printStackTrace();
+//            public Object get(int id) {
+//                return null;
 //            }
-//        }
+//
+//            public void insert(Object model) {
+//            }
+//
+//            public void update(Object model) {
+//            }
+//
+//            public void delete(Object model) {
+//            }
+//        };
+//
+//        db.testConnection();
 //    }
 }

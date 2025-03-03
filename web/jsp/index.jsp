@@ -1,49 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>Leave Management System</title>
-        <!-- Use context-relative URL for CSS -->
-        <link rel="stylesheet" href="<c:url value='/css/styles.css' />" />
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Leave Management System</title>
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
     </head>
     <body>
-        <!-- Include header -->
-        <jsp:include page="header.jsp" />
+        <%--<jsp:include page="jsp/header.jsp" />--%>
 
-        <c:if test="${not empty sessionScope.user}">
-            <ul>
-                <ul>
-                    <li><a href="<c:url value='/index.jsp' />">Home</a></li>
-                    <li><a href="<c:url value='/jsp/login.jsp' />">Login</a></li>
-                    <li><a href="<c:url value='/request/create' />">Create Request</a></li>
-                    <li><a href="<c:url value='/request/list' />">List Requests</a></li>
+        <div class="container">
+            <h2>Welcome to the Leave Management System</h2>
 
-                    <c:if test="${not empty sessionScope.user}">
-                        <!-- Kiểm tra vai trò Manager -->
-                        <c:if test="${sessionScope.user.role == 'Manager'}">
-                            <li><a href="<c:url value='/request/review' />">Review Request</a></li>
-                            </c:if>
+            <!-- Check if user is logged in -->
+            <c:choose>
+                <c:when test="${not empty sessionScope.user}">
+                    <p>Hello, ${sessionScope.user.fullName}!</p>
+                    <p>Access your dashboard using the navigation menu above.</p>
+                </c:when>
+                <c:otherwise>
+                    <p>You are not logged in. Please <a href="<c:url value='/jsp/login.jsp' />">login</a> to continue.</p>
+                </c:otherwise>
+            </c:choose>
+        </div>
 
-                        <!-- Kiểm tra vai trò DepartmentHead -->
-                        <c:if test="${sessionScope.user.role == 'DepartmentHead'}">
-                            <li><a href="<c:url value='/jsp/agenda.jsp' />">Agenda</a></li>
-                            </c:if>
-
-                        <li><a href="<c:url value='/logout' />">Logout</a></li>
-                        </c:if>
-                </ul>
-
-            </ul>
-        </c:if>
-
-        <c:if test="${empty sessionScope.user}">
-            <p>You are not logged in. Please 
-                <a href="<c:url value='/jsp/login' />">Login</a>.
-            </p>
-        </c:if>
-
-        <!-- Include footer -->
-        <jsp:include page="footer.jsp" />
+        <!-- Include common footer -->
+        <%--<jsp:include page="jsp/footer.jsp" />--%>
     </body>
 </html>

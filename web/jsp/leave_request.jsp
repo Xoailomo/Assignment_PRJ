@@ -10,7 +10,7 @@
     <jsp:include page="header.jsp" />
     
     <h2>Create Leave Request</h2>
-    <form action="request/create" method="post">
+    <form action="../request/create" method="post">
         <div>
             <label>From Date:</label>
             <input type="date" name="fromDate" required>

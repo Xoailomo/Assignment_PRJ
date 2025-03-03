@@ -11,7 +11,7 @@
     <jsp:include page="header.jsp" />
     
     <h2>Agenda</h2>
-    <form action="agenda" method="get">
+    <form action="../agenda" method="get">
         <label>From Date:</label>
         <input type="date" name="fromDate" required>
         <label>To Date:</label>

@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Login - Leave Management System</title>
-    <link rel="stylesheet" href="<c:url value='/css/styles.css' />" />
+    <link rel="stylesheet" href="<c:url value='../css/styles.css' />" />
 </head>
 <body>
     <jsp:include page="header.jsp" />

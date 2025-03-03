@@ -31,7 +31,7 @@
                 <td>${request.status}</td>
                 <c:if test="${sessionScope.user.hasRole('Manager') && request.status == 'Inprogress'}">
                     <td>
-                        <form action="request/review" method="post">
+                        <form action="../request/review" method="post">
                             <input type="hidden" name="request_id" value="${request.requestId}">
                             <input type="submit" name="status" value="Approve">
                             <input type="submit" name="status" value="Reject">

@@ -22,16 +22,16 @@ public class LoginController extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("username");
+        String email = req.getParameter("email");
         String password = req.getParameter("password");
         UserDBContext db = new UserDBContext();
-        User user = db.get(username, password);
+        User user = db.get(email, password);
         if(user != null)
         {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
             
-            resp.sendRedirect("home");
+            resp.sendRedirect("LMS/index.jsp");
         }
         else
         {
@@ -41,7 +41,7 @@ public class LoginController extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        req.getRequestDispatcher("LMS/index.jsp").forward(req, resp);
     }
     
 }

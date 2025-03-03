@@ -4,17 +4,20 @@
 <html>
 <head>
     <title>Login - Leave Management System</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="<c:url value='/css/styles.css' />" />
 </head>
 <body>
-    <%-- Bao gồm header.jsp --%>
     <jsp:include page="header.jsp" />
-    
+
     <h2>Login</h2>
     <c:if test="${not empty error}">
         <p style="color: red">${error}</p>
     </c:if>
-    <form action="auth/login" method="post">
+    <!-- 
+        If your actual login POST is /auth/login, do <c:url value='/jsp/login' /> 
+        If direct JSP handling, do <c:url value='/jsp/login.jsp' /> 
+    -->
+    <form action="<c:url value='/jsp/login' />" method="post">
         <div>
             <label>Email:</label>
             <input type="email" name="email" required>
@@ -28,7 +31,6 @@
         </div>
     </form>
 
-    <%-- Bao gồm footer.jsp --%>
     <jsp:include page="footer.jsp" />
 </body>
 </html>

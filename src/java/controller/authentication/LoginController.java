@@ -64,7 +64,7 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+ resp.sendRedirect(req.getContextPath() + "/login");
         req.getRequestDispatcher("jsp/login.jsp").forward(req, resp);
     }
 

@@ -26,7 +26,7 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        
+
         if (email == null || email.trim().isEmpty() || password == null || password.trim().isEmpty()) {
             req.setAttribute("error", "Email and password are required");
             req.getRequestDispatcher("/view/home/dashboard.jsp").forward(req, resp);
@@ -37,7 +37,15 @@ public class LoginController extends HttpServlet {
         if (user != null) {
             EmployeeDBContext edb = new EmployeeDBContext();
             Employee profile = edb.get(user.getEmployee().getId());
-            if 
+            if (profile != null) {
+                user.getEmployee().setManager(profile.getManager());
+                user.setEmployee(profile);
+            } else {
+                System.out.println("Employee profile not found for user: " + email);
+                req.setAttribute("error", "User Profile not found. Please contact support.");
+                req.getRequestDispatcher("../jsp/login.jsp").forward(req, resp);
+                return;
+            }
             profile.setManager(user.getEmployee().getManager());
             user.setEmployee(profile);
             HttpSession session = req.getSession();

@@ -4,6 +4,7 @@
  */
 package controller.authentication;
 
+import dal.EmployeeDBContext;
 import dal.UserDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import model.Employee;
 import model.User;
 
 /**
@@ -28,20 +30,24 @@ public class LoginController extends HttpServlet{
         User user = db.get(email, password);
         if(user != null)
         {
+            EmployeeDBContext edb = new EmployeeDBContext();
+            Employee profile = edb.get(user.getEmployee().getId());
+            profile.setManager(user.getEmployee().getManager());
+            user.setEmployee(profile);
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
-            
-            resp.sendRedirect("index.jsp");
+            resp.sendRedirect("view/home/home.jsp");
         }
         else
         {
             resp.getWriter().println("Access denied!");
         }
+    
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("index.jsp").forward(req, resp);
+        req.getRequestDispatcher("jsp/login.jsp").forward(req, resp);
     }
     
 }

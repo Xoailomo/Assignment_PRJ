@@ -8,7 +8,7 @@
 </head>
 <body>
     <%-- Bao gồm header.jsp --%>
-    <jsp:include page="header.jsp" />
+
     
     <h2>List Requests</h2>
     <table border="1">
@@ -46,6 +46,5 @@
     </table>
 
     <%-- Bao gồm footer.jsp --%>
-    <jsp:include page="footer.jsp" />
 </body>
 </html>

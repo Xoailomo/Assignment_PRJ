@@ -10,7 +10,7 @@ import java.sql.Date;
  *
  * @author phank
  */
-public class LeaveRequest {
+public class LeaveRequest extends BaseModel{
     private String title;
     private String reason;
     private Date from;

@@ -45,7 +45,7 @@ public class LoginController extends HttpServlet {
             } else {
                 System.out.println("Employee profile not found for user: " + username);
                 req.setAttribute("error", "User Profile not found. Please contact support.");
-                req.getRequestDispatcher("../jsp/login.jsp").forward(req, resp);
+                req.getRequestDispatcher("../view/auth/login.jsp").forward(req, resp);
                 return;
             }
             // kiểm tra xem có role hay không
@@ -57,14 +57,14 @@ public class LoginController extends HttpServlet {
         } else {
             System.out.println("Authentication faild for email: "+username);
             req.setAttribute("error","Invalid email or password");
-            req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
+            req.getRequestDispatcher("/view/auth/login.jsp").forward(req, resp);
         }
 
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("jsp/login.jsp").forward(req, resp);
+        req.getRequestDispatcher("/view/auth/login.jsp").forward(req, resp);
     }
 
 }

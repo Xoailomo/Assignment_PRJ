@@ -1,17 +1,10 @@
-<%-- 
-    Document   : header
-    Created on : Mar 4, 2025, 12:54:43 AM
-    Author     : phank
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <<link rel="stylesheet" href="css/style.css"/>
-    </head>
-    <body>
-        <h1>Leave Management System</h1>
-    </body>
-</html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<header class="header">
+    <h1>Employee Leave Management System</h1>
+    <c:if test="${sessionScope.user != null}">
+        <div class="user-info">
+            <span>Welcome, ${sessionScope.user.employee.name}</span>
+            <a href="${pageContext.request.contextPath}/logout" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </c:if>
+</header>

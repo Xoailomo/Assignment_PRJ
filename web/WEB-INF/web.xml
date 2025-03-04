@@ -21,6 +21,18 @@
         <servlet-name>UpdateLeaveRequestController</servlet-name>
         <servlet-class>controller.leaveRequest.UpdateLeaveRequestController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CalendarController</servlet-name>
+        <servlet-class>controller.calendar.CalendarController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DashboardController</servlet-name>
+        <servlet-class>controller.dashboard.DashboardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListLeaveRequestList</servlet-name>
+        <servlet-class>view.leaverequestlist.ListLeaveRequestList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RequestServlet</servlet-name>
         <url-pattern>/request/*</url-pattern>
@@ -59,6 +71,18 @@
     <servlet-mapping>
         <servlet-name>UpdateLeaveRequestController</servlet-name>
         <url-pattern>/leaverequest/update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CalendarController</servlet-name>
+        <url-pattern>/calendar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashboardController</servlet-name>
+        <url-pattern>/dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListLeaveRequestList</servlet-name>
+        <url-pattern>/leaverequest/list</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

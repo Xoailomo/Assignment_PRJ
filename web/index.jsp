@@ -22,7 +22,7 @@
                 <!-- Since index.jsp and login.jsp are in the same folder (jsp), 
                      a simple relative link 'login.jsp' works. -->
                 <p>You are not logged in. Please 
-                    <a href="jsp/login.jsp">login</a> 
+                    <a href="<c:url value='/login'/>">login</a> 
                     to continue.
                 </p>
             </c:otherwise>

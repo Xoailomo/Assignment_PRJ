@@ -26,16 +26,16 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String email = req.getParameter("email");
+        String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        if (email == null || email.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+        if (username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty()) {
             req.setAttribute("error", "Email and password are required");
             req.getRequestDispatcher("/view/home/dashboard.jsp").forward(req, resp);
             return;
         }
         UserDBContext db = new UserDBContext();
-        User user = db.get(email, password);
+        User user = db.get(username, password);
         if (user != null) {
             EmployeeDBContext edb = new EmployeeDBContext();
             Employee profile = edb.get(user.getEmployee().getId());
@@ -43,7 +43,7 @@ public class LoginController extends HttpServlet {
                 user.getEmployee().setManager(profile.getManager());
                 user.setEmployee(profile);
             } else {
-                System.out.println("Employee profile not found for user: " + email);
+                System.out.println("Employee profile not found for user: " + username);
                 req.setAttribute("error", "User Profile not found. Please contact support.");
                 req.getRequestDispatcher("../jsp/login.jsp").forward(req, resp);
                 return;
@@ -55,16 +55,15 @@ public class LoginController extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/login");
 
         } else {
-            System.out.println("Authentication faild for email: "+email);
-            req.setAttribute("error","Invalid email of password");
-            req.getRequestDispatcher("../jsp/login.jsp").forward(req, resp);
+            System.out.println("Authentication faild for email: "+username);
+            req.setAttribute("error","Invalid email or password");
+            req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
         }
 
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
- resp.sendRedirect(req.getContextPath() + "/login");
         req.getRequestDispatcher("jsp/login.jsp").forward(req, resp);
     }
 

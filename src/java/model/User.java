@@ -3,10 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class User {
-
-    private int id;
     private String username;
-    private String email;
     private String password;
     private Department department;
     private Integer managerId; // Sử dụng Integer để cho phép NULL (nhân viên cấp cao nhất không có quản lý)

@@ -4,29 +4,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Leave Management System</title>
-    <!-- Use context path for CSS, or a relative path if your CSS is at ../css/style.css -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Leave Management System</title>
+    <meta http-equiv="refresh" content="0;url=${pageContext.request.contextPath}/login">
 </head>
 <body>
-    <div class="container">
-        <h2>Welcome to the Leave Management System</h2>
-
-        <!-- Check if user is logged in -->
-        <c:choose>
-            <c:when test="${not empty sessionScope.user}">
-                <p>Hello, ${sessionScope.user.fullName}!</p>
-                <p>Access your dashboard using the navigation menu above.</p>
-            </c:when>
-            <c:otherwise>
-                <!-- Since index.jsp and login.jsp are in the same folder (jsp), 
-                     a simple relative link 'login.jsp' works. -->
-                <p>You are not logged in. Please 
-                    <a href="<c:url value='/login'/>">login</a> 
-                    to continue.
-                </p>
-            </c:otherwise>
-        </c:choose>
-    </div>
+    <c:if test="${sessionScope.user != null}">
+        <c:redirect url="/dashboard"/>
+    </c:if>
+    <c:if test="${sessionScope.user == null}">
+        <c:redirect url="/login"/>
+    </c:if>
 </body>
 </html>

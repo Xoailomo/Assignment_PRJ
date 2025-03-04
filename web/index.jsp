@@ -5,23 +5,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Leave Management System</title>
+    <!-- Use context path for CSS, or a relative path if your CSS is at ../css/style.css -->
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css" />
 </head>
 <body>
     <div class="container">
         <h2>Welcome to the Leave Management System</h2>
 
+        <!-- Check if user is logged in -->
         <c:choose>
             <c:when test="${not empty sessionScope.user}">
                 <p>Hello, ${sessionScope.user.fullName}!</p>
-                <!-- Optionally auto-redirect to home.jsp:
-                     <c:redirect url='/jsp/home.jsp' /> 
-                     or just show a link: -->
-                <p><a href="<%= request.getContextPath() %>/jsp/home.jsp">Go to Home</a></p>
+                <p>Access your dashboard using the navigation menu above.</p>
             </c:when>
             <c:otherwise>
+                <!-- Since index.jsp and login.jsp are in the same folder (jsp), 
+                     a simple relative link 'login.jsp' works. -->
                 <p>You are not logged in. Please 
-                    <a href="<%= request.getContextPath() %>/jsp/login.jsp">login</a> 
+                    <a href="jsp/login.jsp">login</a> 
                     to continue.
                 </p>
             </c:otherwise>

@@ -9,8 +9,17 @@ public class User {
     private Integer managerId; // Sử dụng Integer để cho phép NULL (nhân viên cấp cao nhất không có quản lý)
     private Employee employee;
     private ArrayList<Role> roles = new ArrayList<>();
+    private String Displayname;
 
-    public User() {
+//    public User() {
+//    }
+
+    public String getDisplayname() {
+        return Displayname;
+    }
+
+    public void setDisplayname(String Displayname) {
+        this.Displayname = Displayname;
     }
     
 
@@ -35,13 +44,7 @@ public class User {
         this.employee = employee;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+   
 
     public String getName() {
         return username;
@@ -51,13 +54,7 @@ public class User {
         this.username = name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+   
 
     public String getPassword() {
         return password;

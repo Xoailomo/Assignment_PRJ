@@ -31,6 +31,15 @@ public abstract class DBContext<T> {
         }
     }
 
+    public abstract ArrayList<T> list();
+
+    public abstract T get(int id);
+
+    public abstract void insert(T model);
+
+    public abstract void update(T model);
+
+    public abstract void delete(T model);
 //    public boolean testConnection() {
 //        try {
 //            System.out.println((connection != null && !connection.isClosed())
@@ -41,17 +50,8 @@ public abstract class DBContext<T> {
 //            return false;
 //        }
 //    }
-//
-    public abstract ArrayList<T> list();
 
-    public abstract T get(int id);
 
-    public abstract void insert(T model);
-
-    public abstract void update(T model);
-
-    public abstract void delete(T model);
-//
 //    public static void main(String[] args) {
 //        DBContext<Object> db = new DBContext<>() {
 //            public ArrayList<Object> list() {

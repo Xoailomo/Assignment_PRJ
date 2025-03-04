@@ -21,7 +21,7 @@ public abstract class DBContext<T> {
         try {
             String user = "sa";
             String pass = "sa";
-            String url = "jdbc:sqlserver://localhost\\MSSQLSERVER:1433;databaseName=CompanyDB;trustServerCertificate=true;";
+            String url = "jdbc:sqlserver://localhost\\MSSQLSERVER:1433;databaseName=IS1903_Stupet;trustServerCertificate=true;";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);
         } catch (ClassNotFoundException ex) {
@@ -50,8 +50,6 @@ public abstract class DBContext<T> {
 //            return false;
 //        }
 //    }
-
-
 //    public static void main(String[] args) {
 //        DBContext<Object> db = new DBContext<>() {
 //            public ArrayList<Object> list() {

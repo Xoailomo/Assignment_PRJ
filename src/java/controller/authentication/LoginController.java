@@ -13,7 +13,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import model.Employee;
+import model.Role;
 import model.User;
 
 /**
@@ -46,19 +48,23 @@ public class LoginController extends HttpServlet {
                 req.getRequestDispatcher("../jsp/login.jsp").forward(req, resp);
                 return;
             }
-            profile.setManager(user.getEmployee().getManager());
-            user.setEmployee(profile);
+            // kiểm tra xem có role hay không
+
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
-            resp.sendRedirect("view/home/home.jsp");
+            resp.sendRedirect(req.getContextPath() + "/login");
+
         } else {
-            resp.getWriter().println("Access denied!");
+            System.out.println("Authentication faild for email: "+email);
+            req.setAttribute("error","Invalid email of password");
+            req.getRequestDispatcher("../jsp/login.jsp").forward(req, resp);
         }
 
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         req.getRequestDispatcher("jsp/login.jsp").forward(req, resp);
     }
 

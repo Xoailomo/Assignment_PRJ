@@ -20,34 +20,38 @@ import model.User;
  *
  * @author phank
  */
-public class LoginController extends HttpServlet{
+public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
+        
+        if (email == null || email.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+            req.setAttribute("error", "Email and password are required");
+            req.getRequestDispatcher("/view/home/dashboard.jsp").forward(req, resp);
+            return;
+        }
         UserDBContext db = new UserDBContext();
         User user = db.get(email, password);
-        if(user != null)
-        {
+        if (user != null) {
             EmployeeDBContext edb = new EmployeeDBContext();
             Employee profile = edb.get(user.getEmployee().getId());
+            if 
             profile.setManager(user.getEmployee().getManager());
             user.setEmployee(profile);
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
             resp.sendRedirect("view/home/home.jsp");
-        }
-        else
-        {
+        } else {
             resp.getWriter().println("Access denied!");
         }
-    
+
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("jsp/login.jsp").forward(req, resp);
     }
-    
+
 }

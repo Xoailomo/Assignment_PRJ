@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author phank
@@ -13,11 +15,24 @@ public class Role {
     private int id;
     private String name;
     private String Description;
-//
-//    public Role(int id, String name) {
-//        this.id = id;
-//        this.name = name;
-//    }
+    private ArrayList<User> users = new ArrayList<>();
+    private ArrayList<Feature> features = new ArrayList<>();
+
+    public ArrayList<Feature> getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(ArrayList<Feature> features) {
+        this.features = features;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
+    }
 
     public String getDescription() {
         return Description;

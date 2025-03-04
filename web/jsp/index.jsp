@@ -20,7 +20,7 @@
                     <p>Access your dashboard using the navigation menu above.</p>
                 </c:when>
                 <c:otherwise>
-                    <p>You are not logged in. Please <a href="<c:url value='/jsp/login.jsp' />">login</a> to continue.</p>
+                    <p>You are not logged in. Please <a href="login.jsp">login</a> to continue.</p>
                 </c:otherwise>
             </c:choose>
         </div>

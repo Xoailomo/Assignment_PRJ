@@ -4,6 +4,7 @@
  */
 package controller.dashboard;
 
+import dal.EmployeeDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +26,9 @@ public class DashboardController extends HttpServlet{
             resp.sendRedirect(req.getContextPath()+"/login");
             return;
         }
-        User user = (User) + session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
+        EmployeeDBContext edb = new EmployeeDBContext();
+        Leave
     }
 
     @Override

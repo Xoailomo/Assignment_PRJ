@@ -97,16 +97,16 @@
     </head>
     <body>
         <div class="login-container">
-            <h2>Forgot Password</h2>
-            <p>Nhập email để nhận liên kết đặt lại mật khẩu.</p>
+         <a style="text-align: left" href="login.jsp">Back to login</a>
+            <p>Forgot your account's password? Enter your email 
+                address and we'll send you a recovery link.</p>
 
             <!-- Form yêu cầu đặt lại mật khẩu -->
             <form action="<%=request.getContextPath()%>/auth/forgotpassword" method="post">
                 <div class="input-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Nhập email" required>
+                    <input type="email" id="email" name="email" placeholder="Your email address" required>
                 </div>
-                <button type="submit" class="reset-btn">Send Reset Link <span class="arrow">→</span></button>
+                <button type="submit" class="reset-btn">Recover <span class="arrow">→</span></button>
             </form>
 
             <!-- Thông báo lỗi nếu có -->

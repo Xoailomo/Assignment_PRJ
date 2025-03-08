@@ -4,23 +4,17 @@
  */
 package dal;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import model.Employee;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Department;
-import model.Employee;
+
 
 /**
  *
- * @author phank
+ * @author sonnt-local
  */
 public class EmployeeDBContext extends DBContext<Employee> {
 

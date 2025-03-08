@@ -6,6 +6,7 @@
 package controller.leaveRequest;
 
 import controller.authentication.BaseRequiredAuthenticationController;
+import dal.EmployeeDBContext;
 import dal.LeaveRequestDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,7 +22,7 @@ import model.User;
 
 /**
  *
- * @author phank
+ * @author sonnt-local hand-some
  */
 public class CreateLeaveRequestController extends BaseRequiredAuthenticationController {
 
@@ -40,18 +41,18 @@ public class CreateLeaveRequestController extends BaseRequiredAuthenticationCont
         LeaveRequestDBContext db = new LeaveRequestDBContext();
         db.insert(lr);
         resp.getWriter().println("inserted " + lr.getId());
+        
     }
 
-  
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp, User user) throws ServletException, IOException {
+        
         ArrayList<Employee> employees = new ArrayList<>();
         employees.add(user.getEmployee());
         for (Employee staff : user.getEmployee().getStaffs()) {
             employees.add(staff);
         }
         req.setAttribute("employees",employees);
-        req.getRequestDispatcher("../view/leaverequest/create.jsp").forward(req, resp);
+        req.getRequestDispatcher("view/home/dashboard.jsp").forward(req, resp);
     }
-  
 }

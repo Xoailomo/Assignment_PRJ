@@ -3,25 +3,22 @@ package model;
 import java.util.ArrayList;
 
 public class User {
+
     private String username;
     private String password;
     private Department department;
     private Integer managerId; // Sử dụng Integer để cho phép NULL (nhân viên cấp cao nhất không có quản lý)
     private Employee employee;
     private ArrayList<Role> roles = new ArrayList<>();
-    private String Displayname;
-
-//    public User() {
-//    }
+    private String displayname;
 
     public String getDisplayname() {
-        return Displayname;
+        return displayname;
     }
 
-    public void setDisplayname(String Displayname) {
-        this.Displayname = Displayname;
+    public void setDisplayname(String displayname) {
+        this.displayname = displayname;
     }
-    
 
     public String getUsername() {
         return username;
@@ -31,7 +28,6 @@ public class User {
         this.username = username;
     }
 
-    
     public ArrayList<Role> getRoles() {
         return roles;
     }
@@ -44,8 +40,6 @@ public class User {
         this.employee = employee;
     }
 
-   
-
     public String getName() {
         return username;
     }
@@ -53,8 +47,6 @@ public class User {
     public void setUserName(String name) {
         this.username = name;
     }
-
-   
 
     public String getPassword() {
         return password;

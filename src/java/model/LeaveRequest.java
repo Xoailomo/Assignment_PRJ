@@ -3,14 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
-
-import java.sql.Date;
+import java.sql.*;
 
 /**
  *
- * @author phank
+ * @author sonnt-local
  */
-public class LeaveRequest extends BaseModel{
+public class LeaveRequest extends BaseModel {
     private String title;
     private String reason;
     private Date from;

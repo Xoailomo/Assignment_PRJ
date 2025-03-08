@@ -31,7 +31,7 @@ public class LoginController extends HttpServlet {
 
         if (username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty()) {
             req.setAttribute("error", "Email and password are required");
-            req.getRequestDispatcher("/view/home/dashboard.jsp").forward(req, resp);
+            req.getRequestDispatcher("/view/auth/login.jsp").forward(req, resp);
             return;
         }
         UserDBContext db = new UserDBContext();
@@ -48,23 +48,21 @@ public class LoginController extends HttpServlet {
                 req.getRequestDispatcher("../view/auth/login.jsp").forward(req, resp);
                 return;
             }
-            // kiểm tra xem có role hay không
-
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
-            resp.sendRedirect(req.getContextPath() + "/login");
+            resp.sendRedirect("index.jsp");
 
         } else {
-            System.out.println("Authentication faild for email: "+username);
-            req.setAttribute("error","Invalid email or password");
-            req.getRequestDispatcher("/view/auth/login.jsp").forward(req, resp);
+            System.out.println("Authentication faild for email: " + username);
+            req.setAttribute("error", "Invalid email or password");
+            req.getRequestDispatcher("view/auth/login.jsp").forward(req, resp);
         }
 
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/view/auth/login.jsp").forward(req, resp);
+        req.getRequestDispatcher("view/auth/login.jsp").forward(req, resp);
     }
 
 }

@@ -22,14 +22,14 @@ public abstract class BaseRequiredAuthenticationController extends HttpServlet {
     private User getLoggedUser(HttpServletRequest req) {
         return (User) req.getSession().getAttribute("user");
     }
-
-    private boolean isAllowedAccess(User u, HttpServletRequest req) {
+    
+    private boolean isAllowedAccess(User u, HttpServletRequest req)
+    {
         String current_endpoint = req.getServletPath();
         for (Role role : u.getRoles()) {
             for (Feature feature : role.getFeatures()) {
-                if (feature.getUrl().equals(current_endpoint)) {
+                if(feature.getUrl().equals(current_endpoint))
                     return true;
-                }
             }
         }
         return false;

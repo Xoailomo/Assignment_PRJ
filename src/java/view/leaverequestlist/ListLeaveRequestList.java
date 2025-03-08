@@ -30,7 +30,7 @@ public class ListLeaveRequestList extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        req.getRequestDispatcher("../view/leaverequest/request_list.jsp").forward(req, resp);
     }
    
    

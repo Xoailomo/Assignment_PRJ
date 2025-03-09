@@ -17,6 +17,10 @@ body {
     gap:20px;
     
 }
+.sidebar{
+    background: #f4f4f4;
+    padding: 15px;
+}
 
 /* Main content area */
 .main-content {

@@ -36,10 +36,12 @@
         </style>
     </head>
     <body>
-            <jsp:include page="/layout/header.jsp" />
+        <jsp:include page="/layout/header.jsp" />
         <div class="container">
             <!-- Main Content -->
-            <jsp:include page="../home/sidebar.jsp"/>     
+            <div class="sidebar">
+                <jsp:include page="../home/sidebar.jsp"/>     
+            </div>
             <main class="main-content">
                 <!-- Welcome Section -->
                 <section class="welcome">
@@ -51,11 +53,11 @@
                             <a href="../account/office.jsp">Add an office</a>
                             <!--<a href="#">Add a team</a>-->
                         </div>
-<!--                        <div class="more-actions">
-                            <h3>More actions</h3>
-                            <a href="#">Leave settings</a>
-                            <a href="#">Company settings</a>
-                        </div>-->
+                        <!--                        <div class="more-actions">
+                                                    <h3>More actions</h3>
+                                                    <a href="#">Leave settings</a>
+                                                    <a href="#">Company settings</a>
+                                                </div>-->
                     </div>
                 </section>
 
@@ -188,6 +190,6 @@
     </main>
 </div>
 
-   <jsp:include page="/layout/footer.jsp" />     
+<jsp:include page="/layout/footer.jsp" />     
 </body>
 </html>

@@ -36,6 +36,7 @@
         </style>
     </head>
     <body>
+            <jsp:include page="/layout/header.jsp" />
         <div class="container">
             <!-- Main Content -->
             <jsp:include page="../home/sidebar.jsp"/>     

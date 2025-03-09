@@ -10,7 +10,7 @@
 </head>
 <body>
     <c:if test="${sessionScope.user != null}">
-        <c:redirect url="/dashboard"/>
+        <c:redirect url="/create"/>
     </c:if>
     <c:if test="${sessionScope.user == null}">
         <c:redirect url="/login"/>

@@ -83,7 +83,7 @@
     </welcome-file-list>
     <servlet-mapping>
         <servlet-name>CreateLeaveRequestController</servlet-name>
-        <url-pattern>/dashboard</url-pattern>
+        <url-pattern>/create</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>60</session-timeout>

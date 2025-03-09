@@ -12,18 +12,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     </head>
     <body>
-        <div class="d-flex">
+        <div class="d-flex" style="color: black">
             <div calss="bg-dark text-white p-3 vh-100" id="sidebar">
-                <button class="btn btn-light w-100 mb-3" type="button" data-bs-toggle="colapse" data-bs-target="menu">Menu</button>
+                <button class="btn btn-light w-100 mb-3" type="button" data-bs-toggle="colapse" data-bs-target="menu"><i class="fa fa-bars"></i> Menu</button>
                 <div class="collapse show" id="menu">
-                    <aside class="sidebar">
+<!--                    <aside class="sidebar">-->
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="${pageContext.request.contextPath}/view/home/create.jsp"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
@@ -53,7 +51,7 @@
                                 <a class="nav-link text-white" href="${pageContext.request.contextPath}/view/auth/login.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>
                             </li>
                         </ul>
-                    </aside>
+                    <!--</aside>-->
                 </div>
             </div>
         </div>

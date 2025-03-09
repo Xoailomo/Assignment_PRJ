@@ -19,7 +19,7 @@
         <aside class="sidebar">
             <ul id="menu">
                 <li>
-                    <a href="${pageContext.request.contextPath}/view/home/dashboard.jsp"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                    <a href="${pageContext.request.contextPath}/view/home/create.jsp"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                 </li>
                 <li>
                     <a href="${pageContext.request.contextPath}/view/calendar/agenda.jsp"><i class="fas fa-calendar-alt"></i> Calendar</a>

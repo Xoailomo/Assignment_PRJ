@@ -30,7 +30,7 @@ public class LoginController extends HttpServlet {
         String password = req.getParameter("password");
 
         if (username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty()) {
-            req.setAttribute("error", "Email and password are required");
+            req.setAttribute("error", "Username and password are required");
             req.getRequestDispatcher("/view/auth/login.jsp").forward(req, resp);
             return;
         }

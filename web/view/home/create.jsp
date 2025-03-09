@@ -61,7 +61,7 @@
                 <!-- Book Time Off and Balances Row -->
                 <section class="book-time-off">
                     <h2>Book time off</h2>
-                    <form id="leave-form" action="home/create" method="post">
+                    <form id="leave-form" action="create" method="post">
                         <div class="input-wrapper">
 
                             Title:<input type="text" name="title"/> <br/>

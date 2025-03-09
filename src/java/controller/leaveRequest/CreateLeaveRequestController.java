@@ -53,6 +53,6 @@ public class CreateLeaveRequestController extends BaseRequiredAuthenticationCont
             employees.add(staff);
         }
         req.setAttribute("employees",employees);
-        req.getRequestDispatcher("view/home/dashboard.jsp").forward(req, resp);
+        req.getRequestDispatcher("view/home/create.jsp").forward(req, resp);
     }
 }

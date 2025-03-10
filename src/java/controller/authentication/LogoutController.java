@@ -33,6 +33,7 @@ public class LogoutController extends HttpServlet {
         }
 //        // clear
         resp.sendRedirect(req.getContextPath()+"/login");
+        req.getRequestDispatcher("/login").forward(req, resp);
     }
 
 }

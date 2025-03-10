@@ -28,12 +28,17 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-
+        HttpSession session = req.getSession();
         if (username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty()) {
             req.setAttribute("error", "Username and password are required");
             req.getRequestDispatcher("/view/auth/login.jsp").forward(req, resp);
             return;
         }
+//        if(session.getAttribute("user") == null){
+//            req.setAttribute("error", "Invalid Username or password");
+//            req.getRequestDispatcher("/view/auth/login.jsp").forward(req, resp);
+//            return;
+//        }
         UserDBContext db = new UserDBContext();
         User user = db.get(username, password);
         if (user != null) {
@@ -45,16 +50,26 @@ public class LoginController extends HttpServlet {
             } else {
                 System.out.println("Employee profile not found for user: " + username);
                 req.setAttribute("error", "User Profile not found. Please contact support.");
-                req.getRequestDispatcher("../view/auth/login.jsp").forward(req, resp);
+                req.getRequestDispatcher("/view/auth/login.jsp").forward(req, resp);
                 return;
             }
-            HttpSession session = req.getSession();
+            
             session.setAttribute("user", user);
+            // have problem with cache or session, still can login with delete account from the database
+            // clear old cookies
+            Cookie[] cos = req.getCookies();
+            if(cos != null){
+                for(Cookie co : cos){
+                    co.setMaxAge(0);
+                    co.setPath("/");
+                    resp.addCookie(co);
+                }
+            }
             resp.sendRedirect("index.jsp");
 
         } else {
-            System.out.println("Authentication faild for email: " + username);
-            req.setAttribute("error", "Invalid email or password");
+            
+            req.setAttribute("error", "Invalid username or password");
             req.getRequestDispatcher("view/auth/login.jsp").forward(req, resp);
         }
 

@@ -10,9 +10,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dashboard.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <style>
+<!--        <style>
         body {
             display: flex;
             font-family: Arial, sans-serif;
@@ -62,12 +62,14 @@
             border-radius: 50%;
             display: inline-block;
         }
-    </style>
+    </style>-->
     </head>
     <body>
         <div class="container">
             <!-- Sidebar -->
-            <jsp:include page="../home/sidebar.jsp"/>  
+            <div class="sidebar">
+                <jsp:include page="../home/sidebar.jsp"/>     
+            </div>
             <main class="main-content">
                 <section>
 

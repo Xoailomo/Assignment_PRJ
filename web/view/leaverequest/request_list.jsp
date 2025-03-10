@@ -4,7 +4,7 @@
 <html>
     <head>
         <title>List Requests - Leave Management System</title>
-        <link rel="stylesheet" href="<%= request.getContextPath() %>/css/styles.css">
+        <!--<link rel="stylesheet" href="<%= request.getContextPath() %>/css/styles.css">-->
         <link href="../../css/dashboard.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>

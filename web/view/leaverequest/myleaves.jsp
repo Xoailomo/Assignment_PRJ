@@ -8,46 +8,46 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>My Leaves - Leave Management System</title>
-<!--        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myleaves.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">-->
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 20px;
-            }
-            .leave-details {
-                border: 1px solid #ccc;
-                padding: 10px;
-                border-radius: 5px;
-                max-width: 400px;
-            }
-            .leave-details .leave-type {
-                font-weight: bold;
-                display: flex;
-                align-items: center;
-            }
-            .leave-details .leave-type .dot {
-                width: 10px;
-                height: 10px;
-                background: orange;
-                border-radius: 50%;
-                display: inline-block;
-                margin-right: 5px;
-            }
-            .leave-details .info {
-                display: flex;
-                justify-content: space-between;
-                padding: 5px 0;
-            }
-        </style>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dashboard.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <!--        <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        margin: 0;
+                        padding: 20px;
+                    }
+                    .leave-details {
+                        border: 1px solid #ccc;
+                        padding: 10px;
+                        border-radius: 5px;
+                        max-width: 400px;
+                    }
+                    .leave-details .leave-type {
+                        font-weight: bold;
+                        display: flex;
+                        align-items: center;
+                    }
+                    .leave-details .leave-type .dot {
+                        width: 10px;
+                        height: 10px;
+                        background: orange;
+                        border-radius: 50%;
+                        display: inline-block;
+                        margin-right: 5px;
+                    }
+                    .leave-details .info {
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 5px 0;
+                    }
+                </style>-->
     </head>
     <body>
-        <!--         Header 
-        -->        <div class="container">
-            Sidebar 
-            <jsp:include page="../home/sidebar.jsp"/>  
-            Main Content 
+<jsp:include page="/layout/header.jsp" />
+        <div class="container">
+            <div class="sidebar">
+                <jsp:include page="../home/sidebar.jsp"/>     
+            </div>
             <main class="main-content">
                 <section class="leave-requests">
                     <h2>My Leaves</h2>
@@ -153,6 +153,6 @@
                 </section>
             </main>
         </div>
-
+<jsp:include page="/layout/footer.jsp" />   
     </body>
 </html>

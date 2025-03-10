@@ -4,7 +4,7 @@
     Author     : phank
 --%>
 
-            <jsp:include page="../home/sidebar.jsp"/> 
+<jsp:include page="../home/sidebar.jsp"/> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,78 +17,82 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Leaves to Approve</title>
-            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dashboard.css">
             <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">-->
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    margin: 20px;
-                }
-                .container {
-                    max-width: 800px;
-                }
-                .leave-card {
-                    border: 1px solid #ccc;
-                    padding: 15px;
-                    border-radius: 5px;
-                    margin-top: 10px;
-                }
-                .leave-header {
-                    font-weight: bold;
-                }
-                .leave-type {
-                    display: flex;
-                    align-items: center;
-                }
-                .leave-type .dot {
-                    width: 10px;
-                    height: 10px;
-                    background: yellow;
-                    border-radius: 50%;
-                    display: inline-block;
-                    margin-right: 5px;
-                }
-                .buttons {
-                    margin-top: 10px;
-                }
-                .approve-btn, .decline-btn {
-                    padding: 5px 10px;
-                    border: none;
-                    cursor: pointer;
-                    border-radius: 3px;
-                }
-                .approve-btn {
-                    background-color: green;
-                    color: white;
-                }
-                .decline-btn {
-                    background-color: red;
-                    color: white;
-                }
-            </style>
+            <!--            <style>
+                            body {
+                                font-family: Arial, sans-serif;
+                                margin: 20px;
+                            }
+                            .container {
+                                max-width: 800px;
+                            }
+                            .leave-card {
+                                border: 1px solid #ccc;
+                                padding: 15px;
+                                border-radius: 5px;
+                                margin-top: 10px;
+                            }
+                            .leave-header {
+                                font-weight: bold;
+                            }
+                            .leave-type {
+                                display: flex;
+                                align-items: center;
+                            }
+                            .leave-type .dot {
+                                width: 10px;
+                                height: 10px;
+                                background: yellow;
+                                border-radius: 50%;
+                                display: inline-block;
+                                margin-right: 5px;
+                            }
+                            .buttons {
+                                margin-top: 10px;
+                            }
+                            .approve-btn, .decline-btn {
+                                padding: 5px 10px;
+                                border: none;
+                                cursor: pointer;
+                                border-radius: 3px;
+                            }
+                            .approve-btn {
+                                background-color: green;
+                                color: white;
+                            }
+                            .decline-btn {
+                                background-color: red;
+                                color: white;
+                            }
+                        </style>-->
         </head>
         <body>
-            <main class="main-content">
-                <div class="container">
-                    <h3>Leaves to approve</h3>
-                    <label for="date-range">Range</label>
-                    <input type="text" id="date-range" value="03/05/2024 - 04/04/2026" readonly>
+            <div class="container">
+                <div class="sidebar">
+                    <jsp:include page="../home/sidebar.jsp"/>     
+                </div>
+                <main class="main-content">
+                    <div class="container">
+                        <h3>Leaves to approve</h3>
+                        <label for="date-range">Range</label>
+                        <input type="text" id="date-range" value="03/05/2024 - 04/04/2026" readonly>
 
-                    <div class="leave-card">
-                        <div class="leave-header">111, 111</div>
-                        <div class="leave-type">
-                            <span class="dot"></span>
-                            Vacation
-                        </div>
-                        <div>03/06/2025 - a day</div>
-                        <div class="buttons">
-                            <button class="approve-btn"><i class="fas fa-thumbs-up"></i> Approve</button>
-                            <button class="decline-btn"><i class="fas fa-thumbs-down"></i> Decline</button>
+                        <div class="leave-card">
+                            <div class="leave-header">111, 111</div>
+                            <div class="leave-type">
+                                <span class="dot"></span>
+                                Vacation
+                            </div>
+                            <div>03/06/2025 - a day</div>
+                            <div class="buttons">
+                                <button class="approve-btn"><i class="fas fa-thumbs-up"></i> Approve</button>
+                                <button class="decline-btn"><i class="fas fa-thumbs-down"></i> Decline</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </main>
-
+                </main>
+            </div>
 
 
 

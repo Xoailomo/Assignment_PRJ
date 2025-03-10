@@ -63,7 +63,7 @@ public class LoginController extends HttpServlet {
                 }
             }
             resp.sendRedirect(req.getContextPath()+"/create");
-
+//            resp.sendRedirect("view/home/create.jsp");           
         } else {
             
             req.setAttribute("error", "Invalid username or password");

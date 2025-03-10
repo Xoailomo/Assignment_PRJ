@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>User Profile</title>
+        <link href="../../css/dashboard.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <style>
             body {
@@ -44,39 +45,43 @@
         </style>
     </head>
     <body>
-        <jsp:include page="../home/sidebar.jsp"/>
-        <main class="main-content">
-            <div class="container">
-                <h3>User Profile</h3>
-                <div class="profile-card">
-                    <div class="profile-header"><%= request.getAttribute("name") %></div>
-                    <div class="info"><strong>Email:</strong> <a href="mailto:<%= request.getAttribute("email") %>"><%= request.getAttribute("email") %></a></div>
-                    <div class="info"><strong>Position:</strong> <%= request.getAttribute("position") %></div>
-                    <div class="info"><strong>Approver:</strong> <%= request.getAttribute("approver") %></div>
-                    <div class="info"><strong>Team:</strong> <%= request.getAttribute("team") %></div>
-                    <div class="info"><strong>Office:</strong> <%= request.getAttribute("office") %></div>
-                    <div class="info"><strong>Country:</strong> <%= request.getAttribute("country") %></div>
+        <div class="container">
+            <div class="sidebar">
+                <jsp:include page="../home/sidebar.jsp"/>     
+            </div>
+            <main class="main-content">
+                <div class="container">
+                    <h3>User Profile</h3>
+                    <div class="profile-card">
+                        <div class="profile-header"><%= request.getAttribute("name") %></div>
+                        <div class="info"><strong>Email:</strong> <a href="mailto:<%= request.getAttribute("email") %>"><%= request.getAttribute("email") %></a></div>
+                        <div class="info"><strong>Position:</strong> <%= request.getAttribute("position") %></div>
+                        <div class="info"><strong>Approver:</strong> <%= request.getAttribute("approver") %></div>
+                        <div class="info"><strong>Team:</strong> <%= request.getAttribute("team") %></div>
+                        <div class="info"><strong>Office:</strong> <%= request.getAttribute("office") %></div>
+                        <div class="info"><strong>Country:</strong> <%= request.getAttribute("country") %></div>
 
-                    <h4>Working Days and Hours</h4>
-                    <div class="work-hours">
-                        <div class="work-day">Monday<br>09:00 - 17:59</div>
-                        <div class="work-day">Tuesday<br>09:00 - 17:59</div>
-                        <div class="work-day">Wednesday<br>09:00 - 17:59</div>
-                        <div class="work-day">Thursday<br>09:00 - 17:59</div>
-                        <div class="work-day">Friday<br>09:00 - 17:59</div>
+                        <h4>Working Days and Hours</h4>
+                        <div class="work-hours">
+                            <div class="work-day">Monday<br>09:00 - 17:59</div>
+                            <div class="work-day">Tuesday<br>09:00 - 17:59</div>
+                            <div class="work-day">Wednesday<br>09:00 - 17:59</div>
+                            <div class="work-day">Thursday<br>09:00 - 17:59</div>
+                            <div class="work-day">Friday<br>09:00 - 17:59</div>
+                        </div>
+                    </div>
+
+                    <div class="approvers">
+                        <h4>Team Manager for</h4>
+                        <p>👥 <%= request.getAttribute("team") %></p>
+                        <h4>Approver for</h4>
+                        <p>👤 <%= request.getAttribute("approverFor1") %></p>
+                        <p>👤 <%= request.getAttribute("approverFor2") %></p>
+                        <p>👤 <%= request.getAttribute("approverFor3") %></p>
                     </div>
                 </div>
 
-                <div class="approvers">
-                    <h4>Team Manager for</h4>
-                    <p>👥 <%= request.getAttribute("team") %></p>
-                    <h4>Approver for</h4>
-                    <p>👤 <%= request.getAttribute("approverFor1") %></p>
-                    <p>👤 <%= request.getAttribute("approverFor2") %></p>
-                    <p>👤 <%= request.getAttribute("approverFor3") %></p>
-                </div>
-            </div>
-
-        </main>
+            </main>
+        </div>
     </body>
 </html>

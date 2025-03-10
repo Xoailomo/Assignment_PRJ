@@ -18,8 +18,14 @@ body {
     
 }
 .sidebar{
-    background: #f4f4f4;
+    background: #333333;
     padding: 15px;
+}
+.sidebar.collapse{
+    width:60px;
+}
+.main-content.collapse{
+    margin-left: 60px;
 }
 
 /* Main content area */

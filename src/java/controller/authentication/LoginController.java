@@ -34,11 +34,6 @@ public class LoginController extends HttpServlet {
             req.getRequestDispatcher("/view/auth/login.jsp").forward(req, resp);
             return;
         }
-//        if(session.getAttribute("user") == null){
-//            req.setAttribute("error", "Invalid Username or password");
-//            req.getRequestDispatcher("/view/auth/login.jsp").forward(req, resp);
-//            return;
-//        }
         UserDBContext db = new UserDBContext();
         User user = db.get(username, password);
         if (user != null) {
@@ -56,6 +51,8 @@ public class LoginController extends HttpServlet {
             
             session.setAttribute("user", user);
             // have problem with cache or session, still can login with delete account from the database
+            // problem detected: deleted account not commit successfully in database
+            
             // clear old cookies
             Cookie[] cos = req.getCookies();
             if(cos != null){
@@ -65,7 +62,7 @@ public class LoginController extends HttpServlet {
                     resp.addCookie(co);
                 }
             }
-            resp.sendRedirect("index.jsp");
+            resp.sendRedirect(req.getContextPath()+"/create");
 
         } else {
             

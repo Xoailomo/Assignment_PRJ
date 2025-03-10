@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Leave Management Dashboard</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dashboard.css">
-        <style>
+<!--        <style>
             .input-wrapper {
                 position: relative;
                 margin-bottom: 15px;
@@ -33,7 +33,7 @@
                 justify-content: space-between;
                 margin: 20px 0;
             }
-        </style>
+        </style>-->
     </head>
     <body>
         <jsp:include page="/layout/header.jsp" />

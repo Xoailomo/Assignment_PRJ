@@ -1,0 +1,313 @@
+/*
+    Revised dashboard.css
+*/
+
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container layout (sidebar + main content) */
+.container {
+    display: grid;
+    grid-template-columns: 250px auto;
+    gap:20px;
+    
+}
+.sidebar{
+    background: #333333;
+    padding: 15px;
+}
+.sidebar.collapse{
+    width:60px;
+}
+.main-content.collapse{
+    margin-left: 60px;
+}
+
+/* Main content area */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Welcome section */
+.welcome h1 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+.welcome p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+.links {
+    display: flex;
+    gap: 20px; /* space between next-steps and more-actions */
+}
+
+.next-steps,
+.more-actions {
+    flex: 1;
+    background: #fafafa;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.next-steps h3,
+.more-actions h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.next-steps a,
+.more-actions a {
+    display: block;
+    margin-bottom: 5px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.next-steps a:hover,
+.more-actions a:hover {
+    text-decoration: underline;
+}
+
+/* Row containing 'Book time off' and 'Leave Balances' */
+.book-balance-row {
+    display: flex;
+    gap: 20px;           /* space between the two sections */
+    margin: 30px 0;
+}
+
+/* Book time off section */
+.book-time-off {
+    flex: 1;            /* take half the space */
+    background: #fafafa;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.book-time-off h2 {
+    font-size: 1.6em;
+    margin-bottom: 15px;
+}
+
+/* Form styling inside Book time off */
+#leave-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+#leave-form input,
+#leave-form select,
+#leave-form textarea {
+    width: 100%;             /* full width for a cleaner look */
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.95em;
+    box-sizing: border-box;
+}
+
+/* The allowance area (two small boxes side by side) */
+.allowance {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.allowance div {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+}
+
+.allowance h3 {
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+.allowance p {
+    font-size: 0.95em;
+    margin: 0;
+}
+
+/* Book time off button */
+#leave-form button[type="submit"] {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+#leave-form button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Leave Balances section */
+.leave-balances {
+    flex: 1;            /* take the other half of the space */
+    background: #fafafa;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.leave-balances table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.leave-balances th,
+.leave-balances td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.leave-balances th {
+    background-color: #f2f2f2;
+}
+
+.leave-balances td:first-child {
+    text-align: left;
+}
+
+.dot {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.vacation {
+    background-color: #007bff;
+}
+
+.sick-leave {
+    background-color: #dc3545;
+}
+
+.unpaid-leave {
+    background-color: #ffc107;
+}
+
+/* Work anniversary section */
+.work-anniversary {
+    margin: 30px 0;
+}
+
+.work-anniversary h2 {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+}
+
+.work-anniversary p {
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+.range {
+    font-style: italic;
+}
+
+/* Agenda section */
+.agenda {
+    margin-top: 30px;
+}
+
+.agenda-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.agenda-header h2 {
+    font-size: 1.4em;
+    margin: 0;
+}
+
+.filters {
+    display: flex;
+    align-items: center;
+}
+
+.filters input {
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.filters button {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.filters button:hover {
+    background-color: #0056b3;
+}
+
+.agenda-table {
+    overflow-x: auto;
+}
+
+.agenda-table table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px; /* so columns are wide enough */
+}
+
+.agenda-table th,
+.agenda-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.agenda-table th {
+    background-color: #f2f2f2;
+}
+
+.agenda-table td:first-child {
+    text-align: left;
+    font-weight: 500;
+}
+
+/* Day status classes for agenda table cells */
+.approved {
+    background-color: #28a745; /* green */
+}
+
+.pending {
+    background-color: #ffc107; /* yellow */
+}
+
+.rejected {
+    background-color: #dc3545; /* red */
+}

@@ -1,0 +1,73 @@
+/* Existing styles (omitted for brevity) */
+
+/* Header styles */
+.header {
+    background-color: #fff;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    font-size: 20px;
+    margin: 0;
+    color: #333;
+}
+
+.header .user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.header .user-info span {
+    color: #666;
+}
+
+.header .logout-link {
+    color: #007bff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.header .logout-link:hover {
+    text-decoration: underline;
+}
+
+/* Footer styles */
+.footer {
+    background-color: #fff;
+    padding: 15px 20px;
+    border-top: 1px solid #e0e0e0;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-top: 20px;
+}
+
+.footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Message styles for forgotPassword.jsp */
+.message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

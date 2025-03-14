@@ -49,7 +49,7 @@
                     <div class="links">
                         <div class="next-steps">
                             <h3>Next steps</h3>
-                            <a href="../account/invite.jsp">Invite employees</a>
+                            <a href="..view/account/invite.jsp">Invite employees</a>
                             <a href="../account/office.jsp">Add an office</a>
                             <!--<a href="#">Add a team</a>-->
                         </div>

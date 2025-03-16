@@ -43,8 +43,8 @@ public abstract class DBContext<T> {
     public boolean testConnection() {
         try {
             System.out.println((connection != null && !connection.isClosed())
-                    ? "Kết nối thành công!"
-                    : "Kết nối thất bại!");
+                    ? "ok"
+                    : "nah");
             return connection != null && !connection.isClosed();
         } catch (SQLException ex) {
             return false;

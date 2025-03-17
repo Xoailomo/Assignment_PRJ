@@ -61,14 +61,14 @@ public class LeaveRequestDBContext extends DBContext<LeaveRequest> {
                 lr.setCreateddate(rs.getTimestamp("createddate"));
 
                 User createdby = new User();
-                createdby.setUsername(rs.getString("createdbyusername"));
+                createdby.setUserName(rs.getString("createdbyusername"));
                 createdby.setDisplayname(rs.getString("createdbydisplayname"));
                 lr.setCreatedby(createdby);
 
                 String processbyusername = rs.getString("processedbyusername");
                 if (processbyusername != null) {
                     User processby = new User();
-                    processby.setUsername(processbyusername);
+                    processby.setUserName(processbyusername);
                     processby.setDisplayname(rs.getString("processedbydisplayname"));
                     lr.setProcessedby(processby);
                 }
@@ -110,7 +110,7 @@ public class LeaveRequestDBContext extends DBContext<LeaveRequest> {
             stm.setString(2, model.getReason());
             stm.setDate(3, model.getFrom());
             stm.setDate(4, model.getTo());
-            stm.setString(5, model.getCreatedby().getUsername());
+            stm.setString(5, model.getCreatedby().getUserName());
             stm.setInt(6, model.getOwner().getId());
             stm.executeUpdate();
 

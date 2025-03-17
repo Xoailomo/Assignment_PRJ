@@ -45,7 +45,7 @@ public class UserDBContext extends DBContext<User> {
             while (rs.next()) {
                 if (user == null) {
                     user = new User();
-                    user.setUsername(username);
+                    user.setUserName(username);
                     Employee e = new Employee();
                     e.setId(rs.getInt("eid"));
                     e.setName(rs.getString("ename"));

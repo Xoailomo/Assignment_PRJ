@@ -20,7 +20,7 @@ public abstract class BaseRecordAccessControlByOwnerController<T extends BaseMod
     
     private boolean isAllowedAccess(T entity, User user)
     {
-        return (entity.getCreatedby().getUsername().equals(user.getUsername()));
+        return (entity.getCreatedby().getUserName().equals(user.getUserName()));
     }
     
     protected abstract T getModel(int id);

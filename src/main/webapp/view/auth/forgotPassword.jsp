@@ -102,7 +102,7 @@
                 address and we'll send you a recovery link.</p>
 
             <!-- Form yêu cầu đặt lại mật khẩu -->
-            <form action="<%=request.getContextPath()%>/auth/forgotpassword" method="post">
+            <form action="<%=request.getContextPath()%>/forgotpassword" method="post">
                 <div class="input-group">
                     <input type="email" id="email" name="email" placeholder="Your email address" required>
                 </div>

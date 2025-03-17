@@ -36,7 +36,7 @@ public class ForgotPasswordController extends HttpServlet {
 
         UserDBContext db = new UserDBContext();
         User user = new User();
-        user.setUsername(username);
+        user.setUserName(username);
         User existingUser = db.get(username, null); // Check if username exists (password not needed)
 
         if (existingUser != null) {

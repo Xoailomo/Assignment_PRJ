@@ -8,32 +8,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Leave Management Dashboard</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dashboard.css">
-<!--        <style>
-            .input-wrapper {
-                position: relative;
-                margin-bottom: 15px;
-            }
-
-            .completed::after {
-                content: '✔';
-                color: #00cc00;
-                font-size: 20px;
-                position: absolute;
-                right: 10px;
-                top: 50%;
-                transform: translateY(-50%);
-            }
-
-            .textarea-wrapper.completed::after {
-                top: 20px;
-            }
-
-            .allowance {
-                display: flex;
-                justify-content: space-between;
-                margin: 20px 0;
-            }
-        </style>-->
+        <!--        <style>
+                    .input-wrapper {
+                        position: relative;
+                        margin-bottom: 15px;
+                    }
+        
+                    .completed::after {
+                        content: '✔';
+                        color: #00cc00;
+                        font-size: 20px;
+                        position: absolute;
+                        right: 10px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+        
+                    .textarea-wrapper.completed::after {
+                        top: 20px;
+                    }
+        
+                    .allowance {
+                        display: flex;
+                        justify-content: space-between;
+                        margin: 20px 0;
+                    }
+                </style>-->
     </head>
     <body>
         <jsp:include page="/layout/header.jsp" />

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <!--
+    Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+    Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+    -->
+    <html>
+        <head>
+            <title>TODO supply a title</title>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+        <body>
+            <form th:aciton="@{/login}" method="post">
+                <div>
+                    <table border="0">
+                        <tbody>
+                            <tr>
+                                <td>User name:</td>
+                                <td><input type="text" name="username"/></td>
+                            </tr>
+                            <tr>
+                                <td>Password:</td>
+                                <td><input type="text" name="username"/></td>
+                            </tr>
+                            <tr>
+                                <td><button type="submit">Login</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </form>
+            <p th:if="${param.error}">Invalid username or password</p>
+            <p th:if="${param.logout}">You have been logged out</p>
+
+
+        </body>
+    </html>

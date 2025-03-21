@@ -1,39 +1,103 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <!--
-    Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-    Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
-    -->
-    <html>
-        <head>
-            <title>TODO supply a title</title>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        </head>
-        <body>
-            <form th:aciton="@{/login}" method="post">
-                <div>
+    <head>
+        <title>Leave Board - Login</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #e0f7fa;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+            .login-container {
+                background: #ffffff;
+                padding: 20px;
+                border-radius: 12px;
+                box-shadow: 0px 4px 15px rgba(0, 0, 255, 0.3);
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 400px;
+            }
+            .login-form {
+                flex: 1;
+            }
+            .login-image {
+                width: 100px;
+                height: auto;
+                margin-left: 20px;
+            }
+            h2 {
+                color: #007bb5;
+            }
+            table {
+                margin: 0 auto;
+            }
+            input {
+                padding: 8px;
+                width: 200px;
+                border: 1px solid #007bb5;
+                border-radius: 4px;
+            }
+            button {
+                background-color: #007bb5;
+                color: white;
+                border: none;
+                padding: 10px 15px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #005f87;
+            }
+            .forgot-password {
+                margin-top: 10px;
+            }
+            .forgot-password a {
+                color: #007bb5;
+                text-decoration: none;
+            }
+            .forgot-password a:hover {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="login-container">
+            <div class="login-form">
+                <h2>Leave Board Login Page</h2>
+                <form th:action="@{/login}" method="post">
                     <table border="0">
                         <tbody>
                             <tr>
-                                <td>User name:</td>
-                                <td><input type="text" name="username"/></td>
+                                <td>Username:</td>
+                                <td><input type="text" name="username" required/></td>
                             </tr>
                             <tr>
                                 <td>Password:</td>
-                                <td><input type="text" name="username"/></td>
+                                <td><input type="password" name="password" required/></td>
                             </tr>
                             <tr>
-                                <td><button type="submit">Login</button></td>
+                                <td colspan="2">
+                                    <button type="submit">Login</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="forgot-password">
+                                    <a th:href="@{/forgot-password}">Forgot Password?</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
-
-                </div>
-            </form>
-            <p th:if="${param.error}">Invalid username or password</p>
-            <p th:if="${param.logout}">You have been logged out</p>
-
-
-        </body>
-    </html>
+                </form>
+                <p th:if="${param.error}" style="color: red;">Invalid username or password</p>
+                <p th:if="${param.logout}" style="color: green;">You have been logged out</p>
+           
+    </body>
+</html>

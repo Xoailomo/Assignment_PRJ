@@ -2,54 +2,91 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package com.mycompany.LeaveManagementSystem.model;
+
+import jakarta.persistence.*;
+import java.sql.Date;
 
 /**
  *
  * @author phank
  */
-import jakarta.persistence.*;
-import java.time.LocalDate;
-import java.util.Set;
-
 @Entity
-@Table(name = "Employees")
+@Table(name = "employees")
 public class Employee {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
+    private String firstName;
+    private String lastName;
 
-    @Column(name = "eName", nullable = false, length = 255)
-    private String name;
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    @Column(name = "hireDate", nullable = false)
-    private LocalDate hireDate;
+    private String phone;
+    private String address;
+    private String status;
+    private String gender;
+    private Date createdAt;
+    
+    public String getGender() {
+        return gender;
+    }
 
-    @Column(name = "status", nullable = false, length = 50)
-    private String status = "Active";
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "deptid", nullable = false)
-    private Department department;
+    public Date getCreatedAt() {
+        return createdAt;
+    }
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<EmployeeHierarchy> subordinates;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "eid", nullable = true) // Cho phép null nếu user không thuộc employee nào
+//    @JsonIgnore
+//    private Employee employee;
+//
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private Set<UserRole> userRoles;
+//
+//    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private Set<LeaveRequest> createdRequests;
+//
+//    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private Set<LeaveRequest> ownedRequests;
+//
+//    @OneToMany(mappedBy = "processBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private Set<LeaveRequest> processedRequests;
+//
+//    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private Set<Holiday> holidays;
+//
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private Set<Notification> notifications;
+//
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private Set<PasswordResetToken> passwordResetTokens;
+//
+//    @OneToMany(mappedBy = "approver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private Set<LeaveRequestApproval> approvals;
+//
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private Set<AuditLog> auditLogs;
+    // Getters và Setters
+    public void setCreatedAt(Date createdAt) {    
+        this.createdAt = createdAt;
+    }
 
-    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<EmployeeHierarchy> managers;
-
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<LeaveBalance> leaveBalances;
-
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<LeaveEntitlement> leaveEntitlements;
-
-    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private User user;
-
-    // Getter và Setter cho id
     public int getId() {
         return id;
     }
@@ -58,25 +95,38 @@ public class Employee {
         this.id = id;
     }
 
-    // Getter và Setter cho name
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    // Getter và Setter cho hireDate
-    public LocalDate getHireDate() {
-        return hireDate;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setHireDate(LocalDate hireDate) {
-        this.hireDate = hireDate;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    // Getter và Setter cho status
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -85,57 +135,91 @@ public class Employee {
         this.status = status;
     }
 
-    // Getter và Setter cho department
-    public Department getDepartment() {
-        return department;
+    public String getEmail() {
+        return email;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    // Getter và Setter cho subordinates
-    public Set<EmployeeHierarchy> getSubordinates() {
-        return subordinates;
-    }
-
-    public void setSubordinates(Set<EmployeeHierarchy> subordinates) {
-        this.subordinates = subordinates;
-    }
-
-    // Getter và Setter cho managers
-    public Set<EmployeeHierarchy> getManagers() {
-        return managers;
-    }
-
-    public void setManagers(Set<EmployeeHierarchy> managers) {
-        this.managers = managers;
-    }
-
-    // Getter và Setter cho leaveBalances
-    public Set<LeaveBalance> getLeaveBalances() {
-        return leaveBalances;
-    }
-
-    public void setLeaveBalances(Set<LeaveBalance> leaveBalances) {
-        this.leaveBalances = leaveBalances;
-    }
-
-    // Getter và Setter cho leaveEntitlements
-    public Set<LeaveEntitlement> getLeaveEntitlements() {
-        return leaveEntitlements;
-    }
-
-    public void setLeaveEntitlements(Set<LeaveEntitlement> leaveEntitlements) {
-        this.leaveEntitlements = leaveEntitlements;
-    }
-
-    // Getter và Setter cho user
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+//    public Employee getEmployee() {
+//        return employee;
+//    }
+//
+//    public void setEmployee(Employee employee) {
+//        this.employee = employee;
+//    }
+//
+//    public Set<UserRole> getUserRoles() {
+//        return userRoles;
+//    }
+//
+//    public void setUserRoles(Set<UserRole> userRoles) {
+//        this.userRoles = userRoles;
+//    }
+//
+//    public Set<LeaveRequest> getCreatedRequests() {
+//        return createdRequests;
+//    }
+//
+//    public void setCreatedRequests(Set<LeaveRequest> createdRequests) {
+//        this.createdRequests = createdRequests;
+//    }
+//
+//    public Set<LeaveRequest> getOwnedRequests() {
+//        return ownedRequests;
+//    }
+//
+//    public void setOwnedRequests(Set<LeaveRequest> ownedRequests) {
+//        this.ownedRequests = ownedRequests;
+//    }
+//
+//    public Set<LeaveRequest> getProcessedRequests() {
+//        return processedRequests;
+//    }
+//
+//    public void setProcessedRequests(Set<LeaveRequest> processedRequests) {
+//        this.processedRequests = processedRequests;
+//    }
+//
+//    public Set<Holiday> getHolidays() {
+//        return holidays;
+//    }
+//
+//    public void setHolidays(Set<Holiday> holidays) {
+//        this.holidays = holidays;
+//    }
+//
+//    public Set<Notification> getNotifications() {
+//        return notifications;
+//    }
+//
+//    public void setNotifications(Set<Notification> notifications) {
+//        this.notifications = notifications;
+//    }
+//
+//    public Set<PasswordResetToken> getPasswordResetTokens() {
+//        return passwordResetTokens;
+//    }
+//
+//    public void setPasswordResetTokens(Set<PasswordResetToken> passwordResetTokens) {
+//        this.passwordResetTokens = passwordResetTokens;
+//    }
+//
+//    public Set<LeaveRequestApproval> getApprovals() {
+//        return approvals;
+//    }
+//
+//    public void setApprovals(Set<LeaveRequestApproval> approvals) {
+//        this.approvals = approvals;
+//    }
+//
+//    public Set<AuditLog> getAuditLogs() {
+//        return auditLogs;
+//    }
+//
+//    public void setAuditLogs(Set<AuditLog> auditLogs) {
+//        this.auditLogs = auditLogs;
+//    }
 }

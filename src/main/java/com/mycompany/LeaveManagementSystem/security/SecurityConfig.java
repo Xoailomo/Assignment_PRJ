@@ -2,19 +2,19 @@ package com.mycompany.LeaveManagementSystem.security;
 
 //import com.mycompany.LeaveManagementSystem.model.User;
 //import com.mycompany.LeaveManagementSystem.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.stream.Collectors;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
@@ -26,61 +26,54 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 //        http
-//                .csrf(csrf -> csrf.disable()) // Nếu dùng API, cần tắt CSRF
 //                .authorizeHttpRequests(auth -> auth
-//                .requestMatchers("/login", "/forgot-password", "/css/**").permitAll()
-//                .requestMatchers("/home", "/my-agenda", "/my-request", "/my-account").hasAnyRole("MANAGER", "STAFF")
-//                .requestMatchers("/company-agenda", "/request-list").hasRole("MANAGER")
+//                .requestMatchers("/login", "/css/**", "/js/**").permitAll() // Allow login page & static resources
 //                .anyRequest().authenticated()
 //                )
 //                .formLogin(form -> form
-//                .loginPage("/login")
-//                .defaultSuccessUrl("/home", true)
+//                .loginPage("/login") // Custom login page URL
+//                .loginProcessingUrl("/perform_login") // URL for form submission
+//                .defaultSuccessUrl("/dashboard", true) // Redirect after successful login
+//                .failureUrl("/login?error=true") // Redirect after failure
 //                .permitAll()
 //                )
 //                .logout(logout -> logout
-//                .logoutUrl("/logout")
-//                .logoutSuccessUrl("/login?logout")
+//                .logoutUrl("/logout") // URL to trigger logout
+//                .logoutSuccessUrl("/login?logout=true") // Redirect after logout
+//                .invalidateHttpSession(true)
+//                .deleteCookies("JSESSIONID")
 //                .permitAll()
-//                );
+//                )
+//                .csrf(csrf -> csrf.disable()); // Disable CSRF for testing (enable in production)
+//
 //        return http.build();
-        http
-                .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll() // Cho phép tất cả các request mà không cần đăng nhập
-                )
-                .csrf(csrf -> csrf.disable()) // Tắt CSRF nếu cần
-                .headers(headers -> headers.disable()); // Hỗ trợ H2 Console nếu có
 
-        return http.build();
+//test with sample code from youtube
+        return http
+                .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/").permitAll()//default to home
+                .requestMatchers("/login").permitAll()
+                .anyRequest().authenticated()
+                ).formLogin(form -> form
+                .defaultSuccessUrl("/", true)
+                )
+                .logout(config -> config.logoutSuccessUrl("/"))
+                .build();
+
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        return username -> {
-//            User user = userService.findByUsername(username);
-//            if (user == null) {
-//                throw new UsernameNotFoundException("User not found: " + username);
-//            }
-//
-//            // Lấy danh sách roles từ UserRole
-//            String[] roles = user.getUserRoles().stream()
-//                    .map(userRole -> userRole.getRole().getName())
-//                    .collect(Collectors.toList())
-//                    .toArray(new String[0]);
-//
-//            return org.springframework.security.core.userdetails.User
-//                    .withUsername(user.getUsername())
-//                    .password(user.getPassword()) // Đảm bảo mật khẩu đã được mã hóa
-//                    .roles(roles) // Dùng danh sách roles từ UserRole
-//                    .build();
-//        };
-//    }
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+        UserDetails user = User.withUsername("admin")
+                .password(passwordEncoder.encode("admin123"))
+                .roles("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(user); // Using in-memory authentication for now
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

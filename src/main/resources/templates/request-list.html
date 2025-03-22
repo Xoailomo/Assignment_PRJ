@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Request List</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="content">
+        <h2>Request List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Reason</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Owner ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="request : ${requests}">
+                    <td th:text="${request.id}"></td>
+                    <td th:text="${request.reason}"></td>
+                    <td th:text="${request.startDate}"></td>
+                    <td th:text="${request.endDate}"></td>
+                    <td th:text="${request.status}"></td>
+                    <td th:text="${request.ownerId}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

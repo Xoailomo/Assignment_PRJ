@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:fragment="sidebar" class="sidebar">
+    <ul>
+        <li><a th:href="@{/}">Home</a></li>
+        <li><a th:href="@{/home}">Create request</a></li>
+        <li sec:authorize="hasRole('MANAGER')"><a th:href="@{/company-agenda}">Company Agenda</a></li>
+        <li ><a th:href="@{/company-agenda}">Company Agenda</a></li>
+        <li><a th:href="@{/my-agenda}">My Agenda</a></li>
+        <li sec:authorize="hasRole('MANAGER')"><a th:href="@{/request-list}">Request List</a></li>
+        <li><a th:href="@{/request-list}">Request List</a></li>
+        <li><a th:href="@{/my-request}">My Request</a></li>
+        <li><a th:href="@{/my-account}">My Account</a></li>
+        <li><a th:href="@{/logout}">Logout</a></li>
+    </ul>
+</div>
+</html>

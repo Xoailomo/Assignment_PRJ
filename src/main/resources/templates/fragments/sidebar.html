@@ -10,7 +10,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <ul>
             <li><a th:href="@{/}">🏠 Home</a></li>
             <li><a th:href="@{/leave-requests/create}">📝 Create Leave</a></li>
-            <li sec:authorize="hasRole('MANAGER')">
+            <li sec:authorize="hasRole('ADMIN')">
                 <a th:href="@{/company-agenda}">📅 Company Agenda</a>
             </li>
             <li><a th:href="@{/my-agenda}">📆 My Agenda</a></li>

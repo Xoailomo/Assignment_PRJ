@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-@Configuration
+//@Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
@@ -62,15 +62,25 @@ public class SecurityConfig {
 
     }
 
+//    @Bean
+//    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+//        UserDetails user = User.withUsername("sa")
+//                .password(passwordEncoder.encode("123"))
+//                .roles("ADMIN")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(user); // Using in-memory authentication for now
+//    }
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        UserDetails user = User.withUsername("admin")
-                .password(passwordEncoder.encode("admin123"))
-                .roles("ADMIN")
-                .build();
+public UserDetailsService userDetailsService() {
+    UserDetails user = User.withDefaultPasswordEncoder()
+        .username("user")
+        .password("password")
+        .roles("USER")
+        .build();
+    return new InMemoryUserDetailsManager(user);
+}
 
-        return new InMemoryUserDetailsManager(user); // Using in-memory authentication for now
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

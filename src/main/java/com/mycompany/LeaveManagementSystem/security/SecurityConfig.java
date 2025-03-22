@@ -1,7 +1,7 @@
 package com.mycompany.LeaveManagementSystem.security;
 
-import com.mycompany.LeaveManagementSystem.model.User;
-import com.mycompany.LeaveManagementSystem.service.UserService;
+//import com.mycompany.LeaveManagementSystem.model.User;
+//import com.mycompany.LeaveManagementSystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +20,9 @@ import org.springframework.context.annotation.Lazy;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    @Lazy
-    private UserService userService;
-
+//    @Autowired
+//    @Lazy
+//    private UserService userService;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 //        http
@@ -46,35 +45,36 @@ public class SecurityConfig {
 //                );
 //        return http.build();
         http
-        .csrf(csrf -> csrf.disable()) // Tắt CSRF nếu dùng API
-        .authorizeHttpRequests(auth -> auth
-            .anyRequest().permitAll() // 🚀 Cho phép tất cả request không cần login
-        );
-    return http.build();
+                .authorizeHttpRequests(auth -> auth
+                .anyRequest().permitAll() // Cho phép tất cả các request mà không cần đăng nhập
+                )
+                .csrf(csrf -> csrf.disable()) // Tắt CSRF nếu cần
+                .headers(headers -> headers.disable()); // Hỗ trợ H2 Console nếu có
+
+        return http.build();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return username -> {
-            User user = userService.findByUsername(username);
-            if (user == null) {
-                throw new UsernameNotFoundException("User not found: " + username);
-            }
-
-            // Lấy danh sách roles từ UserRole
-            String[] roles = user.getUserRoles().stream()
-                    .map(userRole -> userRole.getRole().getName())
-                    .collect(Collectors.toList())
-                    .toArray(new String[0]);
-
-            return org.springframework.security.core.userdetails.User
-                    .withUsername(user.getUsername())
-                    .password(user.getPassword()) // Đảm bảo mật khẩu đã được mã hóa
-                    .roles(roles) // Dùng danh sách roles từ UserRole
-                    .build();
-        };
-    }
-
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        return username -> {
+//            User user = userService.findByUsername(username);
+//            if (user == null) {
+//                throw new UsernameNotFoundException("User not found: " + username);
+//            }
+//
+//            // Lấy danh sách roles từ UserRole
+//            String[] roles = user.getUserRoles().stream()
+//                    .map(userRole -> userRole.getRole().getName())
+//                    .collect(Collectors.toList())
+//                    .toArray(new String[0]);
+//
+//            return org.springframework.security.core.userdetails.User
+//                    .withUsername(user.getUsername())
+//                    .password(user.getPassword()) // Đảm bảo mật khẩu đã được mã hóa
+//                    .roles(roles) // Dùng danh sách roles từ UserRole
+//                    .build();
+//        };
+//    }
 //    @Bean
 //    public PasswordEncoder passwordEncoder() {
 //        return new BCryptPasswordEncoder();

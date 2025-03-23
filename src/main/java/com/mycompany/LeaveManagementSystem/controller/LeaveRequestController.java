@@ -8,7 +8,6 @@ import com.mycompany.LeaveManagementSystem.repository.EmployeeRepository;
 import com.mycompany.LeaveManagementSystem.repository.LeaveRequestRepository;
 import com.mycompany.LeaveManagementSystem.service.LeaveRequestService;
 import com.mycompany.LeaveManagementSystem.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+import org.springframework.data.domain.Sort;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,25 +42,6 @@ public class LeaveRequestController {
     public ModelAndView showCreateForm() {
         return new ModelAndView("leave/create", "leaveRequest", new LeaveRequest());
     }
-
-//    // Nhận POST qua AJAX, trả về JSON
-//    @PostMapping("/create")
-//    public ResponseEntity<?> submitLeaveRequest(
-//            @Valid @RequestBody LeaveRequest leaveRequest,
-//            Principal principal) {
-//        if (principal == null) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-//                    .body(Map.of("message", "Not login yet!"));
-//        }
-//        Users currentUser = userService.getUserByUsername(principal.getName());
-//        if (currentUser.getEmployee() == null) {
-//            return ResponseEntity.badRequest()
-//                    .body(Map.of("message", "Employee does not exist for " + currentUser.getUsername()));
-//        }
-//        leaveRequest.setEmployee(currentUser.getEmployee());
-//        leaveRequestService.createLeaveRequest(leaveRequest);
-//        return ResponseEntity.ok(Map.of("message", "Submit successfully!"));
-//    }
     @PostMapping("/create")
     public ResponseEntity<?> submitLeaveRequest(
             @RequestBody LeaveRequest leaveRequest, // Lấy dữ liệu JSON
@@ -96,7 +77,7 @@ public class LeaveRequestController {
         }
         List<LeaveRequest> requests = leaveRequestRepo.findByEmployee(employee);
         model.addAttribute("requests", requests);
-        return "leave/my-requests";
+        return "leave/my-request";
     }
 
    
@@ -151,14 +132,11 @@ public class LeaveRequestController {
     }
 
     @GetMapping("/request-list")
-    public String requestList(Model model, Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";  // Chuyển hướng nếu chưa đăng nhập
-        }
-
-        List<LeaveRequest> requests = leaveRequestRepo.findAll();
+    public String requestList(Model model) {
+        var requests = leaveRequestRepo.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("requests", requests);
-
-        return "leave/request-list"; // Trả về trang request-list.html
+        return "leave/request-list"; // Giao diện danh sách nhân viên
+    
     }
+
 }

@@ -19,10 +19,11 @@
                         <ul class="nav flex-column w-100 mt-3">
                             <li class="nav-item"><a class="nav-link" th:href="@{/}"><i class="fas fa-home"></i> <span>Home</span></a></li>
                             <li class="nav-item"><a class="nav-link" th:href="@{/leave-requests/create}"><i class="fas fa-edit"></i> <span>Create Leave</span></a></li>
-                            <li class="nav-item" sec:authorize="hasRole('Admin')">
-                                <a class="nav-link" th:href="@{/schedule}"><i class="fas fa-calendar-alt"></i> <span>Company Agenda</span></a>
+                            <!--<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">-->
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/schedule/companyagenda}"><i class="fas fa-calendar-alt"></i> <span>Company Agenda</span></a>
                             </li>
-                            <li class="nav-item"><a class="nav-link" th:href="@{/my-agenda}"><i class="fas fa-calendar-check"></i> <span>My Agenda</span></a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{/schedule/myagenda}"><i class="fas fa-calendar-check"></i> <span>My Agenda</span></a></li>
                             <li class="nav-item"><a class="nav-link" th:href="@{/leave-requests/request-list}"><i class="fas fa-list"></i> <span>Request List</span></a></li>
                             <li class="nav-item"><a class="nav-link" th:href="@{/leave-requests/my-requests}"><i class="fas fa-file-alt"></i> <span>My Requests</span></a></li>
                             <li class="nav-item"><a class="nav-link" th:href="@{/employees}"><i class="fas fa-users"></i> <span>Employees</span></a></li>

@@ -4,33 +4,44 @@
  */
 package com.mycompany.LeaveManagementSystem.controller;
 
-import com.mycompany.LeaveManagementSystem.model.User;
+/**
+ *
+ * @author phank
+ */
+
+import com.mycompany.LeaveManagementSystem.model.JwtResponse;
+import com.mycompany.LeaveManagementSystem.model.LoginRequest;
 import com.mycompany.LeaveManagementSystem.service.UserService;
-import com.mycompany.LeaveManagementSystem.util.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final AuthenticationManager authenticationManager;
-    private final JwtUtil jwtUtil;
-    private final UserService userService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, UserService userService) {
-        this.authenticationManager = authenticationManager;
-        this.jwtUtil = jwtUtil;
-        this.userService = userService;
-    }
+//    @Autowired
+//    private JwtUtil jwtUtil;
 
-    @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+    @Autowired
+    private UserService userService;
 
-        User user = userService.getUserByUsername(username); // Lấy User từ DB
-        return jwtUtil.generateToken(user.getUsername()); // Trả về token
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+//        try {
+//            authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+//            );
+//        } catch (Exception e) {
+//            return ResponseEntity.status(401).body("Thông tin đăng nhập không hợp lệ");
+//        }
+//
+//        String token = jwtUtil.generateToken(loginRequest.getUsername());
+//        return ResponseEntity.ok(new JwtResponse(token));
+//    }
 }

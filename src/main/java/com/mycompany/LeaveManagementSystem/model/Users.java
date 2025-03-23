@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "users")
@@ -37,12 +36,6 @@ public class Users {
     private String displayName;
     private Date createAt;
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "user_roles",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id")
-//    )
     private String role;
 
     @OneToOne
@@ -129,11 +122,11 @@ public class Users {
         this.employee = employee;
     }
 
-    public String getRoles() {
+    public String getRole() {
         return role;
     }
 
-    public void setRoles(String role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

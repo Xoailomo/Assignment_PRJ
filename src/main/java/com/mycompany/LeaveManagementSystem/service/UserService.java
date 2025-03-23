@@ -40,8 +40,13 @@ public class UserService implements UserDetailsService {
 //    }
 //
     public Users getUserByUsername(String username) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Users user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
+        return user;
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Users user = userRepository.findByUsername(username);
@@ -49,7 +54,7 @@ public class UserService implements UserDetailsService {
         if (user != null) {
             var springUser = User.withUsername(user.getUsername())
                     .password(user.getPassword())
-                    .roles(user.getRoles().split(",")) // Truyền role vào đây
+                    .roles(user.getRole().split(",")) // Truyền role vào đây
                     .build();
             return springUser;
         }

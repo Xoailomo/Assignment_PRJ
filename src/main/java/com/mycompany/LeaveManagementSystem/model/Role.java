@@ -1,31 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.LeaveManagementSystem.model;
 
 import jakarta.persistence.*;
 
-/**
- *
- * @author phank
-*
- */
 @Entity
 @Table(name = "roles")
 public class Role {
-@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @Column( nullable = false)
-    private String name;
+    @Column(nullable = false, unique = true)
+    private String name; // ADMIN, MANAGER, STAFF
 
-    public int getId() {
+    // Getter & Setter
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -36,5 +28,4 @@ public class Role {
     public void setName(String name) {
         this.name = name;
     }
-    
 }

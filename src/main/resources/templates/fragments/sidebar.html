@@ -1,26 +1,52 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Employee Leave Management</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="/static/css/styles.css">
 
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-  <div th:fragment="sidebar" class="sidebar">
-    <nav>
-        <ul>
-            <li><a th:href="@{/}">🏠 Home</a></li>
-            <li><a th:href="@{/leave-requests/create}">📝 Create Leave</a></li>
-            <li sec:authorize="hasRole('ADMIN')">
-                <a th:href="@{/company-agenda}">📅 Company Agenda</a>
-            </li>
-            <li><a th:href="@{/my-agenda}">📆 My Agenda</a></li>
-            <li><a th:href="@{/leave-requests/request-list}">📋 Request List</a></li>
-            <li><a th:href="@{/leave-requests/my-requests}">📄 My Requests</a></li>
-            <li><a th:href="@{/employees}">👥 Employees</a></li>
-            <li><a th:href="@{/my-account}">🔑 My Account</a></li> 
-            <li><a th:href="@{/logout}">🚪 Logout</a></li>  
-        </ul>
-    </nav>
-</div>
+    </head>
+    <body>
+        <div class="d-flex">
+            <!-- Sidebar -->
+            <div id="sidebar" th:fragment="sidebar" class="sidebar bg-light d-flex flex-column">
 
+                <nav class="navbar navbar-light">
+                    <div class="container-fluid flex-column align-items-start">
+                        <ul class="nav flex-column w-100 mt-3">
+                            <li class="nav-item"><a class="nav-link" th:href="@{/}"><i class="fas fa-home"></i> <span>Home</span></a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{/leave-requests/create}"><i class="fas fa-edit"></i> <span>Create Leave</span></a></li>
+                            <li class="nav-item" sec:authorize="hasRole('Admin')">
+                                <a class="nav-link" th:href="@{/schedule}"><i class="fas fa-calendar-alt"></i> <span>Company Agenda</span></a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{/my-agenda}"><i class="fas fa-calendar-check"></i> <span>My Agenda</span></a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{/leave-requests/request-list}"><i class="fas fa-list"></i> <span>Request List</span></a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{/leave-requests/my-requests}"><i class="fas fa-file-alt"></i> <span>My Requests</span></a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{/employees}"><i class="fas fa-users"></i> <span>Employees</span></a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{/my-account}"><i class="fas fa-user-circle"></i> <span>My Account</span></a></li>
+                            <li class="nav-item"><a class="nav-link text-danger" th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Content -->
+            <div class="content p-4">
+                <h1>Dashboard</h1>
+                <p>Welcome to the Employee Leave Management System.</p>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // JavaScript để toggle sidebar
+            document.getElementById('toggleSidebar').addEventListener('click', function () {
+                document.getElementById('sidebar').classList.toggle('collapsed');
+            });
+
+        </script>
+    </body>
 </html>

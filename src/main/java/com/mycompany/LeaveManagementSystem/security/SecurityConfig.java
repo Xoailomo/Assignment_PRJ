@@ -1,5 +1,6 @@
 package com.mycompany.LeaveManagementSystem.security;
 
+import com.mycompany.LeaveManagementSystem.repository.UserRepository;
 import com.mycompany.LeaveManagementSystem.service.UserService;
 import java.util.List;
 import javax.crypto.spec.SecretKeySpec;
@@ -8,13 +9,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.*;
 import org.springframework.security.config.annotation.web.builders.*;
 import org.springframework.security.config.annotation.web.configuration.*;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.*;
 
@@ -24,21 +27,45 @@ public class SecurityConfig {
 
     @Value("${security.jwt.secret-key}")
     private String jwtSecretKey;
+    
+    private final JwtFilter jwtFilter;
+    private final UserDetailsService userDetailsService;
 
+    public SecurityConfig(JwtFilter jwtFilter, UserDetailsService userDetailsService) {
+        this.jwtFilter = jwtFilter;
+        this.userDetailsService = userDetailsService;
+    }
+
+     // Cấu hình phân quyền
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/account/login", "/account/register", "/account", "/", "/leave-requests/**").permitAll()
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            // Tắt CSRF (nếu không cần)
+            .csrf(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/login", "/register", "/css/**", "/js/**").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")     // => "ROLE_ADMIN"
+                .requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")
+                .requestMatchers("/staff/**").hasAnyRole("STAFF", "MANAGER", "ADMIN")
                 .anyRequest().authenticated()
-                )
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
-                .sessionManagement(session -> session.sessionCreationPolicy(
-                SessionCreationPolicy.STATELESS)
-                )
-                .build();
+            )
+            .formLogin(form -> form
+                .loginPage("/login")          // URL trang login (GET)
+                .loginProcessingUrl("/login") // URL xử lý login (POST)
+                .defaultSuccessUrl("/", true)
+                .failureUrl("/login?error=true")
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .permitAll()
+            )
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+            );
 
+        return http.build();
     }
 
     @Bean
@@ -52,6 +79,6 @@ public class SecurityConfig {
         provider.setUserDetailsService(userService);
         provider.setPasswordEncoder(new BCryptPasswordEncoder());
 
-        return new ProviderManager(List.of(provider)); // Dễ mở rộng nhiều provider
+        return new ProviderManager(List.of(provider)); // Hỗ trợ mở rộng nhiều provider sau này
     }
 }

@@ -222,4 +222,8 @@ public class Employee {
 //    public void setAuditLogs(Set<AuditLog> auditLogs) {
 //        this.auditLogs = auditLogs;
 //    }
+
+    public String getName() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

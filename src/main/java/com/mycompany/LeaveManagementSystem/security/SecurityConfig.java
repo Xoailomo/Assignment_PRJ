@@ -1,49 +1,57 @@
 package com.mycompany.LeaveManagementSystem.security;
 
-//import com.mycompany.LeaveManagementSystem.model.User;
-//import com.mycompany.LeaveManagementSystem.service.UserService;
+import com.mycompany.LeaveManagementSystem.service.UserService;
+import java.util.List;
+import javax.crypto.spec.SecretKeySpec;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import static org.springframework.security.config.Customizer.withDefaults;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.authentication.*;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.*;
+import org.springframework.security.config.annotation.web.builders.*;
+import org.springframework.security.config.annotation.web.configuration.*;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.*;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final JwtFilter jwtFilter;
-
-    public SecurityConfig(JwtFilter jwtFilter) {
-        this.jwtFilter = jwtFilter;
-    }
+    @Value("${security.jwt.secret-key}")
+    private String jwtSecretKey;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/").permitAll()//default to home
-                .requestMatchers("/login", "/leave-requests/create","/leave-requests/my-requests" ).permitAll()
+                .requestMatchers("/account/login", "/account/register", "/account", "/", "/leave-requests/**").permitAll()
                 .anyRequest().authenticated()
-                ).formLogin(form -> form
-                .defaultSuccessUrl("/", true)
                 )
-                .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
-                .invalidateHttpSession(true) // Xóa session khi logout
-                .deleteCookies("JSESSIONID") // Xóa cookie session
-                .permitAll())
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+                .sessionManagement(session -> session.sessionCreationPolicy(
+                SessionCreationPolicy.STATELESS)
+                )
                 .build();
+
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
+    public JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withSecretKey(new SecretKeySpec(jwtSecretKey.getBytes(), "HmacSHA256")).build();
     }
 
+    @Bean
+    public AuthenticationManager authenticationManager(UserService userService) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userService);
+        provider.setPasswordEncoder(new BCryptPasswordEncoder());
+
+        return new ProviderManager(List.of(provider)); // Dễ mở rộng nhiều provider
+    }
 }

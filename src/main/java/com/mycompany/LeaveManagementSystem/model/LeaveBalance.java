@@ -16,23 +16,22 @@ public class LeaveBalance {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(nullable = false)
     private Employee employee;
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
+    @Enumerated(EnumType.STRING)
     private LeaveType leaveType;
 
     private double balance;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

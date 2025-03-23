@@ -11,6 +11,7 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
                 <a class="navbar-brand" href="/">Employee Leave Mangement</a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -28,7 +29,7 @@
                             <a href="/login" class="nav-link text-dark">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/login" class="nav-link text-dark">Register</a>
+                            <a href="/register" class="nav-link text-dark">Register</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" id="languageDropdown" role="button">
@@ -47,12 +48,23 @@
             </div>
         </nav>
 
+        <div class="container my-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card shadow-lg p-4">
+                        <div class="card-body text-center">
+                            <h1 class="mb-3 text-primary fw-bold">Employee Leave Management</h1>
+                            <p class="lead">Welcome, <span th:text="${#authentication.principal.displayName}" class="fw-semibold text-success"></span>!</p>
 
-        <div class="container my-3">
-            <h1 class="text-center mb-3">Welcome to Employee Leave Management </h1>
-            <div class="d-flex justify-content-center">
-                <a class="btn btn-primary" href="leave-requests/create">Create Leave</a>
+                            <a class="btn btn-lg btn-primary mt-3" href="leave-requests/create">
+                                <i class="fas fa-plus-circle me-2"></i> Create Leave
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
 </html>

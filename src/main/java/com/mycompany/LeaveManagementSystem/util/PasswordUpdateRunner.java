@@ -1,12 +1,17 @@
 package com.mycompany.LeaveManagementSystem.util;
 
+import com.mycompany.LeaveManagementSystem.model.LeaveRequest;
+import com.mycompany.LeaveManagementSystem.repository.LeaveRequestRepository;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PasswordUpdateRunner implements CommandLineRunner {
-
+@Autowired
+    private LeaveRequestRepository leaveRequestRepo;
     /**
      *
      * @param args
@@ -20,6 +25,8 @@ public class PasswordUpdateRunner implements CommandLineRunner {
         System.out.println("123 -> " + encoder.encode("123"));
         System.out.println("456 -> " + encoder.encode("456"));
         System.out.println("789 -> " + encoder.encode("789"));
+List<LeaveRequest> requests = leaveRequestRepo.findAll();
+        System.out.println(requests);
 //        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 //
 //        // Mật khẩu gốc

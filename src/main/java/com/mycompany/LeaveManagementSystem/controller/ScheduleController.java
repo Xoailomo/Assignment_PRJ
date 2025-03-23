@@ -3,8 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.LeaveManagementSystem.controller;
-
-import com.mycompany.LeaveManagementSystem.dto.WorkScheduleDTO;
 import com.mycompany.LeaveManagementSystem.model.Employee;
 import com.mycompany.LeaveManagementSystem.model.LeaveRequest;
 import com.mycompany.LeaveManagementSystem.repository.EmployeeRepository;
@@ -38,7 +36,7 @@ public class ScheduleController {
     @Autowired
     private LeaveRequestRepository leaveRequestRepository;
 
-    @GetMapping("/schedule")
+    @GetMapping("/companyagenda")
     public String getSchedule(@RequestParam(required = false) String start,
             @RequestParam(required = false) String end,
             Model model) {
@@ -72,5 +70,6 @@ public class ScheduleController {
         model.addAttribute("endDate", endDate);
         return "schedule";
     }
+    
 
 }

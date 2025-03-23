@@ -4,12 +4,11 @@
  */
 package com.mycompany.LeaveManagementSystem.controller;
 
+import com.mycompany.LeaveManagementSystem.dto.LoginDTO;
 import com.mycompany.LeaveManagementSystem.dto.RegisterDTO;
 import com.mycompany.LeaveManagementSystem.model.Users;
 import com.mycompany.LeaveManagementSystem.repository.UserRepository;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.validation.Valid;
 import java.time.Instant;
 import java.util.Date;
@@ -18,15 +17,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,8 +50,18 @@ public class AccountController {
     private UserRepository userRepository;
     @Autowired
     private AuthenticationManager authenticationManager;
-    
-
+//**
+    @GetMapping("/profile")
+    public ResponseEntity<Object> profile(Authentication auth) {
+        var resp = new HashMap<String, Object>();
+        resp.put("username", auth.getName());
+        resp.put("authorities", auth.getAuthorities());
+        
+        var user = userRepository.findByUsername(auth.getName());
+        resp.put("user", user);
+        return ResponseEntity.ok(resp);
+    }
+//**
     @PostMapping("/register")
     public ResponseEntity<Object> register(@Valid @RequestBody RegisterDTO rdto, BindingResult result) {
         if (result.hasErrors()) {
@@ -72,7 +83,7 @@ public class AccountController {
         user.setLastName(rdto.getLastname());
         user.setUsername(rdto.getUsername());
         user.setEmail(rdto.getEmail());
-        user.setRoles("staff");
+        user.setRole("staff");
         user.setCreateAt(new Date());
         user.setPassword(bCryptEncoder.encode(rdto.getPassword()));
 
@@ -103,11 +114,39 @@ public class AccountController {
         }
         return ResponseEntity.badRequest().body("Error");
     }
-    
-//    @PostMapping("/login")
-//    public ResponseEntity<Object> login(@Valid @RequestBody RegisterDTO rdto, BindingResult result){
-//        
-//    }
+//**
+    // test with code form youtube
+    @PostMapping("/login")
+    public ResponseEntity<Object> login(@Valid @RequestBody LoginDTO ldto, BindingResult result) {
+        if (result.hasErrors()) {
+            var errorsList = result.getAllErrors();
+            var errorsMap = new HashMap<String, String>();
+
+            for (int i = 0; i < errorsList.size(); i++) {
+                var error = (FieldError) errorsList.get(i);
+                errorsMap.put(error.getField(), error.getDefaultMessage());
+
+            }
+            return ResponseEntity.badRequest().body(errorsMap);
+        }
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(ldto.getUsername(), ldto.getPassword()));
+            Users user = userRepository.findByUsername(ldto.getUsername());
+
+            String jwtToken = createJwtToken(user);
+
+            var resp = new HashMap<String, Object>();
+            resp.put("token", jwtToken);
+            resp.put("user", user);
+            return ResponseEntity.ok(resp);
+
+        } catch (Exception e) {
+            System.out.println("There is an exception: ");
+            e.printStackTrace();
+        }
+        return ResponseEntity.badRequest().body("Bad username or password");
+    }
 
     //test with code from youtube
     private String createJwtToken(Users user) {
@@ -127,20 +166,4 @@ public class AccountController {
                 JwsHeader.with(MacAlgorithm.HS256).build(), claims);
         return encoder.encode(params).getTokenValue();
     }
-    
-//private String createJwtToken(Users user) {
-//    long nowMillis = System.currentTimeMillis();
-//    long expMillis = nowMillis + (12 * 3600 * 1000); // Hết hạn sau 12h
-//    Date now = new Date(nowMillis);
-//    Date expiryDate = new Date(expMillis);
-//
-//    return Jwts.builder()
-//            .setIssuer("MyApp") // Đổi issuer
-//            .setSubject(user.getUsername()) 
-//            .setIssuedAt(now)
-//            .setExpiration(expiryDate)
-//            .claim("email", user.getEmail()) 
-//            .signWith(SignatureAlgorithm.HS256, "MY_SECRET_123456") // Dùng secret key riêng
-//            .compact();
-//}
 }

@@ -15,16 +15,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <thead>
         <tr>
             <th>Company calendar </th>
-            <th th:each="date : ${schedule.values().iterator().next().keySet()}" th:text="${date}"></th>
+            <!--<th th:each="date : ${schedule.values().iterator().next().keySet()}" th:text="${date}"></th>-->
         </tr>
     </thead>
     <tbody>
-        <tr th:each="entry : ${schedule}">
+    <h1> hello</h1>
+<!--        <tr th:each="entry : ${schedule}">
             <td th:text="${entry.key.name}"></td>
             <td th:each="status : ${entry.value.values()}" th:style="${status == 'ON_LEAVE' ? 'background-color: red' : 'background-color: green'}">
                 <span th:text="${status}"></span>
             </td>
-        </tr>
+        </tr>-->
     </tbody>
 </table>
 

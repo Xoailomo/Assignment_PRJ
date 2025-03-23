@@ -4,7 +4,7 @@
  */
 package com.mycompany.LeaveManagementSystem.repository;
 
-import com.mycompany.LeaveManagementSystem.model.User;
+import com.mycompany.LeaveManagementSystem.model.Users;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,14 +12,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author phank
  */
-public interface UserRepository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<Users, Integer>{
 
-    public User findByEmail(String email);
+    public Users findByUsername(String username);
+    public Users findByEmail(String email);
 
     public boolean existsByUsername(String username);
 
     public boolean existsByEmail(String email);
     
-    Optional<User> findByUsername(String username);
     
 }

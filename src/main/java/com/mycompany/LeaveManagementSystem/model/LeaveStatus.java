@@ -9,5 +9,5 @@ package com.mycompany.LeaveManagementSystem.model;
  * @author phank
  */
 public enum LeaveStatus {
-    INPROGRESS, APPROVED, REJECTED
+    INPROGRESS, APPROVED, REJECTED, CANCELLED
 }

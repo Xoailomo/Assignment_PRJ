@@ -1,20 +1,21 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
-*/
-/* 
-    Created on : Mar 21, 2025, 12:05:31 PM
-    Author     : phank
-*/
+/* Layout chính */
 body {
     display: flex;
     font-family: Arial, sans-serif;
+    margin: 0;
 }
 
+/* Sidebar */
 .sidebar {
-    width: 200px;
-    background-color: #f4f4f4;
+    width: 220px;
+    background: linear-gradient(135deg, #f4f4f4, #ddd);
     padding: 20px;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease-in-out;
+}
+
+.sidebar:hover {
+    width: 250px;
 }
 
 .sidebar ul {
@@ -29,13 +30,26 @@ body {
 .sidebar ul li a {
     text-decoration: none;
     color: #333;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease, transform 0.2s;
 }
 
+.sidebar ul li a:hover {
+    background: #007bff;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* Content */
 .content {
     flex: 1;
     padding: 20px;
+    background-color: #f9f9f9;
 }
 
+/* Form Input */
 .input-group {
     margin-bottom: 15px;
 }
@@ -47,15 +61,24 @@ body {
     margin-bottom: 5px;
 }
 
-input[type="text"], input[type="date"], input[type="email"], input[type="password"], input[type="number"] {
+input[type="text"], input[type="date"], input[type="email"], 
+input[type="password"], input[type="number"] {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
     box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+/* Login Box */
 .login-container {
     width: 400px;
     margin: 100px auto;
@@ -63,10 +86,16 @@ input[type="text"], input[type="date"], input[type="email"], input[type="passwor
     background-color: #fff;
     padding: 40px;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out;
 }
 
-.login-btn, .reset-btn, button {
+.login-container:hover {
+    transform: translateY(-5px);
+}
+
+/* Buttons */
+button, .login-btn, .reset-btn {
     width: 100%;
     padding: 12px;
     background-color: #007bff;
@@ -75,35 +104,48 @@ input[type="text"], input[type="date"], input[type="email"], input[type="passwor
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s;
 }
 
-.login-btn .arrow, .reset-btn .arrow {
-    margin-left: 10px;
+button:hover, .login-btn:hover, .reset-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
 }
 
+/* Forgot Password */
 .forgot-password {
     display: block;
     margin-top: 20px;
     font-size: 14px;
     color: #666;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .forgot-password:hover {
     color: #007bff;
 }
 
+/* Table */
 table {
     width: 100%;
     border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 table th, table td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 12px;
     text-align: left;
+    transition: background 0.3s ease;
 }
 
 table th {
-    background-color: #f2f2f2;
+    background-color: #007bff;
+    color: white;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
 }

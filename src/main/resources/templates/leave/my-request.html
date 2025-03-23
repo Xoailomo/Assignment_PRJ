@@ -6,28 +6,93 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<div th:replace="~{fragments/sidebar :: sidebar}"></div>
-<div class="container mt-4">
-    <h2>My Leave Requests</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Reason</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="request : ${leave_requests}">
-                <td th:text="${request.startDate}"></td>
-                <td th:text="${request.endDate}"></td>
-                <td th:text="${request.reason}"></td>
-                <td th:text="${request.status}"></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Sidebar: đảm bảo file fragments/sidebar.html có th:fragment="sidebar" -->
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    
+    <div class="container mt-4">
+        <h2>My Leave Requests</h2>
+        <table class="table table-bordered" id="requestsTable">
+            <thead>
+                <tr>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Các dòng sẽ được tạo động qua JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Hàm load danh sách đơn nghỉ của người dùng qua AJAX
+        async function loadRequests() {
+            try {
+                const response = await fetch("/leave-requests/my-requests");
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    alert("Error loading requests: " + errorText);
+                    return;
+                }
+                const data = await response.json(); // Chờ nhận JSON từ backend
+                const requests = data.requests;
+                const tbody = document.querySelector("#requestsTable tbody");
+                tbody.innerHTML = ""; // Xóa nội dung cũ
+
+                requests.forEach(request => {
+                    // Tạo dòng mới cho mỗi đơn nghỉ
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${request.startDate}</td>
+                        <td>${request.endDate}</td>
+                        <td>${request.reason}</td>
+                        <td>${request.status}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" onclick="cancelRequest(${request.id})">Cancel</button>
+                            <button class="btn btn-info btn-sm" onclick="sendReminder(${request.id})">Send Reminder</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (err) {
+                alert("Failed to load requests: " + err);
+            }
+        }
+
+        // Hàm xử lý hủy đơn nghỉ
+        async function cancelRequest(id) {
+            if (confirm("Are you sure you want to cancel this request?")) {
+                try {
+                    const response = await fetch("/leave-requests/cancel/" + id, { method: "GET" });
+                    const result = await response.text();
+                    alert("Cancel: " + result);
+                    loadRequests(); // Tải lại danh sách sau khi hủy
+                } catch (err) {
+                    alert("Error: " + err);
+                }
+            }
+        }
+
+        // Hàm xử lý gửi reminder
+        async function sendReminder(id) {
+            if (confirm("Send reminder to your manager?")) {
+                try {
+                    const response = await fetch("/leave-requests/reminder/" + id, { method: "GET" });
+                    const result = await response.text();
+                    alert("Reminder: " + result);
+                } catch (err) {
+                    alert("Error: " + err);
+                }
+            }
+        }
+
+        // Tải danh sách đơn nghỉ khi trang được load
+        document.addEventListener("DOMContentLoaded", loadRequests);
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

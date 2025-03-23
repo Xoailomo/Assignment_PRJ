@@ -1,30 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Register</title>
-    <meta charset="UTF-8">
-</head>
-<body>
-    <h2>Register</h2>
-    
-    <p th:if="${error}" style="color: red;" th:text="${error}"></p>
-    
-    <form th:action="@{/register}" method="post">
-        <label>Email:</label>
-        <input type="email" name="email" required>
-        <br>
+    <head>
+        <title>Register</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h2>Register</h2>
 
-        <label>Full Name:</label>
-        <input type="text" name="fullName" required>
-        <br>
+        <p th:if="${error}" style="color: red;" th:text="${error}"></p>
 
-        <label>Password:</label>
-        <input type="password" name="password" required>
-        <br>
+        <form action="/register" method="post">
+            <label>Username:</label>
+            <input type="text" name="username" required>
+            <br>
 
-        <button type="submit">Register</button>
-    </form>
+            <label>Email:</label>
+            <input type="email" name="email" required>
+            <br>
 
-    <p>Already have an account? <a th:href="@{/login}">Login</a></p>
-</body>
+            <label>First Name:</label>
+            <input type="text" name="firstName" required>
+            <br>
+
+            <label>Last Name:</label>
+            <input type="text" name="lastName" required>
+            <br>
+
+            <label>Display Name (optional):</label>
+            <input type="text" name="displayName">
+            <br>
+
+            <label>Password:</label>
+            <input type="password" name="password" required>
+            <br>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p>Already have an account? <a th:href="@{/login}">Login</a></p>
+    </body>
 </html>

@@ -9,39 +9,57 @@ package com.mycompany.LeaveManagementSystem.controller;
  * @author phank
  */
 
-import com.mycompany.LeaveManagementSystem.model.JwtResponse;
-import com.mycompany.LeaveManagementSystem.model.LoginRequest;
-import com.mycompany.LeaveManagementSystem.service.UserService;
+import com.mycompany.LeaveManagementSystem.model.Users;
+import com.mycompany.LeaveManagementSystem.repository.UserRepository;
+import java.time.LocalDateTime;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/auth")
+@Controller
 public class AuthController {
-
+    
     @Autowired
-    private AuthenticationManager authenticationManager;
-
-//    @Autowired
-//    private JwtUtil jwtUtil;
-
-    @Autowired
-    private UserService userService;
-
-//    @PostMapping("/login")
-//    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-//        try {
-//            authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
-//            );
-//        } catch (Exception e) {
-//            return ResponseEntity.status(401).body("Thông tin đăng nhập không hợp lệ");
-//        }
-//
-//        String token = jwtUtil.generateToken(loginRequest.getUsername());
-//        return ResponseEntity.ok(new JwtResponse(token));
-//    }
+    private UserRepository userRepo;
+    
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login"; // login.html (Thymeleaf)
+    }
+    
+    @GetMapping("/register")
+    public String registerPage() {
+        return "register"; // register.html (Thymeleaf)
+    }
+    
+    @PostMapping("/register")
+    public String doRegister(@RequestParam String username,
+                             @RequestParam String password,
+                             @RequestParam String displayName,
+                             @RequestParam String email,
+                             @RequestParam Date createAt,
+                             Model model) {
+        // Kiểm tra username đã tồn tại chưa
+        if (userRepo.existsByUsername(username)) {
+            model.addAttribute("error", "Username already exists!");
+            return "register";
+        }
+        // Tạo user mới
+        Users user = new Users();
+        user.setUsername(username);
+        user.setPassword(new BCryptPasswordEncoder().encode(password));
+        user.setRole("ROLE_STAFF"); // mặc định staff
+        user.setDisplayName(displayName);
+        user.setEmail(email);
+        user.setCreateAt(createAt);
+        
+        userRepo.save(user);
+        
+        // Sau khi đăng ký xong -> chuyển về login
+        return "redirect:/login?success";
+    }
 }
+

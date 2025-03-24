@@ -23,6 +23,16 @@ public class RegisterDTO {
     private String phone;
     @NotEmpty
     private String email;
+    @NotEmpty
+    private String displayName;
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
     
     @NotEmpty
     private Date createAt;

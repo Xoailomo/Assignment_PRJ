@@ -11,19 +11,29 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    private String firstname;
-    private String lastname;
     private String username;
     private String password;
-    private String email;
-    private String role;
-    private String approverName;
-    private String team;
-    private String office;
-    private String country;
-    private Date createAt;
-     private String displayName;
+    private String displayName;
+    @Column(nullable = true)
+    private int eid;
+
+    public int getEid() {
+        return eid;
+    }
+
+    public void setEid(int eid) {
+        this.eid = eid;
+    }
+    
+//    private String firstname;
+//    private String lastname;
+//    private String email;
+//    private String role;
+//    private String approverName;
+//    private String team;
+//    private String office;
+//    private String country;
+//    private Date createAt;
 
     public String getDisplayName() {
         return displayName;
@@ -47,18 +57,18 @@ public class Users {
     public Users() {
     }
 
-    public Users(String firstname, String lastname) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-    }
-
-    public Date getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(Date createAt) {
-        this.createAt = createAt;
-    }
+//    public Users(String firstname, String lastname) {
+//        this.firstname = firstname;
+//        this.lastname = lastname;
+//    }
+//
+//    public Date getCreateAt() {
+//        return createAt;
+//    }
+//
+//    public void setCreateAt(Date createAt) {
+//        this.createAt = createAt;
+//    }
     
 
     public String getUsername() {
@@ -86,69 +96,69 @@ public class Users {
         this.id = id;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
+//    public String getFirstname() {
+//        return firstname;
+//    }
+//
+//    public void setFirstName(String firstname) {
+//        this.firstname = firstname;
+//    }
+//
+//    public String getLastname() {
+//        return lastname;
+//    }
+//
+//    public void setLastName(String lastname) {
+//        this.lastname = lastname;
+//    }
+//
+//    public String getEmail() {
+//        return email;
+//    }
 
-    public void setFirstName(String firstname) {
-        this.firstname = firstname;
-    }
+//    public void setEmail(String email) {
+//        this.email = email;
+//    }
+//
+//    public String getRole() {
+//        return role;
+//    }
+//
+//    public void setRole(String role) {
+//        this.role = role;
+//    }
+//
+//    public String getApproverName() {
+//        return approverName;
+//    }
+//
+//    public void setApproverName(String approverName) {
+//        this.approverName = approverName;
+//    }
+//
+//    public String getTeam() {
+//        return team;
+//    }
+//
+//    public void setTeam(String team) {
+//        this.team = team;
+//    }
+//
+//    public String getOffice() {
+//        return office;
+//    }
 
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastName(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getApproverName() {
-        return approverName;
-    }
-
-    public void setApproverName(String approverName) {
-        this.approverName = approverName;
-    }
-
-    public String getTeam() {
-        return team;
-    }
-
-    public void setTeam(String team) {
-        this.team = team;
-    }
-
-    public String getOffice() {
-        return office;
-    }
-
-    public void setOffice(String office) {
-        this.office = office;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
+//    public void setOffice(String office) {
+//        this.office = office;
+//    }
+//
+//    public String getCountry() {
+//        return country;
+//    }
+//
+//    public void setCountry(String country) {
+//        this.country = country;
+//    }
 
     public Employee getEmployee() {
         return employee;

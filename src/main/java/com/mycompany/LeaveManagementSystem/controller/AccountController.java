@@ -9,6 +9,7 @@ import com.mycompany.LeaveManagementSystem.dto.RegisterDTO;
 import com.mycompany.LeaveManagementSystem.model.Employee;
 import com.mycompany.LeaveManagementSystem.model.Users;
 import com.mycompany.LeaveManagementSystem.repository.UserRepository;
+import com.mycompany.LeaveManagementSystem.security.PasswordEncoderConfig;
 import com.mycompany.LeaveManagementSystem.service.EmployeeService;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import jakarta.validation.Valid;
@@ -63,6 +64,8 @@ public class AccountController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private PasswordEncoderConfig passwordEncoder;
 //**
 
     @GetMapping("/profile")
@@ -75,59 +78,9 @@ public class AccountController {
         resp.put("user", user);
         return ResponseEntity.ok(resp);
     }
-//**
-//    @PostMapping("/register")
-//    public ResponseEntity<Object> register(@Valid @RequestBody RegisterDTO rdto, BindingResult result) {
-//        if (result.hasErrors()) {
-//            var errorsList = result.getAllErrors();
-//            var errorsMap = new HashMap<String, String>();
-//
-//            for (int i = 0; i < errorsList.size(); i++) {
-//                var error = (FieldError) errorsList.get(i);
-//                errorsMap.put(error.getField(), error.getDefaultMessage());
-//
-//            }
-//            return ResponseEntity.badRequest().body(errorsMap);
-//        }
-//
-//        var bCryptEncoder = new BCryptPasswordEncoder();
-//
-//        Users user = new Users();
-//        user.setFirstName(rdto.getFirstname());
-//        user.setLastName(rdto.getLastname());
-//        user.setUsername(rdto.getUsername());   
-//        user.setEmail(rdto.getEmail());
-//        user.setRole("staff");
-//        user.setCreateAt(new Date());
-//        user.setPassword(bCryptEncoder.encode(rdto.getPassword()));
-//
-//        try {
-//            //check if username/email are used or not 
-//            var otherUser = userRepository.findByUsername(rdto.getUsername());
-//            if (otherUser != null) {
-//                return ResponseEntity.badRequest().body("Username already used");
-//
-//            }
-//            otherUser = userRepository.findByEmail(rdto.getEmail());
-//            if (otherUser != null) {
-//                return ResponseEntity.badRequest().body("Email adress already used");
-//
-//            }
-//            userRepository.save(user);
-//
-//            String jwtToken = createJwtToken(user);
-//
-//            var resp = new HashMap<String, Object>();
-//            resp.put("token", jwtToken);
-//            resp.put("user", user);
-//            return ResponseEntity.ok(resp);
-//
-//        } catch (Exception e) {
-//            System.out.println("There is an Exception: ");
-//            e.printStackTrace();
-//        }
-//        return ResponseEntity.badRequest().body("Error");
-//    }
+
+
+ 
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(@Valid @RequestBody RegisterDTO rdto, BindingResult result) {
@@ -175,40 +128,39 @@ public class AccountController {
 
 //**
     @PostMapping("/login")
-public ResponseEntity<Object> login(@Valid @RequestBody LoginDTO ldto, BindingResult result) {
-    if (result.hasErrors()) {
-        var errorsMap = result.getAllErrors().stream()
-                .collect(Collectors.toMap(
-                        error -> ((FieldError) error).getField(),
-                        ObjectError::getDefaultMessage
-                ));
-        return ResponseEntity.badRequest().body(errorsMap);
-    }
-    
-    try {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(ldto.getUsername(), ldto.getPassword()));
-        
-        Optional<Users> optionalUser = userRepository.findByUsername(ldto.getUsername());
-        if (optionalUser.isEmpty()) {
-            return ResponseEntity.badRequest().body("Bad username or password");
+    public ResponseEntity<Object> login(@Valid @RequestBody LoginDTO ldto, BindingResult result) {
+        if (result.hasErrors()) {
+            var errorsMap = result.getAllErrors().stream()
+                    .collect(Collectors.toMap(
+                            error -> ((FieldError) error).getField(),
+                            ObjectError::getDefaultMessage
+                    ));
+            return ResponseEntity.badRequest().body(errorsMap);
         }
 
-        Users user = optionalUser.get();
-        String jwtToken = createJwtToken(user);
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(ldto.getUsername(), ldto.getPassword()));
 
-        var resp = new HashMap<String, Object>();
-        resp.put("token", jwtToken);
-        resp.put("user", user);
-        return ResponseEntity.ok(resp);
+            Optional<Users> optionalUser = userRepository.findByUsername(ldto.getUsername());
+            if (optionalUser.isEmpty()) {
+                return ResponseEntity.badRequest().body("Bad username or password");
+            }
 
-    } catch (Exception e) {
-        System.out.println("There is an exception: ");
-        e.printStackTrace();
+            Users user = optionalUser.get();
+            String jwtToken = createJwtToken(user);
+
+            var resp = new HashMap<String, Object>();
+            resp.put("token", jwtToken);
+            resp.put("user", user);
+            return ResponseEntity.ok(resp);
+
+        } catch (Exception e) {
+            System.out.println("There is an exception: ");
+            e.printStackTrace();
+        }
+        return ResponseEntity.badRequest().body("Bad username or password");
     }
-    return ResponseEntity.badRequest().body("Bad username or password");
-}
-
 
     @GetMapping("/my-account")
     public String myAccountPage(Model model) {

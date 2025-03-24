@@ -1,14 +1,17 @@
+/* styles.css */
+
 /* Layout chính */
 body {
     display: flex;
     font-family: Arial, sans-serif;
     margin: 0;
+    background-color: #f0f8ff; /* Màu nền xanh nhạt */
 }
 
 /* Sidebar */
 .sidebar {
     width: 220px;
-    background: linear-gradient(135deg, #f4f4f4, #ddd);
+    background: linear-gradient(135deg, #e6f2ff, #cce5ff); /* Gradient xanh nhạt */
     padding: 20px;
     box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
     transition: width 0.3s ease-in-out;
@@ -37,7 +40,7 @@ body {
 }
 
 .sidebar ul li a:hover {
-    background: #007bff;
+    background: #007bff; /* Màu xanh dương */
     color: #fff;
     transform: scale(1.05);
 }
@@ -46,7 +49,7 @@ body {
 .content {
     flex: 1;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #ffffff; /* Màu trắng */
 }
 
 /* Form Input */
@@ -62,44 +65,27 @@ body {
 }
 
 input[type="text"], input[type="date"], input[type="email"], 
-input[type="password"], input[type="number"] {
+input[type="password"], input[type="number"], textarea {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ccc;
+    border: 1px solid white;
     border-radius: 4px;
     font-size: 16px;
     box-sizing: border-box;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-input:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+input:focus, textarea:focus {
+    border-color: #007bff; /* Viền xanh */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Shadow xanh nhạt */
     outline: none;
 }
 
-/* Login Box */
-.login-container {
-    width: 400px;
-    margin: 100px auto;
-    text-align: center;
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease-in-out;
-}
-
-.login-container:hover {
-    transform: translateY(-5px);
-}
-
 /* Buttons */
-button, .login-btn, .reset-btn {
-    width: 100%;
+button, .btn {
     padding: 12px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #007bff; /* Xanh dương */
+    color: white; /* Chữ trắng */
     border: none;
     border-radius: 4px;
     font-size: 16px;
@@ -107,45 +93,39 @@ button, .login-btn, .reset-btn {
     transition: background 0.3s ease, transform 0.2s;
 }
 
-button:hover, .login-btn:hover, .reset-btn:hover {
-    background-color: #0056b3;
+button:hover, .btn:hover {
+    background-color: #0056b3; /* Xanh đậm hơn khi hover */
     transform: scale(1.05);
-}
-
-/* Forgot Password */
-.forgot-password {
-    display: block;
-    margin-top: 20px;
-    font-size: 14px;
-    color: #666;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.forgot-password:hover {
-    color: #007bff;
 }
 
 /* Table */
 table {
     width: 100%;
     border-collapse: collapse;
-    background: #fff;
+    background: #fff; /* Trắng */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 table th, table td {
-    border: 1px solid #ddd;
+    border: 1px solid white;
     padding: 12px;
     text-align: left;
     transition: background 0.3s ease;
 }
 
 table th {
-    background-color: #007bff;
-    color: white;
+    background-color: #007bff; /* Xanh dương */
+    color: white; /* Chữ trắng */
 }
 
 table tr:hover {
-    background-color: #f1f1f1;
+    background-color: #e6f2ff; /* Xanh nhạt khi hover */
+}
+.btn-danger a {
+    color: white !important;
+    text-decoration: none;
+}
+
+.btn-danger a:hover {
+    color: white !important;
 }

@@ -44,9 +44,6 @@ public class CustomUserDetails implements UserDetails {
     }
 
     // Nếu bạn muốn hiển thị displayName trong Thymeleaf: #authentication.principal.displayName
-    public String getDisplayName() {
-        return user.getDisplayName();
-    }
 
     // Còn lại cho đơn giản
     @Override

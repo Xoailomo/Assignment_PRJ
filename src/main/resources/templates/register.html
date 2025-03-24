@@ -2,89 +2,167 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Register</title>
+    <link rel="stylesheet" th:href="@{/css/styles2.css}">
     <style>
+        /* --- Dùng chung cho toàn bộ các trang --- */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f0f2f5, #e1e5ea); /* Light gradient */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background: linear-gradient(135deg, #d0e7ff, #a3d5ff); /* Xanh dương nhạt */
+            display: flex;justify-content: center;align-items: center;min-height: 100vh;margin: 0;color: #003366; /* Màu xanh đậm */
         }
 
+        /* --- Định dạng cho container chính --- */
         .form-container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            width: 350px;
-            text-align: center;
+            background-color: rgba(255, 255, 255, 0.98);padding: 40px;border-radius: 15px;box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);width: 100%;
+            max-width: 400px;text-align: center;transition: transform 0.3s ease;
+        }
+
+        .form-container:hover {
+            transform: translateY(-5px); /* Hiệu ứng nâng lên khi hover */
         }
 
         h2 {
-            color: #3f51b5; /* Primary blue */
-            margin-bottom: 25px;
-            font-weight: 600;
+            color: #00509e; /* Xanh dương đậm */
+            margin-bottom: 30px;
+            font-weight: 700;
+            font-size: 28px;
+        }
+
+        /* --- Định dạng các phần tử trong form --- */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         p {
-            margin-bottom: 15px;
+            margin: 0;
             text-align: left;
+            font-size: 14px;
+            font-weight: 500;
         }
 
+        /* --- Định dạng input --- */
         input[type="text"],
         input[type="password"],
         input[type="email"] {
-            width: calc(100% - 22px);
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #d4d4d4;
-            border-radius: 6px;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease;
-        }
-
-        input[type="text"]:focus,
-        input[type="password"]:focus,
-        input[type="email"]:focus {
-            border-color: #3f51b5; /* Primary blue focus */
-            outline: none;
-        }
-
-        button[type="submit"] {
-            background-color: #3f51b5;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
             width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #0077cc;
+            border-radius: 8px;
+            box-sizing: border-box;
             font-size: 16px;
-            transition: background-color 0.3s ease;
+            color: #003366;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        button[type="submit"]:hover {
-            background-color: #303f9f; /* Darker blue hover */
+        input:focus {
+            border-color: #00509e;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 80, 158, 0.2);
         }
 
+        input:hover {
+            border-color: #00509e;
+        }
+
+        /* --- Định dạng nhãn và select cho phần Role --- */
+        .input-group {
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #003366;
+            font-size: 14px;
+        }
+
+        .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #0077cc;
+            border-radius: 8px;
+            background-color: #fff;
+            font-size: 16px;
+            color: #003366;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%230077cc" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+        }
+
+        .input-group select:focus {
+            border-color: #00509e;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 80, 158, 0.2);
+        }
+
+        .input-group select:hover {
+            border-color: #00509e;
+        }
+
+        .input-group select option {
+            padding: 10px;
+            background-color: #fff;
+            color: #003366;
+        }
+
+        .input-group select::-ms-expand {
+            display: none;
+        }
+
+        /* --- Nút gửi form --- */
+        button {
+            background-color: #0077cc;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #00509e;
+            transform: scale(1.02);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* --- Thông báo lỗi --- */
         .error-message {
             margin-top: 20px;
-            padding: 10px;
-            border-radius: 4px;
+            padding: 12px;
+            border-radius: 8px;
             color: #d32f2f;
             background-color: #ffebee;
             border: 1px solid #ef9a9a;
             text-align: center;
+            font-size: 14px;
+            font-weight: 500;
         }
-        a{
+
+        /* --- Link quay lại --- */
+        a {
             text-decoration: none;
-            color: #3f51b5;
-            margin-bottom: 10px;
-            display: block;
+            color: #00509e;
+            margin-bottom: 20px;
+            display: inline-block;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
         }
-        a:hover{
+
+        a:hover {
+            color: #003366;
             text-decoration: underline;
         }
     </style>
@@ -94,10 +172,19 @@
         <h2>Register Page</h2>
         <a href="/">Back to home</a>
         <form th:action="@{/register}" method="post">
-            <p>Username: <input type="text" name="username"/></p>
-            <p>Password: <input type="password" name="password"/></p>
-            <p>Display Name: <input type="text" name="displayName"/></p>
-            <p>Email: <input type="email" name="email"/></p>
+            <p>Username: <input type="text" name="username" placeholder="Enter your username" required/></p>
+            <p>Password: <input type="password" name="password" placeholder="Enter your password" required/></p>
+            <div class="input-group">
+                <label for="role">Role:</label>
+                <select id="role" name="role" required>
+                    <option value="" disabled selected>Select a role</option>
+                    <option value="ROLE_ADMIN">Admin</option>
+                    <option value="ROLE_MANAGER">Manager</option>
+                    <option value="ROLE_STAFF">Staff</option>
+                </select>
+            </div>
+            <p>Display Name: <input type="text" name="displayName" placeholder="Enter your display name" required/></p>
+            <p>Email: <input type="email" name="email" placeholder="Enter your email" required/></p>
             <button type="submit">Register</button>
         </form>
         <div th:if="${error}" class="error-message">

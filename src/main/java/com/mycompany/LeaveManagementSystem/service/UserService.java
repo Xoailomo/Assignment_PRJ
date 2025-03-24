@@ -44,13 +44,20 @@ public class UserService implements UserDetailsService {
         Optional<Users> user = userRepository.findByEmail(email);
         return user.orElse(null); // Trả về null nếu không tìm thấy
     }
+
     public Users getUserByUsername(String username) {
-        Users user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
-        }
-        return user;
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
     }
 
-    userRepository
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username)
+                .map(user -> User.withUsername(user.getUsername())
+                .password(user.getPassword())
+                .roles(user.getRole().split(","))
+                .build()
+                ).orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+    }
+
 }

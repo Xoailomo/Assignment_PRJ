@@ -1,0 +1,173 @@
+/* --- Dùng chung cho toàn bộ các trang --- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #d0e7ff, #a3d5ff); /* Xanh dương nhạt */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #003366; /* Màu xanh đậm */
+}
+
+/* --- Định dạng cho container chính (Login, Register, Forgot Password) --- */
+.form-container, 
+.login-container {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    text-align: center;
+}
+
+h2 {
+    color: #00509e; /* Xanh dương đậm */
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+p {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+/* --- Định dạng input --- */
+.input-group input[type="email"],
+input[type="text"],
+input[type="password"] {
+    width: calc(100% - 22px);
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #0077cc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-color: #00509e;
+    outline: none;
+}
+
+/* --- Nút gửi form (Login, Register, Forgot Password) --- */
+button {
+    background-color: #0077cc; /* Màu xanh chủ đạo */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #00509e;
+}
+
+/* --- Nút "Recover" với mũi tên (Forgot Password) --- */
+.reset-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+}
+
+.reset-btn .arrow {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.reset-btn:hover .arrow {
+    transform: translateX(5px);
+}
+
+/* --- Thông báo lỗi và thành công --- */
+.error-message {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 4px;
+    color: #d32f2f;
+    background-color: #ffebee;
+    border: 1px solid #ef9a9a;
+    text-align: center;
+}
+
+.success-message {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 4px;
+    color: #2e7d32;
+    background-color: #e8f5e9;
+    border: 1px solid #a5d6a7;
+    text-align: center;
+}
+
+/* --- Link quay lại Login/Register --- */
+a {
+    text-decoration: none;
+    color: #00509e;
+    margin-bottom: 10px;
+    display: block;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+/* --- Định dạng nhãn và select cho phần Role --- */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #003366; /* Màu xanh đậm */
+}
+
+.input-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #0077cc; /* Viền xanh chủ đạo */
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #003366; /* Màu chữ xanh đậm */
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    appearance: none; /* Bỏ giao diện mặc định của select */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%230077cc" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); /* Thêm mũi tên tùy chỉnh */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+/* Hiệu ứng khi focus */
+.input-group select:focus {
+    border-color: #00509e; /* Viền xanh đậm khi focus */
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 80, 158, 0.3); /* Hiệu ứng bóng nhẹ */
+}
+
+/* Hiệu ứng khi hover */
+.input-group select:hover {
+    border-color: #00509e; /* Viền xanh đậm khi hover */
+}
+
+/* Định dạng các option */
+.input-group select option {
+    padding: 10px;
+    background-color: #fff;
+    color: #003366;
+}
+
+/* Đảm bảo select không bị ảnh hưởng bởi các style khác */
+.input-group select::-ms-expand {
+    display: none; /* Ẩn mũi tên mặc định trên IE */
+}

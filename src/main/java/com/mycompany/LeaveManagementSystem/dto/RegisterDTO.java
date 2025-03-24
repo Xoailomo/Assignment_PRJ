@@ -6,6 +6,7 @@ package com.mycompany.LeaveManagementSystem.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import java.util.Date;
 
 /**
  *
@@ -22,6 +23,19 @@ public class RegisterDTO {
     private String phone;
     @NotEmpty
     private String email;
+    
+    @NotEmpty
+    private Date createAt;
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+    
+    
 
     private String address;
     @NotEmpty

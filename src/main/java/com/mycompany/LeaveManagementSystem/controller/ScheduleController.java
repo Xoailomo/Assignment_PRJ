@@ -30,10 +30,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -123,8 +125,17 @@ public class ScheduleController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        // Tìm employeeId từ bảng User
-        Users user = userRepository.findByUsername(username);
+        // Tìm người dùng theo username
+        Optional<Users> optionalUser = userRepository.findByUsername(username);
+        if (optionalUser.isEmpty()) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
+        Users user = optionalUser.get();
+
+        // Kiểm tra employee của user
+        if (user.getEmployee() == null) {
+            throw new IllegalArgumentException("User does not have an associated employee.");
+        }
         int employeeId = user.getEmployee().getId();
 
         // Lấy thông tin nhân viên
@@ -164,20 +175,16 @@ public class ScheduleController {
                 for (LocalDate date = leaveStart; !date.isAfter(leaveEnd); date = date.plusDays(1)) {
                     if (date.getMonthValue() == month && date.getYear() == year) {
                         int day = date.getDayOfMonth();
-                        switch (status) {
-                            case APPROVED:
-                                dailyStatus.put(day, "APPROVED_LEAVE");
-                                break;
-                            case REJECTED:
-                                dailyStatus.put(day, "REJECTED_LEAVE");
-                                break;
-                            case INPROGRESS:
-                                dailyStatus.put(day, "INPROGRESS_LEAVE");
-                                break;
-                            case CANCELLED:
-                                dailyStatus.put(day, "CANCELLED_LEAVE");
-                                break;
-                        }
+                        dailyStatus.put(day, switch (status) {
+                            case APPROVED ->
+                                "APPROVED_LEAVE";
+                            case REJECTED ->
+                                "REJECTED_LEAVE";
+                            case INPROGRESS ->
+                                "INPROGRESS_LEAVE";
+                            case CANCELLED ->
+                                "CANCELLED_LEAVE";
+                        });
                     }
                 }
             }
@@ -194,4 +201,5 @@ public class ScheduleController {
 
         return "mycalendar";
     }
+
 }

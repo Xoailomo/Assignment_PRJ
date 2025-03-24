@@ -1,13 +1,8 @@
 package com.mycompany.LeaveManagementSystem.model;
 
 import jakarta.persistence.*;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -17,36 +12,34 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false, unique = true)
+    private String firstname;
+    private String lastname;
     private String username;
-
-    @Column(nullable = false)
     private String password;
-
-    @Column(nullable = false, unique = true)
     private String email;
-
-    @Column(nullable = false)
-    private String firstName;
-
-    @Column(nullable = false)
-    private String lastName;
-
-    @Column(nullable = true)
-    private String displayName;
+    private String role;
+    private String approverName;
+    private String team;
+    private String office;
+    private String country;
     private Date createAt;
 
-    private String role;
-
     @OneToOne
-    @JoinColumn(nullable = true)
+    @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
 
-// Chuyển đổi roles thành GrantedAuthority
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(role.split(",")) // Tách chuỗi theo dấu phẩy
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.trim())) // Thêm prefix ROLE_
-                .collect(Collectors.toSet());
+    @Transient
+    private List<Users> approvers;
+
+    @Transient
+    private List<WorkingDay> workingDays;
+
+    public Users() {
+    }
+
+    public Users(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
     }
 
     public Date getCreateAt() {
@@ -56,22 +49,14 @@ public class Users {
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
     }
-
-    // Getters & Setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public String getPassword() {
@@ -82,44 +67,37 @@ public class Users {
         this.password = password;
     }
 
+    // GETTERS & SETTERS
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstName(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastName(String lastname) {
+        this.lastname = lastname;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
     }
 
     public String getRole() {
@@ -130,4 +108,59 @@ public class Users {
         this.role = role;
     }
 
+    public String getApproverName() {
+        return approverName;
+    }
+
+    public void setApproverName(String approverName) {
+        this.approverName = approverName;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
+
+    public String getOffice() {
+        return office;
+    }
+
+    public void setOffice(String office) {
+        this.office = office;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public List<Users> getApprovers() {
+        return approvers;
+    }
+
+    public void setApprovers(List<Users> approvers) {
+        this.approvers = approvers;
+    }
+
+    public List<WorkingDay> getWorkingDays() {
+        return workingDays;
+    }
+
+    public void setWorkingDays(List<WorkingDay> workingDays) {
+        this.workingDays = workingDays;
+    }
 }

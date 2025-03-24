@@ -5,6 +5,7 @@
 package com.mycompany.LeaveManagementSystem.repository;
 
 import com.mycompany.LeaveManagementSystem.model.Employee;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -16,5 +17,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
      public Employee findByEmail(String email);
 
     public Optional<Employee> findById(Long employeeId);
+    
+    List<Employee> findByManagerId(int managerId);
 
 }

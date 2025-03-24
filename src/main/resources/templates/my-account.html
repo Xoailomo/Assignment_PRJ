@@ -1,18 +1,37 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>My Account</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
-</head>
-<body>
-    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-    <div class="content">
-        <h2>My Account</h2>
-        <!-- Add account details here -->
+    <head>
+        <title>My Account</title>
+    </head>
+    <body>
+        <h1>Hello <span th:text="${user.firstName + ' ' + user.lastName}"></span></h1>
+
+        <p>Email: <span th:text="${user.email}"></span></p>
+        <p>Position: <span th:text="${user.role}"></span></p>
+        <p>Approver: <span th:text="${user.approverName}"></span></p>
+        <p>Team: <span th:text="${user.team}"></span></p>
+        <p>Office: <span th:text="${user.office}"></span></p>
+        <p>Country: <span th:text="${user.country}"></span></p>
+
+        <h3>Working days and hours</h3>
+        <ul>
+            <li th:each="day : ${user.workingDays}">
+                <span th:text="${day.day}"></span>: <span th:text="${day.hours}"></span>
+            </li>
+        </ul>
+        <h3>Team manager for</h3>
+        <div>
+            <span>👥</span> <span th:text="${user.team}"></span>
+        </div>
+        <h3>Approver for</h3>
+        <ul>
+            <li th:each="approver : ${user.approvers}">
+                <span th:text="${approver.firstName + ', ' + approver.lastName}"></span>
+            </li>
+        </ul>
+
+
+
     </div>
 </body>
 </html>

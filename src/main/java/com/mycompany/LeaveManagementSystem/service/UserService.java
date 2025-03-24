@@ -2,6 +2,7 @@ package com.mycompany.LeaveManagementSystem.service;
 
 import com.mycompany.LeaveManagementSystem.model.Users;
 import com.mycompany.LeaveManagementSystem.repository.UserRepository;
+import java.util.Optional;
 //import com.mycompany.LeaveManagementSystem.model.Users;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,6 +40,10 @@ public class UserService implements UserDetailsService {
 //        userRepository.save(user);
 //    }
 //
+    public Users getUserByEmail(String email) {
+        Optional<Users> user = userRepository.findByEmail(email);
+        return user.orElse(null); // Trả về null nếu không tìm thấy
+    }
     public Users getUserByUsername(String username) {
         Users user = userRepository.findByUsername(username);
         if (user == null) {
@@ -47,19 +52,5 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users user = userRepository.findByUsername(username);
-
-        if (user != null) {
-            var springUser = User.withUsername(user.getUsername())
-                    .password(user.getPassword())
-                    .roles(user.getRole().split(",")) // Truyền role vào đây
-                    .build();
-            return springUser;
-        }
-        return null;
-
-    }
-
+    userRepository
 }

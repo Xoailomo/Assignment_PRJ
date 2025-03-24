@@ -25,8 +25,8 @@ public class PasswordUpdateRunner implements CommandLineRunner {
         System.out.println("123 -> " + encoder.encode("123"));
         System.out.println("456 -> " + encoder.encode("456"));
         System.out.println("789 -> " + encoder.encode("789"));
-List<LeaveRequest> requests = leaveRequestRepo.findAll();
-        System.out.println(requests);
+        System.out.println("1234 -> " + encoder.encode("1234"));
+
 //        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 //
 //        // Mật khẩu gốc

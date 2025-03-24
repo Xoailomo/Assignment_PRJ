@@ -43,7 +43,7 @@ public class ScheduleService {
             leaveType = leaves.get(0).getLeaveType();  // Lấy loại nghỉ đầu tiên
         }
 
-        scheduleList.add(new WorkScheduleDTO(emp.getName(), date, !isOnLeave, leaveType));
+        scheduleList.add(new WorkScheduleDTO(emp.getFullName(), date, !isOnLeave, leaveType));
     }
 }
         return scheduleList;

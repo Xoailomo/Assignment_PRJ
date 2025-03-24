@@ -11,6 +11,7 @@ package com.mycompany.LeaveManagementSystem.controller;
 
 import com.mycompany.LeaveManagementSystem.model.Users;
 import com.mycompany.LeaveManagementSystem.repository.UserRepository;
+import com.mycompany.LeaveManagementSystem.security.PasswordEncoderConfig;
 import java.time.LocalDateTime;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class AuthController {
     @Autowired
     private UserRepository userRepo;
     
+    @Autowired
+    private PasswordEncoderConfig passwordEncoder;
+    
     @GetMapping("/login")
     public String loginPage() {
         return "login"; // login.html (Thymeleaf)
@@ -34,11 +38,19 @@ public class AuthController {
     public String registerPage() {
         return "register"; // register.html (Thymeleaf)
     }
+//    @PostMapping("/register")
+//    public String registerUser(String username, String password, String role) {
+//        Users user = new Users();
+//        user.setUsername(username);
+//        user.setPassword(passwordEncoder.encode(password));
+//        user.setRole(role);
+//        userRepo.save(user);
+//        return "redirect:/login";
+//    }
     
     @PostMapping("/register")
     public String doRegister(@RequestParam String username,
                              @RequestParam String password,
-                             @RequestParam String displayName,
                              @RequestParam String email,
                              @RequestParam Date createAt,
                              Model model) {
@@ -52,7 +64,6 @@ public class AuthController {
         user.setUsername(username);
         user.setPassword(new BCryptPasswordEncoder().encode(password));
         user.setRole("ROLE_STAFF"); // mặc định staff
-        user.setDisplayName(displayName);
         user.setEmail(email);
         user.setCreateAt(createAt);
         
@@ -60,6 +71,10 @@ public class AuthController {
         
         // Sau khi đăng ký xong -> chuyển về login
         return "redirect:/login?success";
+    }
+    @GetMapping("/forgot-password")
+    public String forgorPassword() {
+        return "forgot-password"; // login.html (Thymeleaf)
     }
 }
 

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Company Calendar</title>
+    <title>Lịch làm việc</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <style>
@@ -18,16 +18,16 @@
         <h2>Company Calendar</h2>
         <!-- Nút điều hướng tuần -->
         <div class="d-flex justify-content-between mb-4">
-            <a th:href="@{/schedule/companyagenda(start=${startDate.minusDays(7)}, page=${currentPage})}" class="btn btn-primary">Tuần trước</a>
+            <a th:href="@{/schedule/companycalendar(start=${startDate.minusDays(7)}, page=${currentPage})}" class="btn btn-primary">Tuần trước</a>
             <span th:text="${startDate} + ' đến ' + ${endDate}" class="align-self-center"></span>
-            <a th:href="@{/schedule/companyagenda(start=${startDate.plusDays(7)}, page=${currentPage})}" class="btn btn-primary">Tuần sau</a>
+            <a th:href="@{/schedule/companycalendar(start=${startDate.plusDays(7)}, page=${currentPage})}" class="btn btn-primary">Tuần sau</a>
         </div>
 
         <!-- Bảng lịch -->
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr>
-                    <th>Employee</th>
+                    <th>Nhân viên</th>
                     <th th:each="date : ${schedule.values().iterator().next().keySet()}" th:text="${date}"></th>
                 </tr>
             </thead>
@@ -49,18 +49,18 @@
           <ul class="pagination justify-content-center">
             <!-- Nút Previous -->
             <li th:class="${currentPage == 0 ? 'page-item disabled' : 'page-item'}">
-              <a class="page-link" th:href="@{/schedule/companyagenda(start=${startDate}, page=${currentPage - 1})}" th:if="${currentPage > 0}">Previous</a>
+              <a class="page-link" th:href="@{/schedule/companycalendar(start=${startDate}, page=${currentPage - 1})}" th:if="${currentPage > 0}">Previous</a>
               <span class="page-link" th:unless="${currentPage > 0}">Previous</span>
             </li>
             
             <!-- Các số trang -->
             <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:class="${i == currentPage ? 'page-item active' : 'page-item'}">
-              <a class="page-link" th:href="@{/schedule/companyagenda(start=${startDate}, page=${i})}" th:text="${i + 1}"></a>
+              <a class="page-link" th:href="@{/schedule/companycalendar(start=${startDate}, page=${i})}" th:text="${i + 1}"></a>
             </li>
             
             <!-- Nút Next -->
             <li th:class="${currentPage == totalPages - 1 ? 'page-item disabled' : 'page-item'}">
-              <a class="page-link" th:href="@{/schedule/companyagenda(start=${startDate}, page=${currentPage + 1})}" th:if="${currentPage < totalPages - 1}">Next</a>
+              <a class="page-link" th:href="@{/schedule/companycalendar(start=${startDate}, page=${currentPage + 1})}" th:if="${currentPage < totalPages - 1}">Next</a>
               <span class="page-link" th:unless="${currentPage < totalPages - 1}">Next</span>
             </li>
           </ul>

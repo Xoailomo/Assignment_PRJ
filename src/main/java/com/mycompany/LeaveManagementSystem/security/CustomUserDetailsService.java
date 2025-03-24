@@ -26,16 +26,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users user = userRepo.findByUsername(username);
-
-        if (user != null) {
-            var springUser = User.withUsername(user.getUsername())
-                    .password(user.getPassword())
-                    .roles(user.getRole().split(",")) // Truyền role vào đây
-                    .build();
-            return springUser;
-        }
-        return null;
-
+        return userRepo.findByUsername(username)
+                .map(user -> User.withUsername(user.getUsername())
+                .password(user.getPassword())
+                .roles(user.getRole().split(","))
+                .build()
+                ).orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
+
 }

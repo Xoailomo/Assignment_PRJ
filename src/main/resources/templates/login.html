@@ -2,110 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: whitesmoke; /* Gradient background */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            color: #333; /* Darker text for better readability */
-        }
-
-        .form-container {
-            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow */
-            width: 350px;
-            text-align: center;
-        }
-
-        h2 {
-            color: #2874a6; /* A deeper blue */
-            margin-bottom: 25px;
-            font-weight: 600;
-        }
-
-        p {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-
-        input[type="text"],
-        input[type="password"] {
-            width: calc(100% - 22px);
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #c2e0f5;
-            border-radius: 6px;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease;
-        }
-
-        input[type="text"]:focus,
-        input[type="password"]:focus {
-            border-color: #1e88e5; /* Highlight on focus */
-            outline: none;
-        }
-
-        button[type="submit"] {
-            background-color: #2874a6;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-
-        button[type="submit"]:hover {
-            background-color: #1a5276; /* Darker blue on hover */
-        }
-
-        .error-message,
-        .success-message {
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 4px;
-            font-weight: 500;
-        }
-
-        .error-message {
-            color: #d32f2f;
-            background-color: #ffebee;
-            border: 1px solid #ef9a9a;
-        }
-
-        .success-message {
-            color: #2e7d32;
-            background-color: #e8f5e9;
-            border: 1px solid #a5d6a7;
-        }
-        a{
-            text-decoration: none;
-            color: #2874a6;
-            margin-bottom: 10px;
-            display: block;
-        }
-        a:hover{
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/styles2.css}">
 </head>
 <body>
     <div class="form-container">
         <h2>Login Page</h2>
         <a href="/">Back to home</a>
-        <form th:action="@{/login}" method="post">
+        <form th:action="@{/login}" method="post" >
             <p>Username: <input type="text" name="username"/></p>
             <p>Password: <input type="password" name="password"/></p>
             <button type="submit">Login</button>
-        </form>
+        </form></br>
+       <a href="/forgot-password">Forgot password</a>
 
         <div th:if="${param.error}" class="error-message">
             <p>Invalid username or password</p>

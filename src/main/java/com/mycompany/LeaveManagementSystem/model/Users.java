@@ -23,6 +23,16 @@ public class Users {
     private String office;
     private String country;
     private Date createAt;
+     private String displayName;
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+     
 
     @OneToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")

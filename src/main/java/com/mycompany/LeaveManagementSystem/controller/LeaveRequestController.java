@@ -65,7 +65,7 @@ public class LeaveRequestController {
     }
 
     // Hiển thị danh sách đơn nghỉ của user hiện tại
-    @GetMapping("/my-requests")
+    @GetMapping("/my-request")
     public String myRequests(Model model, Principal principal) {
         if (principal == null) {
             return "redirect:/login";

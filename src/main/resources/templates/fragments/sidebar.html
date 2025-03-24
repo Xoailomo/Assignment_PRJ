@@ -24,7 +24,7 @@
                     <a th:href="@{/leave-requests/request-list}"><i class="fas fa-list"></i> Request List</a>
                 </li>
 
-                <li><a th:href="@{/leave-requests/my-requests}"><i class="fas fa-file-alt"></i> My Requests</a></li>
+                <li><a th:href="@{/leave-requests/my-request}"><i class="fas fa-file-alt"></i> My Requests</a></li>
 
                 <!-- Chỉ hiển thị nếu user là ADMIN hoặc MANAGER -->
                 <li sec:authorize="hasAnyRole('ADMIN', 'MANAGER')">

@@ -4,6 +4,7 @@
  */
 package com.mycompany.LeaveManagementSystem.model;
 
+import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Embeddable
 public class LeaveGroupMappingId implements Serializable {
     private int lgid;
     private int eid;

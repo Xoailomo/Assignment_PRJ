@@ -22,6 +22,4 @@ public class WorkingDays {
 
     @Column(nullable = false)
     private boolean isWorkingDay;
-    
-    
 }

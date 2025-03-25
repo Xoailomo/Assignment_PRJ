@@ -18,19 +18,13 @@ import lombok.*;
 public class RegisterDTO {
 
     @NotEmpty
-    private String firstname;
-    @NotEmpty
-    private String lastname;
-    @NotEmpty
     private String username;
-    private String phone;
     @NotEmpty
     private String email;
     @NotEmpty
     private String displayName;
     @NotEmpty
     private Date createAt;
-    private String address;
     @NotEmpty
     @Size(min = 6, message = "Minimum password length is 6 characters")
     private String password;

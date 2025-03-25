@@ -5,9 +5,6 @@
 package com.mycompany.LeaveManagementSystem.model;
 
 import jakarta.persistence.*;
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.*;
 
 /**

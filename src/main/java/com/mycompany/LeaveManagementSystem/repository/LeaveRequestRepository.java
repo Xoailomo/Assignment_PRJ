@@ -4,10 +4,10 @@
  */
 package com.mycompany.LeaveManagementSystem.repository;
 
+import com.mycompany.LeaveManagementSystem.model.Departments;
 import com.mycompany.LeaveManagementSystem.model.Employees;
 import com.mycompany.LeaveManagementSystem.model.LeaveRequest;
-import com.mycompany.LeaveManagementSystem.model.LeaveStatus;
-import com.mycompany.LeaveManagementSystem.model.LeaveType;
+import com.mycompany.LeaveManagementSystem.model.LeaveTypes;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -25,13 +25,7 @@ public interface LeaveRequestRepository extends JpaRepository<LeaveRequest, Inte
 
     List<LeaveRequest> findByEmployee(Employees employee);
 
-    // Tìm tất cả yêu cầu nghỉ phép theo trạng thái (APPROVED, REJECTED, INPROGRESS)
-    List<LeaveRequest> findByStatus(LeaveStatus status);
-
-    // Tìm tất cả yêu cầu nghỉ phép của một nhân viên với trạng thái cụ thể
-    List<LeaveRequest> findByEmployeeAndStatus(Employees employee, LeaveStatus status);
-
-    List<LeaveRequest> findByLeaveType(LeaveType leaveType);
+    List<LeaveRequest> findByLeaveType(LeaveTypes leaveType);
 
     @Override
     Optional<LeaveRequest> findById(Integer id); // Sửa từ Long id thành Integer id
@@ -43,16 +37,18 @@ public interface LeaveRequestRepository extends JpaRepository<LeaveRequest, Inte
     List<LeaveRequest> findByEmployeeAndStartDateBeforeAndEndDateAfter(
             Employees employee, LocalDate endDate, LocalDate startDate);
 
+    @Query("SELECT lr FROM LeaveRequest lr WHERE lr.employee IN :employees "
+            + "AND lr.startDate <= :endDate AND lr.endDate >= :startDate")
+    List<LeaveRequest> findByEmployeesAndDateRange(@Param("employees") List<Employees> employees,
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate);
+
     @Query("SELECT lr FROM LeaveRequest lr WHERE lr.employee = :employee "
             + "AND lr.startDate <= :endDate AND lr.endDate >= :startDate")
     List<LeaveRequest> findByEmployeeAndDateRange(@Param("employee") Employees employee,
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate);
 
-    // ✅ Thêm phương thức kiểm tra nếu một ngày cụ thể nằm trong khoảng nghỉ của nhân viên
-    @Query("SELECT lr FROM LeaveRequest lr WHERE lr.employee = :employee "
-            + "AND :date BETWEEN lr.startDate AND lr.endDate")
-    List<LeaveRequest> findByEmployeeAndDate(@Param("employee") Employees emp,
-            @Param("date") LocalDate date);
-
+    List<LeaveRequest> findByEmployeeDepartment(Departments department);
+    List<LeaveRequest> findByEmployeeIn(List<Employees> employees);
 }

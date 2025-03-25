@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/leave-requests")
@@ -152,7 +151,7 @@ public class LeaveRequestController {
         // Check if the current user is the manager of the employee who submitted the request
         Users approver = userService.getUserByUsername(principal.getName());
         Employees employee = request.getEmployee();
-        List<Employees> hierarchy = employeeRepo.findByEmployee(employee);
+        List<Employees> hierarchy = employeeRepo.findByManager(employee);
 
         boolean isManager = hierarchy.stream()
                 .anyMatch(h -> h.getManager().equals(approver.getEmployee()));
@@ -180,7 +179,7 @@ public class LeaveRequestController {
         // Check if the current user is the manager of the employee who submitted the request
         Users approver = userService.getUserByUsername(principal.getName());
         Employees employee = request.getEmployee();
-        List<Employees> hierarchy = employeeRepo.findByEmployee(employee);
+        List<Employees> hierarchy = employeeRepo.findByManager(employee);
 
         boolean isManager = hierarchy.stream()
                 .anyMatch(h -> h.getManager().equals(approver.getEmployee()));

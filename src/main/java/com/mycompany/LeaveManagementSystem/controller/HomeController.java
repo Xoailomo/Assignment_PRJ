@@ -5,15 +5,9 @@ package com.mycompany.LeaveManagementSystem.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class HomeController {
-
-//    @Autowired
-//    private LeaveRequestService service;
 
     @GetMapping("/")
     public String index() {
@@ -35,11 +29,5 @@ public class HomeController {
     public String create() {
         return "create";
     }
-    
 
-//    @PostMapping("/create-request")
-//    public String createRequest(LeaveRequest request, @RequestParam(required = false) Integer ownerId) {
-//        service.saveRequest(request, ownerId);
-//        return "redirect:/home";
-//    }
 }

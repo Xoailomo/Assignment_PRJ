@@ -14,5 +14,7 @@ public class Roles {
     @Column(nullable = false, length = 150)
     private String rname;
     
-    
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Departments department; // Role can be department-specific
 }

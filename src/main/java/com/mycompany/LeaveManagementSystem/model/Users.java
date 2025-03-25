@@ -2,56 +2,48 @@ package com.mycompany.LeaveManagementSystem.model;
 
 import jakarta.persistence.*;
 import java.util.Date;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.Set;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class Users {
     @Id
     @Column(length = 150)
     private String username;
-    
+
     @Column(nullable = false, length = 150)
     private String password;
-    
+
     @Column(nullable = false, length = 150)
     private String displayname;
+
+    @Column(nullable = false, length = 150, unique = true)
+    private String email;
     
+    private Date createAt;
+
     @ManyToOne
     @JoinColumn(name = "eid")
     private Employees employee;
 
-    public String getUsername() {
-        return username;
-    }
+    @ManyToMany
+    @JoinTable(
+        name = "user_roles",
+        joinColumns = @JoinColumn(name = "userid"),
+        inverseJoinColumns = @JoinColumn(name = "roleid")
+    )
+    private Set<Roles> roles;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getDisplayname() {
-        return displayname;
-    }
-
-    public void setDisplayname(String displayname) {
-        this.displayname = displayname;
-    }
-
-    public Employees getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employees employee) {
-        this.employee = employee;
-    }
-    
-    
+    @ManyToMany
+    @JoinTable(
+        name = "user_features",
+        joinColumns = @JoinColumn(name = "userid"),
+        inverseJoinColumns = @JoinColumn(name = "featureid")
+    )
+    private Set<Features> features;
 }

@@ -19,6 +19,6 @@ public interface UserRepository extends JpaRepository<Users, String> {
     boolean existsByEmail(String email);
 
     // Lấy danh sách roles của user từ bảng UserDepartmentRole
-    @Query("SELECT r.rname FROM user_department_roles udr JOIN udr.role r WHERE udr.user.username = :username")
+    @Query("SELECT r.rname FROM UserDepartmentRoles udr JOIN udr.role r WHERE udr.user.username = :username")
     List<String> findRolesByUsername(@Param("username") String username);
 }

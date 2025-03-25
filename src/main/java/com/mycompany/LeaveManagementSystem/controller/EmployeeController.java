@@ -35,24 +35,24 @@ public class EmployeeController {
 
 //    @GetMapping("/add")
 //    public String showAddForm(Model model) {
-//        model.addAttribute("employee", new Employee());
+//        model.addAttribute("employee", new Employees());
 //        return "employees/add"; // Trang thêm nhân viên
 //    }
 //    @PostMapping("/add")
-//    public String addEmployee(@ModelAttribute Employee employee, RedirectAttributes redirectAttributes) {
+//    public String addEmployee(@ModelAttribute Employees employee, RedirectAttributes redirectAttributes) {
 //        employeeRepo.save(employee);
-//        redirectAttributes.addFlashAttribute("success", "Employee added successfully!");
+//        redirectAttributes.addFlashAttribute("success", "Employees added successfully!");
 //        return "redirect:/employees/";
 //    }
 
 //    @GetMapping("/new")
 //    public String showCreateForm(Model model) {
-//        model.addAttribute("employee", new Employee());
+//        model.addAttribute("employee", new Employees());
 //        return "employees/form"; // Giao diện form thêm nhân viên
 //    }
 
 //    @PostMapping("/save")
-//    public String saveEmployee(@ModelAttribute Employee employee) {
+//    public String saveEmployee(@ModelAttribute Employees employee) {
 //        employee.setCreatedAt(LocalDate.now());
 //        employeeRepo.save(employee);
 //        return "redirect:/employees";

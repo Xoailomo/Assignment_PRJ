@@ -1,6 +1,6 @@
 package com.mycompany.LeaveManagementSystem.controller;
 
-import com.mycompany.LeaveManagementSystem.model.Employee;
+import com.mycompany.LeaveManagementSystem.model.Employees;
 import com.mycompany.LeaveManagementSystem.model.LeaveRequest;
 import com.mycompany.LeaveManagementSystem.model.LeaveStatus;
 import com.mycompany.LeaveManagementSystem.model.Users;
@@ -71,7 +71,7 @@ public class LeaveRequestController {
             return "redirect:/login";
         }
         // Lấy employee dựa trên email (giả sử email của user trùng với employee.email)
-        Employee employee = employeeRepo.findByEmail(principal.getName());
+        Employees employee = employeeRepo.findByEmail(principal.getName());
         if (employee == null) {
             return "error/403";
         }

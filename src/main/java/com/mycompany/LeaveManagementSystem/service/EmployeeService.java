@@ -9,7 +9,7 @@ package com.mycompany.LeaveManagementSystem.service;
  * @author phank
  */
 
-import com.mycompany.LeaveManagementSystem.model.Employee;
+import com.mycompany.LeaveManagementSystem.model.Employees;
 import com.mycompany.LeaveManagementSystem.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -22,12 +22,12 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public Employee getEmployeeByEmail(String email) {
+    public Employees getEmployeeByEmail(String email) {
         return employeeRepository.findByEmail(email);
     }
 
-    public List<Employee> getStaffsByManager(int managerId) {
-        return (List<Employee>) employeeRepository.findByManagerId(managerId);
+    public List<Employees> getStaffsByManager(int managerId) {
+        return (List<Employees>) employeeRepository.findByManagerId(managerId);
     }
 }
 

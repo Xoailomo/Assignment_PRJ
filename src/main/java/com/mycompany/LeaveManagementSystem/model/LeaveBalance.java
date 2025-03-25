@@ -20,7 +20,7 @@ public class LeaveBalance {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Employee employee;
+    private Employees employee;
 
     @Enumerated(EnumType.STRING)
     private LeaveType leaveType;
@@ -35,11 +35,11 @@ public class LeaveBalance {
         this.id = id;
     }
 
-    public Employee getEmployee() {
+    public Employees getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
+    public void setEmployee(Employees employee) {
         this.employee = employee;
     }
 

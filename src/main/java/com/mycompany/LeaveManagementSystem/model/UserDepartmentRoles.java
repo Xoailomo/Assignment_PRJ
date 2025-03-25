@@ -1,34 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.LeaveManagementSystem.model;
 
 import jakarta.persistence.*;
 import lombok.*;
 
-/**
- *
- * @author phank
- */
 @Entity
 @Table(name = "user_department_roles")
-@IdClass(UserDepartmentRoleId.class) // ✅ Sử dụng @IdClass
+@IdClass(UserDepartmentRoleId.class)
 public class UserDepartmentRoles {
 
     @Id
+    @Column(name = "username")
+    private String username;  // Matches UserDepartmentRoleId.username
+
+    @Id
+    @Column(name = "did")
+    private int did;  // Matches UserDepartmentRoleId.did
+
+    @Id
+    @Column(name = "rid")
+    private int rid;  // Matches UserDepartmentRoleId.rid
+
     @ManyToOne
-    @JoinColumn(name = "username", nullable = false)
+    @JoinColumn(name = "username", insertable = false, updatable = false)
     private Users user;
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "did", nullable = false)
-    private Departments department;  // ✅ Đúng với entity
+    @JoinColumn(name = "did", insertable = false, updatable = false)
+    private Departments department;
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "rid", nullable = false)
-    private Roles role;    
-    
+    @JoinColumn(name = "rid", insertable = false, updatable = false)
+    private Roles role;
 }

@@ -15,16 +15,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "LeaveGroupMappings")
-@IdClass(LeaveGroupMappingId.class)
+@Table(name = "leaveGroup_Mappings")
 public class LeaveGroupMappings {
-    @Id
+    @EmbeddedId
+    private LeaveGroupMappingId id;
+
     @ManyToOne
+    @MapsId("lgid")
     @JoinColumn(name = "lgid", nullable = false)
     private LeaveGroups leaveGroup;
 
-    @Id
     @ManyToOne
+    @MapsId("eid")
     @JoinColumn(name = "eid", nullable = false)
     private Employees employee;
 }

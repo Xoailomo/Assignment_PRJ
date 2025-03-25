@@ -7,12 +7,14 @@ package com.mycompany.LeaveManagementSystem.service;
 import com.mycompany.LeaveManagementSystem.dto.WorkScheduleDTO;
 import com.mycompany.LeaveManagementSystem.model.Employees;
 import com.mycompany.LeaveManagementSystem.model.LeaveRequest;
-import com.mycompany.LeaveManagementSystem.model.LeaveType;
+import com.mycompany.LeaveManagementSystem.model.LeaveTypes;
 import com.mycompany.LeaveManagementSystem.repository.EmployeeRepository;
 import com.mycompany.LeaveManagementSystem.repository.LeaveRequestRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,21 +34,36 @@ public class ScheduleService {
         List<Employees> employees = employeeRepository.findAll();
         List<WorkScheduleDTO> scheduleList = new ArrayList<>();
 
-       for (Employees emp : employees) {
-    for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
-        boolean isOnLeave = false;
-        LeaveType leaveType = null;  // Đổi từ String sang LeaveType
+        // Lấy toàn bộ đơn nghỉ của nhân viên trong khoảng thời gian trước
+        List<LeaveRequest> allLeaveRequests = leaveRequestRepository.findByEmployeesAndDateRange(employees, startDate, endDate);
 
-        List<LeaveRequest> leaves = leaveRequestRepository.findByEmployeeAndDate(emp, date);
-        if (!leaves.isEmpty()) {
-            isOnLeave = true;
-            leaveType = leaves.get(0).getLeaveType();  // Lấy loại nghỉ đầu tiên
+        // Lưu đơn nghỉ theo từng nhân viên để tối ưu tìm kiếm
+        Map<Employees, List<LeaveRequest>> leaveMap = new HashMap<>();
+        for (LeaveRequest leave : allLeaveRequests) {
+            leaveMap.computeIfAbsent(leave.getEmployee(), k -> new ArrayList<>()).add(leave);
         }
 
-        scheduleList.add(new WorkScheduleDTO(emp.getFullName(), date, !isOnLeave, leaveType));
-    }
-}
+        // Duyệt danh sách nhân viên và tạo lịch làm việc
+        for (Employees emp : employees) {
+            List<LeaveRequest> empLeaves = leaveMap.getOrDefault(emp, new ArrayList<>());
+
+            for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+                boolean isOnLeave = false;
+                LeaveTypes leaveType = null;
+
+                for (LeaveRequest leave : empLeaves) {
+                    if (!date.isBefore(leave.getStartDate()) && !date.isAfter(leave.getEndDate())) {
+                        isOnLeave = true;
+                        leaveType = leave.getLeaveType();
+                        break;
+                    }
+                }
+
+                scheduleList.add(new WorkScheduleDTO(emp.getEname(), date, !isOnLeave, leaveType));
+            }
+        }
         return scheduleList;
     }
 }
+
 

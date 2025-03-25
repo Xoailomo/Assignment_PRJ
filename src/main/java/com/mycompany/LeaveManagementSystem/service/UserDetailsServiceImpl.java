@@ -4,10 +4,9 @@
  */
 package com.mycompany.LeaveManagementSystem.service;
 
-
 import com.mycompany.LeaveManagementSystem.model.Users;
 import com.mycompany.LeaveManagementSystem.repository.UserRepository;
-import java.util.Optional;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.User;
@@ -24,31 +23,27 @@ import org.springframework.stereotype.Service;
 @Service
 @Primary  // Đánh dấu bean này là ưu tiên
 public class UserDetailsServiceImpl implements UserDetailsService {
-//
+
     @Autowired
-    private UserRepository userRepository;  
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        Users user = userRepository.findByUsername(username);
-//
-//        if (user != null) {
-//            var springUser = User.withUsername(user.getUsername())
-//                    .password(user.getPassword())
-//                    .roles(user.getRole().split(",")) // Truyền role vào đây
-//                    .build();
-//            return springUser;
-//        }
-//        return null;
-//
-//    }
+    private UserRepository userRepository;
+
+    public Users getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+    }
+
     @Override
-public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    return userRepository.findByUsername(username)
-            .map(user -> User.withUsername(user.getUsername())
-                    .password(user.getPassword())
-                    .roles(user.getRole().split(","))
-                    .build()
-            ).orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
-}
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Users user = getUserByUsername(username);
+
+        // Lấy danh sách role từ bảng UserDepartmentRole
+        List<String> roles = userRepository.findRolesByUsername(username);
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getUsername())
+                .password(user.getPassword())
+                .roles(roles.toArray(new String[0])) // Chuyển List thành Array
+                .build();
+    }
 
 }

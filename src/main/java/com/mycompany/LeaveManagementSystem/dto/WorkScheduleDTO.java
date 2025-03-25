@@ -4,57 +4,31 @@
  */
 package com.mycompany.LeaveManagementSystem.dto;
 
-import com.mycompany.LeaveManagementSystem.model.LeaveType;
+import com.mycompany.LeaveManagementSystem.model.LeaveTypes;
 import java.time.LocalDate;
+import lombok.*;
 
 /**
  *
  * @author phank
  */
+@Getter
+@Setter
 public class WorkScheduleDTO {
-     private String employeeName;
+
+    private String employeeName;
     private LocalDate date;
     private boolean isWorking; // true = làm việc, false = nghỉ phép
-    private LeaveType leaveType; // Optional: Loại nghỉ (Annual, Sick Leave, etc.)
+    private LeaveTypes leaveType; // Optional: Loại nghỉ (Annual, Sick Leave, etc.)
 
-    public WorkScheduleDTO(String employeeName, LocalDate date, boolean isWorking, LeaveType leaveType) {
+    public WorkScheduleDTO() {
+    }
+
+    public WorkScheduleDTO(String employeeName, LocalDate date, boolean isWorking, LeaveTypes leaveType) {
         this.employeeName = employeeName;
         this.date = date;
         this.isWorking = isWorking;
         this.leaveType = leaveType;
     }
-
-    public String getEmployeeName() {
-        return employeeName;
-    }
-
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public boolean isIsWorking() {
-        return isWorking;
-    }
-
-    public void setIsWorking(boolean isWorking) {
-        this.isWorking = isWorking;
-    }
-
-    public LeaveType getLeaveType() {
-        return leaveType;
-    }
-
-    public void setLeaveType(LeaveType leaveType) {
-        this.leaveType = leaveType;
-    }
-    
     
 }

@@ -9,7 +9,6 @@ import com.mycompany.LeaveManagementSystem.dto.RegisterDTO;
 import com.mycompany.LeaveManagementSystem.model.Employees;
 import com.mycompany.LeaveManagementSystem.model.Users;
 import com.mycompany.LeaveManagementSystem.repository.UserRepository;
-import com.mycompany.LeaveManagementSystem.security.PasswordEncoderConfig;
 import com.mycompany.LeaveManagementSystem.service.EmployeeService;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import jakarta.validation.Valid;
@@ -64,8 +63,6 @@ public class AccountController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private EmployeeService employeeService;
-    @Autowired
-    private PasswordEncoderConfig passwordEncoder;
 //**
 
     @GetMapping("/profile")
@@ -174,7 +171,7 @@ public class AccountController {
         }
 
         Employees currentEmployee = employeeService.getEmployeeByEmail(email);
-        List<Employees> staffs = employeeService.getStaffsByManager(currentEmployee.getId());
+        List<Employees> staffs = employeeService.getStaffsByManager(currentEmployee.getEid());
 
         model.addAttribute("employee", currentEmployee);
         model.addAttribute("staffs", staffs);

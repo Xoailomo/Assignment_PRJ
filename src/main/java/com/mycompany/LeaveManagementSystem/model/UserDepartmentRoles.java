@@ -12,21 +12,23 @@ import lombok.*;
  * @author phank
  */
 @Entity
-@Table(name="user_department_roles")
+@Table(name = "user_department_roles")
+@IdClass(UserDepartmentRoleId.class) // ✅ Sử dụng @IdClass
 public class UserDepartmentRoles {
+
     @Id
     @ManyToOne
     @JoinColumn(name = "username", nullable = false)
     private Users user;
-    
+
     @Id
     @ManyToOne
     @JoinColumn(name = "did", nullable = false)
-    private Departments department;
-    
+    private Departments department;  // ✅ Đúng với entity
+
     @Id
     @ManyToOne
     @JoinColumn(name = "rid", nullable = false)
-    private Roles role;
+    private Roles role;    
     
 }

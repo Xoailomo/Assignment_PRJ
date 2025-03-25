@@ -6,39 +6,27 @@ package com.mycompany.LeaveManagementSystem.model;
 
 
 import jakarta.persistence.*;
+import lombok.*;
 
 /**
  *
  * @author phank
  */
+@Getter 
+@Setter
 @Entity
 @Table(name="role_features")
 public class RoleFeatures {
     @Id
     @ManyToOne
-    @JoinColumn(name="rid", nullable = false)
+    @JoinColumn(name = "rid", nullable = false)
     private Roles role;
-    
+
     @Id
     @ManyToOne
-    @JoinColumn(name="fid", nullable = false)
+    @JoinColumn(name = "fid", nullable = false)
     private Features feature;
-
-    public Roles getRole() {
-        return role;
-    }
-
-    public void setRole(Roles role) {
-        this.role = role;
-    }
-
-    public Features getFeature() {
-        return feature;
-    }
-
-    public void setFeature(Features feature) {
-        this.feature = feature;
-    }
+    
     
     
 }

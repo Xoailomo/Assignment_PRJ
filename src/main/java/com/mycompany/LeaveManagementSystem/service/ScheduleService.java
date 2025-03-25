@@ -5,7 +5,7 @@
 package com.mycompany.LeaveManagementSystem.service;
 
 import com.mycompany.LeaveManagementSystem.dto.WorkScheduleDTO;
-import com.mycompany.LeaveManagementSystem.model.Employee;
+import com.mycompany.LeaveManagementSystem.model.Employees;
 import com.mycompany.LeaveManagementSystem.model.LeaveRequest;
 import com.mycompany.LeaveManagementSystem.model.LeaveType;
 import com.mycompany.LeaveManagementSystem.repository.EmployeeRepository;
@@ -29,10 +29,10 @@ public class ScheduleService {
     private LeaveRequestRepository leaveRequestRepository;
 
     public List<WorkScheduleDTO> getWorkSchedules(LocalDate startDate, LocalDate endDate) {
-        List<Employee> employees = employeeRepository.findAll();
+        List<Employees> employees = employeeRepository.findAll();
         List<WorkScheduleDTO> scheduleList = new ArrayList<>();
 
-       for (Employee emp : employees) {
+       for (Employees emp : employees) {
     for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
         boolean isOnLeave = false;
         LeaveType leaveType = null;  // Đổi từ String sang LeaveType

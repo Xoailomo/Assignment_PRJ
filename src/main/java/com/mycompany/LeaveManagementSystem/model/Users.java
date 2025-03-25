@@ -2,6 +2,7 @@ package com.mycompany.LeaveManagementSystem.model;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,7 +38,7 @@ public class Users {
         joinColumns = @JoinColumn(name = "userid"),
         inverseJoinColumns = @JoinColumn(name = "roleid")
     )
-    private Set<Roles> roles;
+    private Set<Roles> roles= new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -45,5 +46,5 @@ public class Users {
         joinColumns = @JoinColumn(name = "userid"),
         inverseJoinColumns = @JoinColumn(name = "featureid")
     )
-    private Set<Features> features;
+    private Set<Features> features= new HashSet<>();
 }

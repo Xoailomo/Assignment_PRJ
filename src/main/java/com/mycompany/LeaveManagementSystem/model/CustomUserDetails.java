@@ -1,19 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.LeaveManagementSystem.model;
 
-/**
- *
- * @author phank
- */
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Đóng gói UserEntity vào UserDetails
@@ -21,16 +13,19 @@ import java.util.List;
 public class CustomUserDetails implements UserDetails {
 
     private final Users user;
+    private final List<String> roles; // Danh sách role của user
 
-    public CustomUserDetails(Users user) {
+    public CustomUserDetails(Users user, List<String> roles) {
         this.user = user;
+        this.roles = roles;
     }
 
-    // Lấy authorities từ cột 'role'
+    // Lấy authorities từ danh sách roles trong DB
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // role trong DB: "ROLE_ADMIN" => new SimpleGrantedAuthority("ROLE_ADMIN")
-        return List.of(new SimpleGrantedAuthority(user.getRole()));
+        return roles.stream()
+                .map(SimpleGrantedAuthority::new) // Chuyển từng role thành GrantedAuthority
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -43,9 +38,10 @@ public class CustomUserDetails implements UserDetails {
         return user.getUsername();
     }
 
-    // Nếu bạn muốn hiển thị displayName trong Thymeleaf: #authentication.principal.displayName
+    public String getDisplayName() {
+        return user.getDisplayname();
+    }
 
-    // Còn lại cho đơn giản
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -66,4 +62,3 @@ public class CustomUserDetails implements UserDetails {
         return true;
     }
 }
-

@@ -13,21 +13,15 @@ import com.mycompany.LeaveManagementSystem.model.Employees;
 import com.mycompany.LeaveManagementSystem.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class EmployeeService {
-    private final EmployeeRepository employeeRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
-
-    public Employees getEmployeeByEmail(String email) {
-        return employeeRepository.findByEmail(email);
-    }
-
-    public List<Employees> getStaffsByManager(int managerId) {
-        return (List<Employees>) employeeRepository.findByManagerId(managerId);
+    public List<Employees> getStaffsByManager(int eid) {
+        return employeeRepository.findByManagerEid(eid);
     }
 }
 

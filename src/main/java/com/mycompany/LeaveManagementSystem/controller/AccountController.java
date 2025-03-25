@@ -6,7 +6,7 @@ package com.mycompany.LeaveManagementSystem.controller;
 
 import com.mycompany.LeaveManagementSystem.dto.LoginDTO;
 import com.mycompany.LeaveManagementSystem.dto.RegisterDTO;
-import com.mycompany.LeaveManagementSystem.model.Employee;
+import com.mycompany.LeaveManagementSystem.model.Employees;
 import com.mycompany.LeaveManagementSystem.model.Users;
 import com.mycompany.LeaveManagementSystem.repository.UserRepository;
 import com.mycompany.LeaveManagementSystem.security.PasswordEncoderConfig;
@@ -173,8 +173,8 @@ public class AccountController {
             email = principal.toString();
         }
 
-        Employee currentEmployee = employeeService.getEmployeeByEmail(email);
-        List<Employee> staffs = employeeService.getStaffsByManager(currentEmployee.getId());
+        Employees currentEmployee = employeeService.getEmployeeByEmail(email);
+        List<Employees> staffs = employeeService.getStaffsByManager(currentEmployee.getId());
 
         model.addAttribute("employee", currentEmployee);
         model.addAttribute("staffs", staffs);

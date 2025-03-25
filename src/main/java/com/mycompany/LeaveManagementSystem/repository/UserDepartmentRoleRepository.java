@@ -19,6 +19,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserDepartmentRoleRepository extends JpaRepository<UserDepartmentRoles, UserDepartmentRoleId> {
 
-    @Query("SELECT r.rname FROM user_department_roles udr JOIN udr.role r WHERE udr.user.username = :username")
+    @Query("SELECT r.rname FROM UserDepartmentRoles udr JOIN udr.role r WHERE udr.user.username = :username")
     List<String> findRolesByUsername(@Param("username") String username);
 }

@@ -32,7 +32,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
@@ -111,7 +110,7 @@ public class AccountController {
 
         Users user = new Users();
         user.setUsername(rdto.getUsername());
-        user.setDisplayname(rdto.getFirstname() + " " + rdto.getLastname());
+        user.setDisplayname(rdto.getDisplayName());
         user.setEmail(rdto.getEmail());
         user.setCreateAt(new Date());
         user.setPassword(passwordEncoder.encode(rdto.getPassword()));

@@ -26,15 +26,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -57,13 +58,19 @@ public class ScheduleController {
     public String getSchedule(
             @RequestParam(required = false) String start,
             @RequestParam(required = false) String end,
-            @RequestParam(defaultValue = "0") int page, // Tham số trang, mặc định là 0
+            @RequestParam(defaultValue = "0") int page, // Phân trang, mặc định là trang 0
             Model model) {
 
-        // Xác định ngày bắt đầu và kết thúc
+        // Xác định ngày bắt đầu và kết thúc với xử lý lỗi
         LocalDate today = LocalDate.now();
-        LocalDate startDate = (start != null) ? LocalDate.parse(start) : today;
-        LocalDate endDate = (end != null) ? LocalDate.parse(end) : startDate.plusDays(6);
+        LocalDate startDate, endDate;
+        try {
+            startDate = (start != null) ? LocalDate.parse(start) : today;
+            endDate = (end != null) ? LocalDate.parse(end) : startDate.plusDays(6);
+        } catch (DateTimeParseException e) {
+            model.addAttribute("error", "Invalid date format!");
+            return "companycalendar"; // Trả về trang với thông báo lỗi
+        }
 
         // Thiết lập phân trang: 10 nhân viên mỗi trang
         int pageSize = 10;
@@ -73,35 +80,32 @@ public class ScheduleController {
         Page<Employees> employeePage = employeeRepository.findAll(pageable);
         List<Employees> employees = employeePage.getContent();
 
-        // Tạo dữ liệu lịch làm việc cho từng nhân viên trong trang hiện tại
+        // Lấy tất cả đơn nghỉ của nhân viên trong khoảng thời gian này (tối ưu query)
+        List<LeaveRequest> leaveRequests = leaveRequestRepository.findByEmployeesAndDateRange(employees, startDate, endDate);
+
+        // Tạo Map lưu trạng thái lịch làm việc của từng nhân viên
         Map<Employees, Map<LocalDate, String>> scheduleMap = new HashMap<>();
+
         for (Employees employee : employees) {
             Map<LocalDate, String> dailyStatus = new LinkedHashMap<>();
+
+            // Đặt mặc định tất cả ngày là "WORKING"
             for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
-                dailyStatus.put(date, "WORKING"); // Mặc định là WORKING
+                dailyStatus.put(date, "WORKING");
             }
-            List<LeaveRequest> leaves = leaveRequestRepository.findByEmployeeAndDateRange(employee, startDate, endDate);
-            for (LeaveRequest leave : leaves) {
-                LocalDate leaveStart = leave.getStartDate();
-                LocalDate leaveEnd = leave.getEndDate();
-                LeaveStatus status = leave.getStatus();
-                for (LocalDate date = leaveStart; !date.isAfter(leaveEnd); date = date.plusDays(1)) {
-                    switch (status) {
-                        case APPROVED:
-                            dailyStatus.put(date, "APPROVED_LEAVE");
-                            break;
-                        case REJECTED:
-                            dailyStatus.put(date, "REJECTED_LEAVE");
-                            break;
-                        case INPROGRESS:
-                            dailyStatus.put(date, "INPROGRESS_LEAVE");
-                            break;
-                        case CANCELLED:
-                            dailyStatus.put(date, "CANCELLED_LEAVE");
-                            break;
-                    }
+
+            // Lọc ra các đơn nghỉ của nhân viên hiện tại
+            List<LeaveRequest> employeeLeaves = leaveRequests.stream()
+                    .filter(leave -> leave.getEmployee().equals(employee))
+                    .collect(Collectors.toList());
+
+            // Cập nhật trạng thái ngày nghỉ
+            for (LeaveRequest leave : employeeLeaves) {
+                for (LocalDate date = leave.getStartDate(); !date.isAfter(leave.getEndDate()); date = date.plusDays(1)) {
+                    dailyStatus.put(date, getLeaveStatus(leave.getStatus())); // Sử dụng method riêng
                 }
             }
+
             scheduleMap.put(employee, dailyStatus);
         }
 
@@ -113,7 +117,23 @@ public class ScheduleController {
         model.addAttribute("totalPages", employeePage.getTotalPages());
         model.addAttribute("pageSize", pageSize);
 
-        return "companycalendar"; // Tên của template Thymeleaf
+        return "companycalendar"; // Trả về template Thymeleaf
+    }
+
+// Phương thức lấy trạng thái đơn nghỉ
+    private String getLeaveStatus(LeaveStatus status) {
+        switch (status) {
+            case APPROVED:
+                return "APPROVED_LEAVE";
+            case REJECTED:
+                return "REJECTED_LEAVE";
+            case INPROGRESS:
+                return "INPROGRESS_LEAVE";
+            case CANCELLED:
+                return "CANCELLED_LEAVE";
+            default:
+                return "UNKNOWN";
+        }
     }
 
     @GetMapping("/mycalendar")
@@ -126,68 +146,47 @@ public class ScheduleController {
         String username = authentication.getName();
 
         // Tìm người dùng theo username
-        Optional<Users> optionalUser = userRepository.findByUsername(username);
-        if (optionalUser.isEmpty()) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
-        }
-        Users user = optionalUser.get();
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
         // Kiểm tra employee của user
-        if (user.getEmployee() == null) {
-            throw new IllegalArgumentException("User does not have an associated employee.");
-        }
-        int employeeId = user.getEmployee().getId();
-
-        // Lấy thông tin nhân viên
-        Employees employee = employeeRepository.findById(employeeId)
-                .orElseThrow(() -> new IllegalArgumentException("Employee not found"));
+        Employees employee = Optional.ofNullable(user.getEmployee())
+                .orElseThrow(() -> new IllegalArgumentException("User does not have an associated employee."));
 
         // Lấy ngày hiện tại
         LocalDate currentDate = LocalDate.now();
-
-        // Xác định khoảng thời gian cho cả năm
         LocalDate startOfYear = LocalDate.of(year, 1, 1);
         LocalDate endOfYear = LocalDate.of(year, 12, 31);
 
         // Tạo lịch cho cả năm
         Map<YearMonth, Map<Integer, String>> yearlySchedule = new HashMap<>();
 
+        // Lấy danh sách đơn nghỉ phép của nhân viên trong năm
+        List<LeaveRequest> leaveRequests = leaveRequestRepository.findByEmployeeAndDateRange(employee, startOfYear, endOfYear);
+
         // Duyệt qua từng tháng trong năm
         for (int month = 1; month <= 12; month++) {
             YearMonth yearMonth = YearMonth.of(year, month);
-            LocalDate startOfMonth = yearMonth.atDay(1);
-            LocalDate endOfMonth = yearMonth.atEndOfMonth();
-
-            // Khởi tạo trạng thái mặc định cho từng ngày trong tháng
             Map<Integer, String> dailyStatus = new LinkedHashMap<>();
+
+            // Mặc định là "WORKING"
             for (int day = 1; day <= yearMonth.lengthOfMonth(); day++) {
                 dailyStatus.put(day, "WORKING");
             }
 
-            // Lấy danh sách đơn nghỉ phép trong tháng
-            List<LeaveRequest> leaves = leaveRequestRepository.findByEmployeeAndDateRange(employee, startOfMonth, endOfMonth);
-            for (LeaveRequest leave : leaves) {
+            // Cập nhật trạng thái nghỉ phép
+            for (LeaveRequest leave : leaveRequests) {
                 LocalDate leaveStart = leave.getStartDate();
                 LocalDate leaveEnd = leave.getEndDate();
                 LeaveStatus status = leave.getStatus();
 
-                // Chỉ xử lý các ngày trong tháng hiện tại
                 for (LocalDate date = leaveStart; !date.isAfter(leaveEnd); date = date.plusDays(1)) {
                     if (date.getMonthValue() == month && date.getYear() == year) {
-                        int day = date.getDayOfMonth();
-                        dailyStatus.put(day, switch (status) {
-                            case APPROVED ->
-                                "APPROVED_LEAVE";
-                            case REJECTED ->
-                                "REJECTED_LEAVE";
-                            case INPROGRESS ->
-                                "INPROGRESS_LEAVE";
-                            case CANCELLED ->
-                                "CANCELLED_LEAVE";
-                        });
+                        dailyStatus.put(date.getDayOfMonth(), getLeaveStatus(status));
                     }
                 }
             }
+
             yearlySchedule.put(yearMonth, dailyStatus);
         }
 
@@ -197,7 +196,7 @@ public class ScheduleController {
         model.addAttribute("employee", employee);
         model.addAttribute("startOfYear", startOfYear);
         model.addAttribute("endOfYear", endOfYear);
-        model.addAttribute("currentDate", currentDate); // Thêm ngày hiện tại vào model
+        model.addAttribute("currentDate", currentDate);
 
         return "mycalendar";
     }

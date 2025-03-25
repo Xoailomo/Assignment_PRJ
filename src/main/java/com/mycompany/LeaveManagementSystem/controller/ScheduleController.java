@@ -4,7 +4,7 @@
  */
 package com.mycompany.LeaveManagementSystem.controller;
 
-import com.mycompany.LeaveManagementSystem.model.Employee;
+import com.mycompany.LeaveManagementSystem.model.Employees;
 import com.mycompany.LeaveManagementSystem.model.LeaveRequest;
 import com.mycompany.LeaveManagementSystem.model.LeaveStatus;
 import com.mycompany.LeaveManagementSystem.model.Users;
@@ -70,12 +70,12 @@ public class ScheduleController {
         Pageable pageable = PageRequest.of(page, pageSize);
 
         // Lấy danh sách nhân viên theo trang
-        Page<Employee> employeePage = employeeRepository.findAll(pageable);
-        List<Employee> employees = employeePage.getContent();
+        Page<Employees> employeePage = employeeRepository.findAll(pageable);
+        List<Employees> employees = employeePage.getContent();
 
         // Tạo dữ liệu lịch làm việc cho từng nhân viên trong trang hiện tại
-        Map<Employee, Map<LocalDate, String>> scheduleMap = new HashMap<>();
-        for (Employee employee : employees) {
+        Map<Employees, Map<LocalDate, String>> scheduleMap = new HashMap<>();
+        for (Employees employee : employees) {
             Map<LocalDate, String> dailyStatus = new LinkedHashMap<>();
             for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
                 dailyStatus.put(date, "WORKING"); // Mặc định là WORKING
@@ -139,7 +139,7 @@ public class ScheduleController {
         int employeeId = user.getEmployee().getId();
 
         // Lấy thông tin nhân viên
-        Employee employee = employeeRepository.findById(employeeId)
+        Employees employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new IllegalArgumentException("Employee not found"));
 
         // Lấy ngày hiện tại

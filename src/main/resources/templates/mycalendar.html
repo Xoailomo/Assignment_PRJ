@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Lịch Cá Nhân</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <style>
+            .calendar-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+            .month-calendar {
+                width: 30%;
+                margin-bottom: 20px;
+            }
+            .month-calendar table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .month-calendar th, .month-calendar td {
+                border: 1px solid #ddd;
+                text-align: center;
+                padding: 5px;
+                font-size: 14px;
+            }
+            .month-calendar th {
+                background-color: #f8f9fa;
+            }
+            .month-calendar td {
+                height: 30px;
+                position: relative;
+            }
+            .approved-leave {
+                background-color: #28a745; /* Xanh lá cho APPROVED */
+                opacity: 0.5;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+            }
+            .rejected-leave {
+                background-color: #dc3545; /* Đỏ cho REJECTED */
+                opacity: 0.5;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+            }
+            .inprogress-leave {
+                background-color: #ffc107; /* Vàng cho INPROGRESS */
+                opacity: 0.5;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+            }
+            .cancelled-leave {
+                background-color: #6c757d; /* Xám cho CANCELLED */
+                opacity: 0.5;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+            }
+            .current-day-dot {
+                background-color: #007bff; /* Màu xanh đậm cho chấm tròn */
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                position: absolute;
+                top: 2px;
+                right: 2px;
+            }
+        </style>
+    </head>
+    <body>
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+        <div class="container mt-5">
+            <h2 th:text="'Lịch Cá Nhân - ' + ${employee.firstName} + ' ' + ${employee.lastName}"></h2>
+            <div class="d-flex justify-content-between mb-4">
+                <a th:href="@{/mycalendar(year=${year - 1})}" class="btn btn-primary">Năm trước</a>
+                <h3 th:text="${year}"></h3>
+                <a th:href="@{/mycalendar(year=${year + 1})}" class="btn btn-primary">Năm sau</a>
+            </div>
+
+            <!-- Lịch cả năm -->
+            <div class="calendar-container">
+                <div th:each="monthEntry : ${yearlySchedule}" class="month-calendar">
+                    <h4 th:text="${monthEntry.key.month}"></h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Su</th>
+                                <th>Mo</th>
+                                <th>Tu</th>
+                                <th>We</th>
+                                <th>Th</th>
+                                <th>Fr</th>
+                                <th>Sa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Tạo các hàng cho tháng -->
+                            <tr th:each="week : ${#numbers.sequence(0, 5)}">
+                                <td th:each="dayOfWeek : ${#numbers.sequence(0, 6)}"
+                                    th:classappend="${week * 7 + dayOfWeek - (monthEntry.key.atDay(1).dayOfWeek.value == 0 ? 7 : monthEntry.key.atDay(1).dayOfWeek.value) + 2 == currentDate.dayOfMonth and monthEntry.key.monthValue == currentDate.monthValue and monthEntry.key.year == currentDate.year} ? 'current-day' : ''">
+                                    <!-- Tính ngày trong tháng -->
+                        <th:block th:with="firstDayOfMonth=${monthEntry.key.atDay(1).dayOfWeek.value},
+                                  adjustedFirstDayOfMonth=${firstDayOfMonth == 0 ? 7 : firstDayOfMonth},
+                                  daysInMonth=${monthEntry.key.lengthOfMonth()},
+                                  dayIndex=${week * 7 + dayOfWeek - adjustedFirstDayOfMonth + 2}">
+                            <th:block th:if="${dayIndex > 0 and dayIndex <= daysInMonth}">
+                                <span th:text="${dayIndex}"></span>
+                                <span th:if="${monthEntry.value.get(dayIndex) == 'APPROVED_LEAVE'}" class="approved-leave"></span>
+                                <span th:if="${monthEntry.value.get(dayIndex) == 'REJECTED_LEAVE'}" class="rejected-leave"></span>
+                                <span th:if="${monthEntry.value.get(dayIndex) == 'INPROGRESS_LEAVE'}" class="inprogress-leave"></span>
+                                <span th:if="${monthEntry.value.get(dayIndex) == 'CANCELLED_LEAVE'}" class="cancelled-leave"></span>
+                                <!-- Thêm chấm tròn cho ngày hiện tại -->
+                                <span th:if="${dayIndex == currentDate.dayOfMonth and monthEntry.key.monthValue == currentDate.monthValue and monthEntry.key.year == currentDate.year}" class="current-day-dot"></span>
+                            </th:block>
+                        </th:block>
+                        </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
